@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sp_db
+    username: root
+    password:
+  jpa:
+    hibernate.ddl-auto: create
+    generate-ddl: true
