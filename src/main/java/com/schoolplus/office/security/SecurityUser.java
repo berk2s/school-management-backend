@@ -1,5 +1,7 @@
 package com.schoolplus.office.security;
 
+import com.schoolplus.office.domain.Authority;
+import com.schoolplus.office.domain.Role;
 import com.schoolplus.office.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class SecurityUser implements UserDetails {
 
@@ -25,6 +29,18 @@ public class SecurityUser implements UserDetails {
         user.getRoles().forEach(role -> grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName().toUpperCase())));
 
         return grantedAuthorities;
+    }
+
+    public UUID getId() {
+        return user.getId();
+    }
+
+    public List<Role> getPureRoles() {
+        return new ArrayList<>(user.getRoles());
+    }
+
+    public List<Authority> getPureAuthorities() {
+        return new ArrayList<>(user.getAuthorities());
     }
 
     @Override

@@ -23,13 +23,7 @@ public class Authority {
     @Column(name = "authority_name")
     private String authorityName;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "USER_AUTHORITIES",
-            joinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
     private Set<User> users = new HashSet<>();
 
 }

@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
+
 @Slf4j
 @Profile({"test", "local"})
 @RequiredArgsConstructor
@@ -29,6 +31,7 @@ public class DataLoader implements CommandLineRunner {
         loadUsers();
     }
 
+    @Transactional
     private void loadUsers() {
         Role role = new Role();
         role.setRoleName("STUDENT");
@@ -36,8 +39,8 @@ public class DataLoader implements CommandLineRunner {
         Authority authority = new Authority();
         authority.setAuthorityName("profile:manage");
 
-        roleRepository.save(role);
-        authorityRepository.save(authority);
+        Role savedRole = roleRepository.save(role);
+        Authority savedAuthoritiy = authorityRepository.save(authority);
 
         User user = new User();
         user.setUsername("username");
@@ -46,8 +49,8 @@ public class DataLoader implements CommandLineRunner {
         user.setCredentialsNonExpired(true);
         user.setAccountNonLocked(true);
         user.setEnabled(true);
-        user.addRole(role);
-        user.addAuthority(authority);
+        user.addRole(savedRole);
+        user.addAuthority(savedAuthoritiy);
 
         userRepository.save(user);
 
