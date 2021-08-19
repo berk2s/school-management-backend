@@ -23,7 +23,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
                 .findByUsername(username)
                 .orElseThrow(() -> {
                     log.warn("User not found by given username [username: {}]", username);
-                    throw new UsernameNotFoundException(ErrorDesc.USERNAME_NOT_FOUND.getDesc());
+                    throw new UsernameNotFoundException(ErrorDesc.BAD_CREDENTIALS.getDesc());
                 });
 
         return new SecurityUser(user);

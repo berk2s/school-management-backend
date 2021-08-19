@@ -9,6 +9,7 @@ public enum ErrorDesc {
     BAD_CREDENTIALS("Bad credentials"),
     INVALID_TOKEN("Invalid token"),
     USER_HAS_NOT_SCOPE("Invalid scope requested for user"),
+    BAD_REQUEST("Bad request"),
     SERVER_ERROR("Server error");
 
     private final String desc;
