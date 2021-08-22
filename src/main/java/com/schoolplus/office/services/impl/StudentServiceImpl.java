@@ -1,13 +1,16 @@
 package com.schoolplus.office.services.impl;
 
 import com.schoolplus.office.domain.Authority;
+import com.schoolplus.office.domain.Parent;
 import com.schoolplus.office.domain.Role;
 import com.schoolplus.office.domain.Student;
 import com.schoolplus.office.repository.AuthorityRepository;
 import com.schoolplus.office.repository.RoleRepository;
 import com.schoolplus.office.repository.UserRepository;
+import com.schoolplus.office.security.SecurityUser;
 import com.schoolplus.office.services.StudentService;
 import com.schoolplus.office.web.exceptions.AuthorityNotFoundException;
+import com.schoolplus.office.web.exceptions.ParentNotFoundException;
 import com.schoolplus.office.web.exceptions.RoleNotFoundException;
 import com.schoolplus.office.web.mappers.StudentMapper;
 import com.schoolplus.office.web.models.CreatingStudentDto;
@@ -16,8 +19,14 @@ import com.schoolplus.office.web.models.StudentDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -47,6 +56,18 @@ public class StudentServiceImpl implements StudentService {
         student.setGradeType(creatingStudent.getGradeType());
         student.setGradeLevel(creatingStudent.getGradeLevel());
 
+        creatingStudent.getParents().forEach(_parentId -> {
+            UUID parentId = UUID.fromString(_parentId);
+
+            Parent parent = (Parent) userRepository.findById(parentId)
+                    .orElseThrow(() -> {
+                       log.warn("Parent with given id does not exists [parentId: {}]", parentId.toString());
+                       throw new ParentNotFoundException(ErrorDesc.PARENT_NOT_FOUND.getDesc());
+                    });
+
+            student.addParent(parent);
+        });
+
         creatingStudent.getRoles().forEach(roleId -> {
             Role role = roleRepository
                     .findById(roleId)
@@ -70,6 +91,9 @@ public class StudentServiceImpl implements StudentService {
         });
 
         Student savedStudent = userRepository.save(student);
+
+        log.info("User has been created [userId: {}, performedBy: {}]", savedStudent.getId().toString(),
+                SecurityContextHolder.getContext().getAuthentication().getName());
 
         return studentMapper.studentToStudentDto(savedStudent);
     }

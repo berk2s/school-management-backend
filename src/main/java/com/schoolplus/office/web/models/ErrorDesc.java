@@ -2,6 +2,7 @@ package com.schoolplus.office.web.models;
 
 import lombok.Getter;
 
+
 @Getter
 public enum ErrorDesc {
 
@@ -13,6 +14,7 @@ public enum ErrorDesc {
     USER_NOT_FOUND("User not found"),
     AUTHORITY_NOT_FOUND("Authority not found"),
     ROLE_NOT_FOUND("Role not found"),
+    PARENT_NOT_FOUND("Parent not found"),
     SERVER_ERROR("Server error");
 
     private final String desc;

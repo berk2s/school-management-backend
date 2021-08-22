@@ -10,7 +10,7 @@ import org.mapstruct.Mappings;
 
 import java.util.UUID;
 
-@Mapper(uses = {UUID.class})
+@Mapper(imports = {UUID.class}, uses = {ParentMapper.class})
 public interface StudentMapper {
 
     @Mappings({
@@ -25,6 +25,7 @@ public interface StudentMapper {
             @Mapping(target = "isAccountNonLocked", expression = "java( student.getIsAccountNonLocked() )"),
             @Mapping(target = "isCredentialsNonExpired", expression = "java( student.getIsCredentialsNonExpired() )"),
             @Mapping(target = "isEnabled", expression = "java( student.getIsEnabled() )"),
+            @Mapping(target = "parents", source = "parents"),
     })
     StudentDto studentToStudentDto(Student student);
 

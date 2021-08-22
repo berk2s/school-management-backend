@@ -7,10 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,5 +24,25 @@ public class Student extends User {
 
     @Enumerated(EnumType.STRING)
     private GradeLevel gradeLevel;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "STUDENT_PARENTS",
+            joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "parent_id", referencedColumnName = "id"))
+    private List<Parent> parents = new ArrayList<>();
+
+    public void addParent(Parent parent) {
+        parent.getStudents().add(this);
+        parents.add(parent);
+    }
+
+    public void removeParent(Parent parent) {
+        if(parents.contains(parent) && parent.getStudents().contains(this)) {
+            parent.getStudents().remove(this);
+            parents.remove(parent);
+        }
+    }
 
 }

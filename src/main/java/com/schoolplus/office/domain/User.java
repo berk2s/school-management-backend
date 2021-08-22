@@ -70,19 +70,23 @@ public class User extends BaseEntity {
         roles.add(role);
     }
 
-    public void deleteRole(Role role) {
-        role.getUsers().remove(this);
-        roles.remove(role);
-    }
-
     public void addAuthority(Authority authority) {
         authority.getUsers().add(this);
         authorities.add(authority);
     }
 
+    public void deleteRole(Role role) {
+        if (roles.contains(role) && role.getUsers().contains(this)) {
+            role.getUsers().remove(this);
+            roles.remove(role);
+        }
+    }
+
     public void deleteAuthority(Authority authority) {
-        authority.getUsers().remove(this);
-        authorities.remove(authority);
+        if (authorities.contains(authority) && authority.getUsers().contains(this)) {
+            authority.getUsers().remove(this);
+            authorities.remove(authority);
+        }
     }
 
 }

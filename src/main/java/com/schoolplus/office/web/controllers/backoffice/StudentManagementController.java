@@ -4,13 +4,18 @@ import com.schoolplus.office.services.StudentService;
 import com.schoolplus.office.web.models.CreatingStudentDto;
 import com.schoolplus.office.web.models.StudentDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping(StudentManagementController.ENDPOINT)
 @RestController
