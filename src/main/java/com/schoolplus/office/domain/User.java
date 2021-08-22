@@ -10,10 +10,12 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "USER_TYPE")
 @Entity
 public class User extends BaseEntity {
 
@@ -22,6 +24,18 @@ public class User extends BaseEntity {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "phone_number", unique = true)
+    private String phoneNumber;
+
+    @Column(name = "email", unique = true)
+    private String email;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {
             CascadeType.MERGE,
