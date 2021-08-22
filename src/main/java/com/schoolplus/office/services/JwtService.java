@@ -12,4 +12,6 @@ public interface JwtService {
 
     JWTClaimsSet parseAndValidate(String token);
 
+    boolean validate(String token);
+
 }
