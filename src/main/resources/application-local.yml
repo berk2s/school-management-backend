@@ -1,6 +1,5 @@
 server:
   port: 8080
-
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
@@ -10,3 +9,12 @@ spring:
   jpa:
     hibernate.ddl-auto: create
     generate-ddl: true
+    show-sql: true
+
+school-plus:
+  url: http://localhost:8080
+  auth-config:
+    access-token:
+      lifetime: 5m
+    refresh-token:
+      lifetime: 8h

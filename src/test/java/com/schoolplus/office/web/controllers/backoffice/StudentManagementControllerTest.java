@@ -47,8 +47,9 @@ public class StudentManagementControllerTest {
     @DisplayName("Creating Student")
     @Nested
     class CreatingStudent {
+
         @DisplayName("Creating Student Successfully")
-        @WithMockUser
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
         @Test
         void creatingStudentSuccessfully() throws Exception {
 
@@ -95,7 +96,7 @@ public class StudentManagementControllerTest {
         }
 
         @DisplayName("Creating Student Role Not Found Error")
-        @WithMockUser
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
         @Test
         void creatingStudentRoleNotFoundError() throws Exception {
 
@@ -128,7 +129,7 @@ public class StudentManagementControllerTest {
         }
 
         @DisplayName("Creating Student Authority Not Found Error")
-        @WithMockUser
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
         @Test
         void creatingStudentAuthorityNotFoundError() throws Exception {
 

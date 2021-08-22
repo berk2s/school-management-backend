@@ -15,6 +15,7 @@ import com.schoolplus.office.web.models.ErrorDesc;
 import com.schoolplus.office.web.models.StudentDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentMapper studentMapper;
     private final PasswordEncoder passwordEncoder;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:students') || hasAuthority('create:student'))")
     @Override
     public StudentDto createStudent(CreatingStudentDto creatingStudent) {
         Student student = new Student();
