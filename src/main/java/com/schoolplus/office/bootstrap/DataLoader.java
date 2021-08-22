@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Slf4j
 @Profile({"test", "local"})
@@ -36,21 +37,35 @@ public class DataLoader implements CommandLineRunner {
         Role role = new Role();
         role.setRoleName("STUDENT");
 
+        Role role1 = new Role();
+        role1.setRoleName("ADMIN");
+
+        Role role2 = new Role();
+        role2.setRoleName("USER");
+
         Authority authority = new Authority();
         authority.setAuthorityName("profile:manage");
 
-        Role savedRole = roleRepository.save(role);
-        Authority savedAuthoritiy = authorityRepository.save(authority);
+        Authority authority1 = new Authority();
+        authority1.setAuthorityName("profile:edit");
+
+        Authority authority2 = new Authority();
+        authority2.setAuthorityName("list:users");
+
+        roleRepository.saveAll(List.of(role, role1, role2));
+        authorityRepository.saveAll(List.of(authority, authority1, authority2));
 
         User user = new User();
         user.setUsername("username");
         user.setPassword(passwordEncoder.encode("password"));
-        user.setAccountNonExpired(true);
-        user.setCredentialsNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setEnabled(true);
-        user.addRole(savedRole);
-        user.addAuthority(savedAuthoritiy);
+        user.setIsAccountNonLocked(true);
+        user.setIsAccountNonExpired(true);
+        user.setIsCredentialsNonExpired(true);
+        user.setIsEnabled(true);
+        user.addRole(role);
+        user.addRole(role1);
+        user.addAuthority(authority);
+        user.addAuthority(authority1);
 
         userRepository.save(user);
 

@@ -10,6 +10,9 @@ public enum ErrorDesc {
     INVALID_TOKEN("Invalid token"),
     USER_HAS_NOT_SCOPE("Invalid scope requested for user"),
     BAD_REQUEST("Bad request"),
+    USER_NOT_FOUND("User not found"),
+    AUTHORITY_NOT_FOUND("Authority not found"),
+    ROLE_NOT_FOUND("Role not found"),
     SERVER_ERROR("Server error");
 
     private final String desc;

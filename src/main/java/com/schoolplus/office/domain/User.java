@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -39,25 +40,35 @@ public class User extends BaseEntity {
     private Set<Authority> authorities = new HashSet<>();
 
     @Column(name = "is_account_non_expired")
-    private boolean isAccountNonExpired;
+    private Boolean isAccountNonExpired;
 
     @Column(name = "is_account_non_locked")
-    private boolean isAccountNonLocked;
+    private Boolean isAccountNonLocked;
 
     @Column(name = "is_credentials_non_expired")
-    private boolean isCredentialsNonExpired;
+    private Boolean isCredentialsNonExpired;
 
     @Column(name = "is_enabled")
-    private boolean isEnabled;
+    private Boolean isEnabled;
 
     public void addRole(Role role) {
         role.getUsers().add(this);
         roles.add(role);
     }
 
+    public void deleteRole(Role role) {
+        role.getUsers().remove(this);
+        roles.remove(role);
+    }
+
     public void addAuthority(Authority authority) {
         authority.getUsers().add(this);
         authorities.add(authority);
+    }
+
+    public void deleteAuthority(Authority authority) {
+        authority.getUsers().remove(this);
+        authorities.remove(authority);
     }
 
 }
