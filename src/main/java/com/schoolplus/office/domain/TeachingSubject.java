@@ -6,25 +6,25 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-public class Authority {
+public class TeachingSubject {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", insertable = false, updatable = false)
     private Long id;
 
-    @Column(name = "authority_name")
-    private String authorityName;
+    @Column(name = "subject_name")
+    private String subjectName;
 
-    @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
-    private Set<User> users = new HashSet<>();
+    @ManyToMany(mappedBy = "teachingSubjects", fetch = FetchType.LAZY)
+    private List<Teacher> teachers = new ArrayList<>();
 
 }

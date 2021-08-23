@@ -135,6 +135,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.NOT_FOUND));
     }
 
+    @ExceptionHandler(TeachingSubjectNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleTeachingSubjectNotFoundException(TeachingSubjectNotFoundException ex) {
+        return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.NOT_FOUND));
+    }
+
+    @ExceptionHandler(TeacherNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleTeacherNotFoundException(TeacherNotFoundException ex) {
+        return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.NOT_FOUND));
+    }
+
     private ResponseEntity<ErrorResponseDto> errorResponse(ErrorResponseDto errorResponseDto){
         return new ResponseEntity<>(errorResponseDto, errorResponseDto.getHttpStatus());
     }

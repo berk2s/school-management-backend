@@ -2,9 +2,11 @@ package com.schoolplus.office.bootstrap;
 
 import com.schoolplus.office.domain.Authority;
 import com.schoolplus.office.domain.Role;
+import com.schoolplus.office.domain.TeachingSubject;
 import com.schoolplus.office.domain.User;
 import com.schoolplus.office.repository.AuthorityRepository;
 import com.schoolplus.office.repository.RoleRepository;
+import com.schoolplus.office.repository.TeachingSubjectRepository;
 import com.schoolplus.office.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,7 @@ public class DataLoader implements CommandLineRunner {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final AuthorityRepository authorityRepository;
+    private final TeachingSubjectRepository teachingSubjectRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -34,6 +37,11 @@ public class DataLoader implements CommandLineRunner {
 
     @Transactional
     private void loadUsers() {
+        TeachingSubject teachingSubject = new TeachingSubject();
+        teachingSubject.setSubjectName("Matematik");
+
+        teachingSubjectRepository.save(teachingSubject);
+
         Role role = new Role();
         role.setRoleName("STUDENT");
 

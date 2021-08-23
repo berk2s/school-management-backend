@@ -140,6 +140,7 @@ public class StudentServiceImpl implements StudentService {
                         });
 
                 student.addParent(parent);
+
             });
         }
 
@@ -154,6 +155,7 @@ public class StudentServiceImpl implements StudentService {
                         });
 
                 student.removeParent(parent);
+
             });
         }
 

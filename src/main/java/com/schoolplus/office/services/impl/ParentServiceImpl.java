@@ -70,6 +70,8 @@ public class ParentServiceImpl implements ParentService {
             if (!student.getParents().contains(savedParent)) {
                 student.addParent(savedParent);
             }
+
+            userRepository.save(student);
         });
 
         log.info("Parent has been created [parentId: {}, performedBy: {}]", savedParent.getId().toString(),
@@ -98,6 +100,8 @@ public class ParentServiceImpl implements ParentService {
                         });
 
                 student.addParent(parent);
+
+                userRepository.save(student);
             });
         }
 
@@ -112,9 +116,15 @@ public class ParentServiceImpl implements ParentService {
                         });
 
                 student.removeParent(parent);
+
+                userRepository.save(student);
             });
         }
 
+        userRepository.save(parent);
+
+        log.info("Parent has been edited [parentId: {}, performedBy: {}]", parent.getId().toString(),
+                SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
 }
