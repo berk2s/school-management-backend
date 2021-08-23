@@ -7,9 +7,7 @@ import com.schoolplus.office.domain.Student;
 import com.schoolplus.office.repository.AuthorityRepository;
 import com.schoolplus.office.repository.RoleRepository;
 import com.schoolplus.office.repository.UserRepository;
-import com.schoolplus.office.security.SecurityUser;
 import com.schoolplus.office.services.StudentService;
-import com.schoolplus.office.services.UserService;
 import com.schoolplus.office.web.exceptions.AuthorityNotFoundException;
 import com.schoolplus.office.web.exceptions.ParentNotFoundException;
 import com.schoolplus.office.web.exceptions.RoleNotFoundException;
@@ -158,6 +156,9 @@ public class StudentServiceImpl implements StudentService {
                 student.removeParent(parent);
             });
         }
+
+        log.info("User has been edited [userId: {}, performedBy: {}]", student.getId().toString(),
+                SecurityContextHolder.getContext().getAuthentication().getName());
 
         userRepository.save(student);
     }

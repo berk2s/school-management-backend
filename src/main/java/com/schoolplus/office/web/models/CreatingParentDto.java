@@ -12,8 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ParentDto extends UserDto {
+public class CreatingParentDto extends CreatingUserDto {
 
-    private List<ParentsStudentDto> students = new ArrayList<>();
+    private List<String> students = new ArrayList<>();
 
 }

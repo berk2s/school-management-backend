@@ -14,7 +14,7 @@ import java.util.UUID;
 public interface ParentMapper {
 
     @Mappings({
-            @Mapping(target = "students", source = "students", ignore = true),
+            @Mapping(target = "students", source = "students"),
             @Mapping(target = "userId", expression = "java( parent.getId().toString() )"),
             @Mapping(target = "firstName", expression = "java( parent.getFirstName() )"),
             @Mapping(target = "lastName", expression = "java( parent.getLastName() )"),
