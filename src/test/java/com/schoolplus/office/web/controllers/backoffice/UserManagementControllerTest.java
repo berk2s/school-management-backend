@@ -11,7 +11,6 @@ import com.schoolplus.office.web.models.EditUserDto;
 import com.schoolplus.office.web.models.ErrorDesc;
 import com.schoolplus.office.web.models.ErrorType;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.aspectj.lang.annotation.Before;
 import org.hibernate.Hibernate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,12 +23,10 @@ import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.*;
@@ -148,7 +145,7 @@ public class UserManagementControllerTest {
     class TestErrors {
 
         @DisplayName("User not found error when requesting user info")
-        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "view:user"})
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "read:user"})
         @Test
         void userNotFoundErrorWhenRequestedUserInfo() throws Exception {
 
@@ -304,7 +301,7 @@ public class UserManagementControllerTest {
     }
 
     @DisplayName("Get User Successfully")
-    @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "view:user"})
+    @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "read:user"})
     @Test
     void getUserSuccessfully() throws Exception {
 
@@ -330,7 +327,7 @@ public class UserManagementControllerTest {
     }
 
     @DisplayName("Edit User Successfully")
-    @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "edit:user", "view:user"})
+    @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "edit:user", "read:user"})
     @Test
     void editUserSuccessfully() throws Exception {
 

@@ -1,9 +1,7 @@
 package com.schoolplus.office.web.controllers.backoffice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.schoolplus.office.domain.Authority;
-import com.schoolplus.office.domain.Parent;
-import com.schoolplus.office.domain.Role;
+import com.schoolplus.office.domain.*;
 import com.schoolplus.office.repository.AuthorityRepository;
 import com.schoolplus.office.repository.RoleRepository;
 import com.schoolplus.office.repository.UserRepository;
@@ -24,13 +22,13 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.hamcrest.Matchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -118,6 +116,23 @@ public class StudentManagementControllerTest {
                     .andExpect(jsonPath("$.parents[*]..username", anyOf(hasItem(is(parent.getUsername())))));
         }
 
+        @DisplayName("Creating Student Parent Not Found Error")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
+        @Test
+        void creatingStudentParentNotFoundError() throws Exception {
+
+            creatingStudent.setParents(List.of(UUID.randomUUID().toString())); // invalid
+
+            mockMvc.perform(post(StudentManagementController.ENDPOINT)
+                            .content(objectMapper.writeValueAsString(creatingStudent))
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.PARENT_NOT_FOUND.getDesc())));
+
+        }
+
         @DisplayName("Creating Student Role Not Found Error")
         @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
         @Test
@@ -154,4 +169,112 @@ public class StudentManagementControllerTest {
 
     }
 
+    @DisplayName("Editing Student")
+    @Nested
+    class EditStudent {
+
+        Parent parent;
+        Student student;
+        EditStudentDto editStudent;
+
+        @BeforeEach
+        void setUp() {
+            parent = new Parent();
+            parent.setUsername(RandomStringUtils.random(10, true, false));
+
+            userRepository.save(parent);
+
+            student = new Student();
+            student.setGradeType(GradeType.HIGH_SCHOOL);
+            student.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
+            student.addParent(parent);
+
+            student = userRepository.save(student);
+
+            editStudent = new EditStudentDto();
+            editStudent.setGradeType(GradeType.GRADUATED);
+        }
+
+        @DisplayName("Edit Student Successfully")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
+        @Test
+        void editStudentSuccessfully() throws Exception {
+
+            mockMvc.perform(put(StudentManagementController.ENDPOINT + "/" + student.getId().toString())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(editStudent)))
+                    .andExpect(status().isPermanentRedirect())
+                    .andExpect(redirectedUrl(StudentManagementController.ENDPOINT + "/" + student.getId().toString()));
+
+            mockMvc.perform(get(StudentManagementController.ENDPOINT + "/" + student.getId().toString()))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.userId").isNotEmpty())
+                    .andExpect(jsonPath("$.username", is(student.getUsername())))
+                    .andExpect(jsonPath("$.gradeType", is(editStudent.getGradeType().getType())))
+                    .andExpect(jsonPath("$.gradeLevel", is(student.getGradeLevel().getGradeYear())))
+                    .andExpect(jsonPath("$.parents[*]..username", anyOf(hasItem(is(parent.getUsername())))));
+        }
+
+        @DisplayName("Edit Student Not Found Error")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
+        @Test
+        void editStudentNotFoundError() throws Exception {
+
+            mockMvc.perform(put(StudentManagementController.ENDPOINT + "/" + UUID.randomUUID().toString())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(editStudent)))
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.STUDENT_NOT_FOUND.getDesc())));
+
+        }
+
+        @DisplayName("Edit Student Parent Found Error")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
+        @Test
+        void editStudentParentNotFoundError() throws Exception {
+
+            editStudent.setAddedParents(List.of(UUID.randomUUID().toString()));
+
+            mockMvc.perform(put(StudentManagementController.ENDPOINT + "/" + student.getId().toString())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(editStudent)))
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.PARENT_NOT_FOUND.getDesc())));
+
+        }
+
+    }
+
+    @DisplayName("Get Student Successfully")
+    @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
+    @Test
+    void getStudentSuccessfully() throws Exception {
+
+        Parent parent = new Parent();
+        parent.setUsername(RandomStringUtils.random(10, true, false));
+
+        userRepository.save(parent);
+
+        Student student = new Student();
+        student.setGradeType(GradeType.HIGH_SCHOOL);
+        student.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
+        student.addParent(parent);
+
+        student = userRepository.save(student);
+
+        mockMvc.perform(get(StudentManagementController.ENDPOINT + "/" + student.getId().toString()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.userId").isNotEmpty())
+                .andExpect(jsonPath("$.username", is(student.getUsername())))
+                .andExpect(jsonPath("$.gradeType", is(student.getGradeType().getType())))
+                .andExpect(jsonPath("$.gradeLevel", is(student.getGradeLevel().getGradeYear())))
+                .andExpect(jsonPath("$.parents[*]..username", anyOf(hasItem(is(parent.getUsername())))));
+
+    }
+
 }
+

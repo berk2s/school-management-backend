@@ -34,8 +34,10 @@ public class Student extends User {
     private List<Parent> parents = new ArrayList<>();
 
     public void addParent(Parent parent) {
-        parent.getStudents().add(this);
-        parents.add(parent);
+        if(!parents.contains(parent) && !parent.getStudents().contains(this)) {
+            parent.getStudents().add(this);
+            parents.add(parent);
+        }
     }
 
     public void removeParent(Parent parent) {
