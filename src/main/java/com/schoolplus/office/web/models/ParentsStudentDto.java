@@ -5,15 +5,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ParentDto extends UserDto {
+public class ParentsStudentDto extends UserDto {
 
-    private List<ParentsStudentDto> students = new ArrayList<>();
+    private String gradeType;
+
+    private String gradeLevel;
 
 }

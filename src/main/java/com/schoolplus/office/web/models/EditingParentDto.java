@@ -12,8 +12,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ParentDto extends UserDto {
+public class EditingParentDto extends EditUserDto {
 
-    private List<ParentsStudentDto> students = new ArrayList<>();
+    public List<String> addedStudents = new ArrayList<>();
+
+    public List<String> deletedStudents = new ArrayList<>();
 
 }

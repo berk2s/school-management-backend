@@ -248,31 +248,49 @@ public class StudentManagementControllerTest {
 
     }
 
-    @DisplayName("Get Student Successfully")
-    @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
-    @Test
-    void getStudentSuccessfully() throws Exception {
+    @DisplayName("Getting Student")
+    @Nested
+    class GettingStudent {
 
-        Parent parent = new Parent();
-        parent.setUsername(RandomStringUtils.random(10, true, false));
+        @DisplayName("Get Student Successfully")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
+        @Test
+        void getStudentSuccessfully() throws Exception {
 
-        userRepository.save(parent);
+            Parent parent = new Parent();
+            parent.setUsername(RandomStringUtils.random(10, true, false));
 
-        Student student = new Student();
-        student.setGradeType(GradeType.HIGH_SCHOOL);
-        student.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
-        student.addParent(parent);
+            userRepository.save(parent);
 
-        student = userRepository.save(student);
+            Student student = new Student();
+            student.setGradeType(GradeType.HIGH_SCHOOL);
+            student.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
+            student.addParent(parent);
 
-        mockMvc.perform(get(StudentManagementController.ENDPOINT + "/" + student.getId().toString()))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.userId").isNotEmpty())
-                .andExpect(jsonPath("$.username", is(student.getUsername())))
-                .andExpect(jsonPath("$.gradeType", is(student.getGradeType().getType())))
-                .andExpect(jsonPath("$.gradeLevel", is(student.getGradeLevel().getGradeYear())))
-                .andExpect(jsonPath("$.parents[*]..username", anyOf(hasItem(is(parent.getUsername())))));
+            student = userRepository.save(student);
+
+            mockMvc.perform(get(StudentManagementController.ENDPOINT + "/" + student.getId().toString()))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.userId").isNotEmpty())
+                    .andExpect(jsonPath("$.username", is(student.getUsername())))
+                    .andExpect(jsonPath("$.gradeType", is(student.getGradeType().getType())))
+                    .andExpect(jsonPath("$.gradeLevel", is(student.getGradeLevel().getGradeYear())))
+                    .andExpect(jsonPath("$.parents[*]..username", anyOf(hasItem(is(parent.getUsername())))));
+
+        }
+
+        @DisplayName("Getting Student Not Found Error")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
+        @Test
+        void gettingStudentNotFoundError() throws Exception {
+
+            mockMvc.perform(get(StudentManagementController.ENDPOINT + "/" + UUID.randomUUID().toString()))
+                    .andDo(print())
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.STUDENT_NOT_FOUND.getDesc())));
+        }
 
     }
 
