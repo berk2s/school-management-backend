@@ -10,10 +10,12 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "USER_TYPE")
 @Entity
 public class User extends BaseEntity {
 
@@ -22,6 +24,18 @@ public class User extends BaseEntity {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "phone_number", unique = true)
+    private String phoneNumber;
+
+    @Column(name = "email", unique = true)
+    private String email;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {
             CascadeType.MERGE,
@@ -56,19 +70,23 @@ public class User extends BaseEntity {
         roles.add(role);
     }
 
-    public void deleteRole(Role role) {
-        role.getUsers().remove(this);
-        roles.remove(role);
-    }
-
     public void addAuthority(Authority authority) {
         authority.getUsers().add(this);
         authorities.add(authority);
     }
 
+    public void deleteRole(Role role) {
+        if (roles.contains(role) && role.getUsers().contains(this)) {
+            role.getUsers().remove(this);
+            roles.remove(role);
+        }
+    }
+
     public void deleteAuthority(Authority authority) {
-        authority.getUsers().remove(this);
-        authorities.remove(authority);
+        if (authorities.contains(authority) && authority.getUsers().contains(this)) {
+            authority.getUsers().remove(this);
+            authorities.remove(authority);
+        }
     }
 
 }

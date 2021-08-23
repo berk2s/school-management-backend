@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users') || hasAuthority('view:user'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users') || hasAuthority('read:user'))")
     @Override
     public UserDto getUser(UUID userId) {
         User user = userRepository.findById(userId)
@@ -86,16 +86,16 @@ public class UserServiceImpl implements UserService {
         if (editUser.getIsEnabled() != null)
             user.setIsEnabled(editUser.getIsEnabled());
 
-        if (editUser.getNewAuthorities().size() != 0)
+        if (editUser.getDeletedAuthorities() != null && editUser.getNewAuthorities().size() != 0)
             addNewAuthority(editUser, user);
 
-        if (editUser.getDeletedAuthorities().size() != 0)
+        if (editUser.getDeletedAuthorities() != null && editUser.getDeletedAuthorities().size() != 0)
             deleteGivenAuthority(editUser, user);
 
-        if (editUser.getNewRoles().size() != 0)
+        if (editUser.getNewRoles() != null && editUser.getNewRoles().size() != 0)
             addNewRole(editUser, user);
 
-        if (editUser.getDeletedRoles().size() != 0)
+        if (editUser.getDeletedRoles() != null && editUser.getDeletedRoles().size() != 0)
             deleteGivenRole(editUser, user);
 
         log.info("User has been edited successfully [userId: {}, performedBy: {}]", userId,

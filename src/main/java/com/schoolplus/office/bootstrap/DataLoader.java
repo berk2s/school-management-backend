@@ -66,6 +66,10 @@ public class DataLoader implements CommandLineRunner {
         user.addRole(role1);
         user.addAuthority(authority);
         user.addAuthority(authority1);
+        user.setFirstName("firstName");
+        user.setLastName("lastName");
+        user.setEmail("email@email.com");
+        user.setPhoneNumber("05553332211");
 
         userRepository.save(user);
 

@@ -11,7 +11,6 @@ import com.schoolplus.office.web.models.EditUserDto;
 import com.schoolplus.office.web.models.ErrorDesc;
 import com.schoolplus.office.web.models.ErrorType;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.aspectj.lang.annotation.Before;
 import org.hibernate.Hibernate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,12 +23,10 @@ import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.*;
@@ -90,6 +87,11 @@ public class UserManagementControllerTest {
                 user.setIsEnabled(true);
                 user.addRole(role);
                 user.addAuthority(authority);
+                user.setFirstName("firstName");
+                user.setLastName("lastName");
+                user.setUsername(RandomStringUtils.random(10, true, false));
+                user.setPhoneNumber(RandomStringUtils.random(10, true, false));
+                user.setEmail(RandomStringUtils.random(10, true, false));
 
                 userRepository.save(user);
             }
@@ -108,6 +110,10 @@ public class UserManagementControllerTest {
                     .andExpect(jsonPath("$.length()", is(10)))
                     .andExpect(jsonPath("$..userId").isNotEmpty())
                     .andExpect(jsonPath("$..username").isNotEmpty())
+                    .andExpect(jsonPath("$..firstName").isNotEmpty())
+                    .andExpect(jsonPath("$..lastName").isNotEmpty())
+                    .andExpect(jsonPath("$..phoneNumber").isNotEmpty())
+                    .andExpect(jsonPath("$..email").isNotEmpty())
                     .andExpect(jsonPath("$..authorities").isNotEmpty())
                     .andExpect(jsonPath("$..roles").isNotEmpty())
                     .andExpect(jsonPath("$..isEnabled").isNotEmpty())
@@ -139,7 +145,7 @@ public class UserManagementControllerTest {
     class TestErrors {
 
         @DisplayName("User not found error when requesting user info")
-        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "view:user"})
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "read:user"})
         @Test
         void userNotFoundErrorWhenRequestedUserInfo() throws Exception {
 
@@ -295,7 +301,7 @@ public class UserManagementControllerTest {
     }
 
     @DisplayName("Get User Successfully")
-    @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "view:user"})
+    @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "read:user"})
     @Test
     void getUserSuccessfully() throws Exception {
 
@@ -305,6 +311,10 @@ public class UserManagementControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.userId").isNotEmpty())
                 .andExpect(jsonPath("$.username").isNotEmpty())
+                .andExpect(jsonPath("$.firstName").isNotEmpty())
+                .andExpect(jsonPath("$.lastName").isNotEmpty())
+                .andExpect(jsonPath("$.phoneNumber").isNotEmpty())
+                .andExpect(jsonPath("$.email").isNotEmpty())
                 .andExpect(jsonPath("$.authorities").isNotEmpty())
                 .andExpect(jsonPath("$.roles").isNotEmpty())
                 .andExpect(jsonPath("$.isEnabled").isNotEmpty())
@@ -317,7 +327,7 @@ public class UserManagementControllerTest {
     }
 
     @DisplayName("Edit User Successfully")
-    @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "edit:user", "view:user"})
+    @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "edit:user", "read:user"})
     @Test
     void editUserSuccessfully() throws Exception {
 
@@ -347,6 +357,10 @@ public class UserManagementControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.userId").isNotEmpty())
                 .andExpect(jsonPath("$.username", is(editUserDto.getUsername())))
+                .andExpect(jsonPath("$.firstName").isNotEmpty())
+                .andExpect(jsonPath("$.lastName").isNotEmpty())
+                .andExpect(jsonPath("$.phoneNumber").isNotEmpty())
+                .andExpect(jsonPath("$.email").isNotEmpty())
                 .andExpect(jsonPath("$.authorities[*]", anyOf(hasItem(is("list:users")))))
                 .andExpect(jsonPath("$.roles[*]", anyOf(hasItem(is("USER")))))
                 .andExpect(jsonPath("$.isEnabled").isNotEmpty())

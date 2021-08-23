@@ -1,6 +1,5 @@
 package com.schoolplus.office.services.impl;
 
-import com.schoolplus.office.config.ServerConfiguration;
 import com.schoolplus.office.security.SecurityUser;
 import com.schoolplus.office.security.SecurityUserDetailsService;
 import com.schoolplus.office.security.UserAuthenticationProvider;
@@ -13,7 +12,6 @@ import com.schoolplus.office.web.models.LoginResponseDto;
 import com.schoolplus.office.web.models.RefreshTokenCommand;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
