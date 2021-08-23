@@ -16,6 +16,8 @@ public enum ErrorDesc {
     ROLE_NOT_FOUND("Role not found"),
     PARENT_NOT_FOUND("Parent not found"),
     STUDENT_NOT_FOUND("Student not found"),
+    TEACHING_SUBJECT_NOT_FOUND("Teaching subject not found"),
+    TEACHER_NOT_FOUND("Teacher not found"),
     SERVER_ERROR("Server error");
 
     private final String desc;

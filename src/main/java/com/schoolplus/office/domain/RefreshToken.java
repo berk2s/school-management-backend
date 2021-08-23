@@ -20,6 +20,7 @@ public class RefreshToken {
 
     @Id
     @GeneratedValue
+    @Column(name = "id", insertable = false, updatable = false)
     private Long id;
 
     @Column(name = "token")
