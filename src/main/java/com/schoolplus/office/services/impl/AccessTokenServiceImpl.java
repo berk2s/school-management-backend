@@ -33,7 +33,7 @@ public class AccessTokenServiceImpl implements AccessTokenService {
     @Override
     public String createToken(AccessTokenCommand accessTokenCommand) {
         SecurityUser securityUser = accessTokenCommand.getSecurityUser();
-        Duration accessTokenDuration = serverConfiguration.getAccessToken().getLifetime();
+        Duration configuredAccessTokenDuration = serverConfiguration.getAccessToken().getLifetime();
 
         Map<String, Object> claims = new HashMap<>();
 
@@ -52,6 +52,9 @@ public class AccessTokenServiceImpl implements AccessTokenService {
         }
 
         claims.put("roles", roles);
+
+        Duration accessTokenDuration = accessTokenCommand.getExpiryDateTime() != null ?
+                accessTokenCommand.getExpiryDateTime() : configuredAccessTokenDuration;
 
         TokenCommand tokenCommand = TokenCommand.builder()
                 .securityUser(securityUser)
