@@ -18,3 +18,4 @@ school-plus:
       lifetime: 5m
     refresh-token:
       lifetime: 8h
+    purging-refresh-tokens-cron: "* * 0/6 * * *"

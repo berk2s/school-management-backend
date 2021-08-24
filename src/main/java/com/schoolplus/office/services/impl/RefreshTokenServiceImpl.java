@@ -2,8 +2,12 @@ package com.schoolplus.office.services.impl;
 
 import com.schoolplus.office.config.ServerConfiguration;
 import com.schoolplus.office.domain.RefreshToken;
+import com.schoolplus.office.domain.User;
 import com.schoolplus.office.repository.RefreshTokenRepository;
+import com.schoolplus.office.repository.UserRepository;
 import com.schoolplus.office.services.RefreshTokenService;
+import com.schoolplus.office.web.exceptions.UserNotFoundException;
+import com.schoolplus.office.web.models.ErrorDesc;
 import com.schoolplus.office.web.models.RefreshTokenCommand;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +25,7 @@ import java.util.Date;
 public class RefreshTokenServiceImpl implements RefreshTokenService {
 
     private final RefreshTokenRepository refreshTokenRepository;
+    private final UserRepository userRepository;
     private final ServerConfiguration serverConfiguration;
 
     @Override
@@ -40,11 +45,18 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
                 LocalDateTime.now().plusMinutes(refreshTokenCommand.getNotBefore().toMinutes()) :
                 LocalDateTime.now();
 
+        User user = userRepository.findByUsername(refreshTokenCommand.getSecurityUser().getUsername())
+                .orElseThrow(() -> {
+                    log.warn("User with given username does not exists [username: {}]", refreshTokenCommand.getSecurityUser().getUsername());
+                    throw new UserNotFoundException(ErrorDesc.USER_NOT_FOUND.getDesc());
+                });
+
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setToken(generatedToken);
         refreshToken.setIssueTime(issuedAt);
         refreshToken.setExpiryDateTime(expiryDateTime);
         refreshToken.setNotBefore(notBeforeTime);
+        refreshToken.setUser(user);
 
         refreshTokenRepository.save(refreshToken);
 

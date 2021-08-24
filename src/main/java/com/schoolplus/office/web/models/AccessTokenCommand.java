@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import java.util.List;
 @Builder
 public class AccessTokenCommand {
     SecurityUser securityUser;
+
+    Duration expiryDateTime;
 
     List<String> scopes = new ArrayList<>();
 }
