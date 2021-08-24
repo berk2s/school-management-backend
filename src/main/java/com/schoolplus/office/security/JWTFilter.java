@@ -40,7 +40,7 @@ public class JWTFilter extends OncePerRequestFilter {
             final String headers = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
 
             if(StringUtils.isEmpty(headers) || !headers.startsWith("Bearer ")) {
-                httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+                filterChain.doFilter(httpServletRequest, httpServletResponse);
                 return;
             }
 
@@ -76,7 +76,7 @@ public class JWTFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             filterChain.doFilter(httpServletRequest, httpServletResponse);
         } catch (UsernameNotFoundException | JWTException | ParseException e) {
-            httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
         }
 
         return;
