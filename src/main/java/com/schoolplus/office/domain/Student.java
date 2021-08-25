@@ -33,6 +33,9 @@ public class Student extends User {
             inverseJoinColumns = @JoinColumn(name = "parent_id", referencedColumnName = "id"))
     private List<Parent> parents = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    private Grade grade;
+
     public void addParent(Parent parent) {
         if(!parents.contains(parent) && !parent.getStudents().contains(this)) {
             parent.getStudents().add(this);
