@@ -22,6 +22,23 @@ public class Teacher extends User {
             inverseJoinColumns = @JoinColumn(name = "teaching_subject_id", referencedColumnName = "id"))
     private List<TeachingSubject> teachingSubjects = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "advisorTeacher")
+    private List<Grade> responsibleGrades = new ArrayList<>();
+
+    public void addGrade(Grade grade) {
+        if (!responsibleGrades.contains(grade)) {
+            grade.setAdvisorTeacher(this);
+            responsibleGrades.add(grade);
+        }
+    }
+
+    public void removeGrade(Grade grade) {
+        if (responsibleGrades.contains(grade)) {
+            grade.setAdvisorTeacher(null);
+            responsibleGrades.remove(grade);
+        }
+    }
+
     public void addTeachingSubject(TeachingSubject teachingSubject) {
         if (!teachingSubjects.contains(teachingSubject) && !teachingSubject.getTeachers().contains(this)) {
             teachingSubject.getTeachers().add(this);

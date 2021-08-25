@@ -1,7 +1,6 @@
 package com.schoolplus.office.repository;
 
 import com.schoolplus.office.domain.User;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;

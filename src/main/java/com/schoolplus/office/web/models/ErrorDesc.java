@@ -3,6 +3,7 @@ package com.schoolplus.office.web.models;
 import lombok.Getter;
 
 
+
 @Getter
 public enum ErrorDesc {
 
@@ -18,6 +19,7 @@ public enum ErrorDesc {
     STUDENT_NOT_FOUND("Student not found"),
     TEACHING_SUBJECT_NOT_FOUND("Teaching subject not found"),
     TEACHER_NOT_FOUND("Teacher not found"),
+    GRADE_NOT_FOUND("Grade not found"),
     SERVER_ERROR("Server error");
 
     private final String desc;

@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class TeacherTeachingSubjects {
+
     private Long teachingSubjectId;
 
     private String subjectName;
+
 }
