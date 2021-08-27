@@ -1,7 +1,7 @@
 package com.schoolplus.office.web.controllers.backoffice;
 
 import com.schoolplus.office.services.UserService;
-import com.schoolplus.office.web.models.EditUserDto;
+import com.schoolplus.office.web.models.EditingUserDto;
 import com.schoolplus.office.web.models.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,8 +39,8 @@ public class UserManagementController {
 
     @PutMapping(value = {"/{userId}"}, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateUser(@Valid @PathVariable UUID userId,
-                                     @Valid @RequestBody EditUserDto editUserDto) {
-        userService.editUser(userId, editUserDto);
+                                     @Valid @RequestBody EditingUserDto editingUserDto) {
+        userService.editUser(userId, editingUserDto);
 
         return ResponseEntity
                 .status(HttpStatus.PERMANENT_REDIRECT)

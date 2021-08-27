@@ -5,22 +5,17 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class EditStudentDto extends EditUserDto {
+public class EditingTeacherDto extends EditingUserDto {
 
-    private GradeType gradeType;
+    private List<Long> addedTeachingSubjects = new ArrayList<>();
 
-    private GradeLevel gradeLevel;
-
-    private List<String> addedParents;
-
-    private List<String> deletedParents;
-
-    private Long gradeId;
+    private List<Long> removeTeachingSubjects = new ArrayList<>();
 
 }

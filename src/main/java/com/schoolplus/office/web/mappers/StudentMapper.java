@@ -49,6 +49,27 @@ public interface StudentMapper {
     })
     StudentDto studentToStudentDtoWithoutParents(Student student);
 
+    @Named("ForAppointment")
+    @Mappings({
+            @Mapping(target = "userId", expression = "java( student.getId().toString() )"),
+            @Mapping(target = "firstName", expression = "java( student.getFirstName() )"),
+            @Mapping(target = "lastName", expression = "java( student.getLastName() )"),
+            @Mapping(target = "parents", source = "parents", ignore = true),
+            @Mapping(target = "grade", qualifiedByName = "WithoutStudents"),
+            @Mapping(target = "username", source = "username", ignore = true),
+            @Mapping(target = "phoneNumber", source = "phoneNumber", ignore = true),
+            @Mapping(target = "email", source = "email", ignore = true),
+            @Mapping(target = "authorities", source = "authorities", ignore = true),
+            @Mapping(target = "roles", source = "roles", ignore = true),
+            @Mapping(target = "isEnabled", source = "isEnabled", ignore = true),
+            @Mapping(target = "isAccountNonExpired", source = "isAccountNonExpired", ignore = true),
+            @Mapping(target = "isAccountNonLocked", source = "isAccountNonLocked", ignore = true),
+            @Mapping(target = "isCredentialsNonExpired", source = "isCredentialsNonExpired", ignore = true),
+            @Mapping(target = "createdAt", source = "createdAt", ignore = true),
+            @Mapping(target = "lastModifiedAt", source = "lastModifiedAt", ignore = true),
+    })
+    StudentDto studentToStudentDtoForAppointment(Student student);
+
     default String mapAuthority(Authority authority){
         return authority != null ? authority.getAuthorityName() : null;
     }

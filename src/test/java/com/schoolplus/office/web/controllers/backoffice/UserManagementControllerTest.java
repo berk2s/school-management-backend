@@ -7,7 +7,7 @@ import com.schoolplus.office.domain.User;
 import com.schoolplus.office.repository.AuthorityRepository;
 import com.schoolplus.office.repository.RoleRepository;
 import com.schoolplus.office.repository.UserRepository;
-import com.schoolplus.office.web.models.EditUserDto;
+import com.schoolplus.office.web.models.EditingUserDto;
 import com.schoolplus.office.web.models.ErrorDesc;
 import com.schoolplus.office.web.models.ErrorType;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -168,17 +168,17 @@ public class UserManagementControllerTest {
             Authority authority = authorityRepository.findByAuthorityName("profile:manage").get();
             Authority authority1 = authorityRepository.findByAuthorityName("list:users").get();
 
-            EditUserDto editUserDto = new EditUserDto();
-            editUserDto.setUsername("new_username");
-            editUserDto.setNewRoles(List.of(role1.getId()));
-            editUserDto.setNewAuthorities(List.of(authority1.getId()));
+            EditingUserDto editingUserDto = new EditingUserDto();
+            editingUserDto.setUsername("new_username");
+            editingUserDto.setNewRoles(List.of(role1.getId()));
+            editingUserDto.setNewAuthorities(List.of(authority1.getId()));
 
-            editUserDto.setDeletedRoles(List.of(role.getId()));
-            editUserDto.setDeletedAuthorities(List.of(authority.getId()));
+            editingUserDto.setDeletedRoles(List.of(role.getId()));
+            editingUserDto.setDeletedAuthorities(List.of(authority.getId()));
 
             mockMvc.perform(put(UserManagementController.ENDPOINT + "/" + UUID.randomUUID().toString())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(editUserDto)))
+                            .content(objectMapper.writeValueAsString(editingUserDto)))
                     .andDo(print())
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
@@ -196,17 +196,17 @@ public class UserManagementControllerTest {
             Authority authority = authorityRepository.findByAuthorityName("profile:manage").get();
 //            Authority authority1 = authorityRepository.findByAuthorityName("list:users").get();
 
-            EditUserDto editUserDto = new EditUserDto();
-            editUserDto.setUsername("new_username");
-            editUserDto.setNewRoles(List.of(role1.getId()));
-            editUserDto.setNewAuthorities(List.of(1234L));
+            EditingUserDto editingUserDto = new EditingUserDto();
+            editingUserDto.setUsername("new_username");
+            editingUserDto.setNewRoles(List.of(role1.getId()));
+            editingUserDto.setNewAuthorities(List.of(1234L));
 
-            editUserDto.setDeletedRoles(List.of(role.getId()));
-            editUserDto.setDeletedAuthorities(List.of(authority.getId()));
+            editingUserDto.setDeletedRoles(List.of(role.getId()));
+            editingUserDto.setDeletedAuthorities(List.of(authority.getId()));
 
             mockMvc.perform(put(UserManagementController.ENDPOINT + "/" + user.getId().toString())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(editUserDto)))
+                            .content(objectMapper.writeValueAsString(editingUserDto)))
                     .andDo(print())
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
@@ -224,17 +224,17 @@ public class UserManagementControllerTest {
 //            Authority authority = authorityRepository.findByAuthorityName("profile:manage").get();
             Authority authority1 = authorityRepository.findByAuthorityName("list:users").get();
 
-            EditUserDto editUserDto = new EditUserDto();
-            editUserDto.setUsername("new_username");
-            editUserDto.setNewRoles(List.of(role1.getId()));
-            editUserDto.setNewAuthorities(List.of(authority1.getId()));
+            EditingUserDto editingUserDto = new EditingUserDto();
+            editingUserDto.setUsername("new_username");
+            editingUserDto.setNewRoles(List.of(role1.getId()));
+            editingUserDto.setNewAuthorities(List.of(authority1.getId()));
 
-            editUserDto.setDeletedRoles(List.of(role.getId()));
-            editUserDto.setDeletedAuthorities(List.of(112345L));
+            editingUserDto.setDeletedRoles(List.of(role.getId()));
+            editingUserDto.setDeletedAuthorities(List.of(112345L));
 
             mockMvc.perform(put(UserManagementController.ENDPOINT + "/" + user.getId().toString())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(editUserDto)))
+                            .content(objectMapper.writeValueAsString(editingUserDto)))
                     .andDo(print())
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
@@ -252,17 +252,17 @@ public class UserManagementControllerTest {
             Authority authority = authorityRepository.findByAuthorityName("profile:manage").get();
             Authority authority1 = authorityRepository.findByAuthorityName("list:users").get();
 
-            EditUserDto editUserDto = new EditUserDto();
-            editUserDto.setUsername("new_username");
-            editUserDto.setNewRoles(List.of(1123321L));
-            editUserDto.setNewAuthorities(List.of(authority1.getId()));
+            EditingUserDto editingUserDto = new EditingUserDto();
+            editingUserDto.setUsername("new_username");
+            editingUserDto.setNewRoles(List.of(1123321L));
+            editingUserDto.setNewAuthorities(List.of(authority1.getId()));
 
-            editUserDto.setDeletedRoles(List.of(role.getId()));
-            editUserDto.setDeletedAuthorities(List.of(authority.getId()));
+            editingUserDto.setDeletedRoles(List.of(role.getId()));
+            editingUserDto.setDeletedAuthorities(List.of(authority.getId()));
 
             mockMvc.perform(put(UserManagementController.ENDPOINT + "/" + user.getId().toString())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(editUserDto)))
+                            .content(objectMapper.writeValueAsString(editingUserDto)))
                     .andDo(print())
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
@@ -280,17 +280,17 @@ public class UserManagementControllerTest {
             Authority authority = authorityRepository.findByAuthorityName("profile:manage").get();
             Authority authority1 = authorityRepository.findByAuthorityName("list:users").get();
 
-            EditUserDto editUserDto = new EditUserDto();
-            editUserDto.setUsername("new_username");
-            editUserDto.setNewRoles(List.of(role1.getId()));
-            editUserDto.setNewAuthorities(List.of(authority1.getId()));
+            EditingUserDto editingUserDto = new EditingUserDto();
+            editingUserDto.setUsername("new_username");
+            editingUserDto.setNewRoles(List.of(role1.getId()));
+            editingUserDto.setNewAuthorities(List.of(authority1.getId()));
 
-            editUserDto.setDeletedRoles(List.of(12312321L));
-            editUserDto.setDeletedAuthorities(List.of(authority.getId()));
+            editingUserDto.setDeletedRoles(List.of(12312321L));
+            editingUserDto.setDeletedAuthorities(List.of(authority.getId()));
 
             mockMvc.perform(put(UserManagementController.ENDPOINT + "/" + user.getId().toString())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(editUserDto)))
+                            .content(objectMapper.writeValueAsString(editingUserDto)))
                     .andDo(print())
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
@@ -336,17 +336,17 @@ public class UserManagementControllerTest {
         Authority authority = authorityRepository.findByAuthorityName("profile:manage").get();
         Authority authority1 = authorityRepository.findByAuthorityName("list:users").get();
 
-        EditUserDto editUserDto = new EditUserDto();
-        editUserDto.setUsername("new_username");
-        editUserDto.setNewRoles(List.of(role1.getId()));
-        editUserDto.setNewAuthorities(List.of(authority1.getId()));
+        EditingUserDto editingUserDto = new EditingUserDto();
+        editingUserDto.setUsername("new_username");
+        editingUserDto.setNewRoles(List.of(role1.getId()));
+        editingUserDto.setNewAuthorities(List.of(authority1.getId()));
 
-        editUserDto.setDeletedRoles(List.of(role.getId()));
-        editUserDto.setDeletedAuthorities(List.of(authority.getId()));
+        editingUserDto.setDeletedRoles(List.of(role.getId()));
+        editingUserDto.setDeletedAuthorities(List.of(authority.getId()));
 
         mockMvc.perform(put(UserManagementController.ENDPOINT + "/" + user.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(editUserDto)))
+                        .content(objectMapper.writeValueAsString(editingUserDto)))
                 .andDo(print())
                 .andExpect(status().isPermanentRedirect())
                 .andExpect(redirectedUrl(UserManagementController.ENDPOINT + "/" + user.getId().toString()));
@@ -356,7 +356,7 @@ public class UserManagementControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.userId").isNotEmpty())
-                .andExpect(jsonPath("$.username", is(editUserDto.getUsername())))
+                .andExpect(jsonPath("$.username", is(editingUserDto.getUsername())))
                 .andExpect(jsonPath("$.firstName").isNotEmpty())
                 .andExpect(jsonPath("$.lastName").isNotEmpty())
                 .andExpect(jsonPath("$.phoneNumber").isNotEmpty())

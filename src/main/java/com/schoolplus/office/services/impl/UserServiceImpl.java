@@ -6,13 +6,12 @@ import com.schoolplus.office.domain.User;
 import com.schoolplus.office.repository.AuthorityRepository;
 import com.schoolplus.office.repository.RoleRepository;
 import com.schoolplus.office.repository.UserRepository;
-import com.schoolplus.office.security.SecurityUser;
 import com.schoolplus.office.services.UserService;
 import com.schoolplus.office.web.exceptions.AuthorityNotFoundException;
 import com.schoolplus.office.web.exceptions.RoleNotFoundException;
 import com.schoolplus.office.web.exceptions.UserNotFoundException;
 import com.schoolplus.office.web.mappers.UserMapper;
-import com.schoolplus.office.web.models.EditUserDto;
+import com.schoolplus.office.web.models.EditingUserDto;
 import com.schoolplus.office.web.models.ErrorDesc;
 import com.schoolplus.office.web.models.UserDto;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users') || hasAuthority('edit:user'))")
     @Override
-    public void editUser(UUID userId, EditUserDto editUser) {
+    public void editUser(UUID userId, EditingUserDto editUser) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> {
                     log.warn("User with given id does not exists given [userId: {}]", userId);
@@ -118,7 +116,7 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(userId);
     }
 
-    private void deleteGivenRole(EditUserDto editUser, User user) {
+    private void deleteGivenRole(EditingUserDto editUser, User user) {
         editUser.getDeletedRoles().forEach(_deletedRoleId -> {
             Long deletedRoleId = Long.valueOf(_deletedRoleId);
 
@@ -142,7 +140,7 @@ public class UserServiceImpl implements UserService {
         });
     }
 
-    private void addNewRole(EditUserDto editUser, User user) {
+    private void addNewRole(EditingUserDto editUser, User user) {
         editUser.getNewRoles().forEach(_givenRoleId -> {
             Long givenRoleId = Long.valueOf(_givenRoleId);
 
@@ -166,7 +164,7 @@ public class UserServiceImpl implements UserService {
         });
     }
 
-    private void deleteGivenAuthority(EditUserDto editUser, User user) {
+    private void deleteGivenAuthority(EditingUserDto editUser, User user) {
         editUser.getDeletedAuthorities().forEach(_deletedAuthrotiyId -> {
             Long deletedAuthorityId = Long.valueOf(_deletedAuthrotiyId);
 
@@ -190,7 +188,7 @@ public class UserServiceImpl implements UserService {
         });
     }
 
-    private void addNewAuthority(EditUserDto editUser, User user) {
+    private void addNewAuthority(EditingUserDto editUser, User user) {
         editUser.getNewAuthorities().forEach(_givenAuthorityId -> {
             Long givenAuthorityId = Long.valueOf(_givenAuthorityId);
 

@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class EditingParentDto extends EditUserDto {
+public class EditingParentDto extends EditingUserDto {
 
     private List<String> addedStudents = new ArrayList<>();
 

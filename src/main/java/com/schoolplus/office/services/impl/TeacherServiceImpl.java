@@ -9,7 +9,7 @@ import com.schoolplus.office.web.exceptions.TeacherNotFoundException;
 import com.schoolplus.office.web.exceptions.TeachingSubjectNotFoundException;
 import com.schoolplus.office.web.mappers.TeacherMapper;
 import com.schoolplus.office.web.models.CreatingTeacherDto;
-import com.schoolplus.office.web.models.EditTeacherDto;
+import com.schoolplus.office.web.models.EditingTeacherDto;
 import com.schoolplus.office.web.models.ErrorDesc;
 import com.schoolplus.office.web.models.TeacherDto;
 import lombok.RequiredArgsConstructor;
@@ -80,7 +80,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:teachers') || hasAuthority('create:teacher'))")
     @Override
-    public void updateTeacher(UUID teacherId, EditTeacherDto editTeacher) {
+    public void updateTeacher(UUID teacherId, EditingTeacherDto editTeacher) {
         Teacher teacher = (Teacher) userRepository.findById(teacherId)
                 .orElseThrow(() -> {
                     log.warn("Teacher with given id does not exists [teacherId: {}]", teacherId);
@@ -116,4 +116,6 @@ public class TeacherServiceImpl implements TeacherService {
 
         userRepository.save(teacher);
     }
+
+
 }

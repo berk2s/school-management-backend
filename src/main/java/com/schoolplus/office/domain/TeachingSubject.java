@@ -4,8 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,5 +29,14 @@ public class TeachingSubject {
 
     @ManyToMany(mappedBy = "teachingSubjects", fetch = FetchType.LAZY)
     private List<Teacher> teachers = new ArrayList<>();
+
+    @CreationTimestamp
+    private Timestamp createdAt;
+
+    @UpdateTimestamp
+    private Timestamp lastModifiedAt;
+
+    @Version
+    private Long version;
 
 }

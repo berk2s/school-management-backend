@@ -10,7 +10,7 @@ import com.schoolplus.office.repository.RoleRepository;
 import com.schoolplus.office.repository.TeachingSubjectRepository;
 import com.schoolplus.office.repository.UserRepository;
 import com.schoolplus.office.web.models.CreatingTeacherDto;
-import com.schoolplus.office.web.models.EditTeacherDto;
+import com.schoolplus.office.web.models.EditingTeacherDto;
 import com.schoolplus.office.web.models.ErrorDesc;
 import com.schoolplus.office.web.models.ErrorType;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -183,7 +183,7 @@ public class TeacherManagementControllerTest {
 
         Teacher teacher;
         TeachingSubject teachingSubject;
-        EditTeacherDto editTeacherDto;
+        EditingTeacherDto editingTeacherDto;
 
         @BeforeEach
         void setUp() {
@@ -198,9 +198,9 @@ public class TeacherManagementControllerTest {
 
             userRepository.save(teacher);
 
-            editTeacherDto = new EditTeacherDto();
+            editingTeacherDto = new EditingTeacherDto();
 
-            editTeacherDto.setRemoveTeachingSubjects(List.of(teachingSubject.getId()));
+            editingTeacherDto.setRemoveTeachingSubjects(List.of(teachingSubject.getId()));
         }
 
         @DisplayName("Edit Teacher Successfully")
@@ -209,7 +209,7 @@ public class TeacherManagementControllerTest {
         void editTeacherSuccessfully() throws Exception {
 
             mockMvc.perform(put(TeacherManagementController.ENDPOINT + "/" + teacher.getId().toString())
-                            .content(objectMapper.writeValueAsString(editTeacherDto))
+                            .content(objectMapper.writeValueAsString(editingTeacherDto))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isPermanentRedirect())
                     .andExpect(redirectedUrl(TeacherManagementController.ENDPOINT + "/" + teacher.getId().toString()));
@@ -230,7 +230,7 @@ public class TeacherManagementControllerTest {
         void editTeacherNotFoundError() throws Exception {
 
             mockMvc.perform(put(TeacherManagementController.ENDPOINT + "/" + UUID.randomUUID().toString())
-                            .content(objectMapper.writeValueAsString(editTeacherDto))
+                            .content(objectMapper.writeValueAsString(editingTeacherDto))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
@@ -243,10 +243,10 @@ public class TeacherManagementControllerTest {
         @Test
         void editTeacherTeachibgSubjectNotFoundError() throws Exception {
 
-            editTeacherDto.setRemoveTeachingSubjects(List.of(123123L));
+            editingTeacherDto.setRemoveTeachingSubjects(List.of(123123L));
 
             mockMvc.perform(put(TeacherManagementController.ENDPOINT + "/" + teacher.getId().toString())
-                            .content(objectMapper.writeValueAsString(editTeacherDto))
+                            .content(objectMapper.writeValueAsString(editingTeacherDto))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))

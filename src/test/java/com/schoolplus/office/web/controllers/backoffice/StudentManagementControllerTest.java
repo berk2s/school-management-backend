@@ -7,7 +7,6 @@ import com.schoolplus.office.repository.GradeRepository;
 import com.schoolplus.office.repository.RoleRepository;
 import com.schoolplus.office.repository.UserRepository;
 import com.schoolplus.office.web.models.*;
-import lombok.With;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -207,7 +205,7 @@ public class StudentManagementControllerTest {
 
         Parent parent;
         Student student;
-        EditStudentDto editStudent;
+        EditingStudentDto editStudent;
         Grade grade;
 
         @BeforeEach
@@ -232,7 +230,7 @@ public class StudentManagementControllerTest {
             gradeRepository.save(grade);
 
 
-            editStudent = new EditStudentDto();
+            editStudent = new EditingStudentDto();
             editStudent.setGradeType(GradeType.GRADUATED);
             editStudent.setGradeId(grade.getId());
         }
