@@ -21,4 +21,6 @@ public class EditStudentDto extends EditUserDto {
 
     private List<String> deletedParents;
 
+    private Long gradeId;
+
 }

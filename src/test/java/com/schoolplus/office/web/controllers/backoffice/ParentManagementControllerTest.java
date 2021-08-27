@@ -143,6 +143,7 @@ public class ParentManagementControllerTest {
 
         @BeforeEach
         void setUp() {
+
             parent = new Parent();
             parent.setUsername("parent_name");
 

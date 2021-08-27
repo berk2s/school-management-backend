@@ -11,7 +11,7 @@ import org.mapstruct.Named;
 
 import java.util.UUID;
 
-@Mapper(imports = {UUID.class}, uses = {ParentMapper.class})
+@Mapper(imports = {UUID.class}, uses = {ParentMapper.class, GradeMapper.class})
 public interface StudentMapper {
 
     @Mappings({
@@ -27,6 +27,7 @@ public interface StudentMapper {
             @Mapping(target = "isCredentialsNonExpired", expression = "java( student.getIsCredentialsNonExpired() )"),
             @Mapping(target = "isEnabled", expression = "java( student.getIsEnabled() )"),
             @Mapping(target = "parents", source = "parents"),
+            @Mapping(target = "grade", qualifiedByName = "WithoutStudents"),
     })
     StudentDto studentToStudentDto(Student student);
 
@@ -44,6 +45,7 @@ public interface StudentMapper {
             @Mapping(target = "isCredentialsNonExpired", expression = "java( student.getIsCredentialsNonExpired() )"),
             @Mapping(target = "isEnabled", expression = "java( student.getIsEnabled() )"),
             @Mapping(target = "parents", source = "parents", ignore = true),
+            @Mapping(target = "grade", qualifiedByName = "WithoutStudents"),
     })
     StudentDto studentToStudentDtoWithoutParents(Student student);
 

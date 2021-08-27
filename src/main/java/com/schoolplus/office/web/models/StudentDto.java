@@ -17,4 +17,6 @@ public class StudentDto extends UserDto {
 
     private List<ParentDto> parents = new ArrayList<>();
 
+    private GradeDto grade;
+
 }
