@@ -13,8 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@DiscriminatorValue("TEACHER")
 @Entity
-public class Teacher extends User {
+public class Teacher extends User implements CanAppointment {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "teacher_subjects",
@@ -24,6 +25,23 @@ public class Teacher extends User {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "advisorTeacher")
     private List<Grade> responsibleGrades = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "teacher")
+    private List<Appointment> appointments = new ArrayList<>();
+
+    public void addAppointment(Appointment appointment) {
+        if (!appointments.contains(appointment)) {
+            appointment.setTeacher(this);
+            appointments.add(appointment);
+        }
+    }
+
+    public void removeAppointment(Appointment appointment) {
+        if (appointments.contains(appointment)) {
+            appointment.setTeacher(null);
+            appointments.remove(appointment);
+        }
+    }
 
     public void addGrade(Grade grade) {
         if (!responsibleGrades.contains(grade)) {

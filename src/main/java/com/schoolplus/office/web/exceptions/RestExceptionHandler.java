@@ -150,6 +150,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.NOT_FOUND));
     }
 
+    @ExceptionHandler(AppointmentNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleAppointmentNotFoundException(AppointmentNotFoundException ex) {
+        return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.NOT_FOUND));
+    }
+
+    @ExceptionHandler(AppointmentNotAvailableException.class)
+    public ResponseEntity<ErrorResponseDto> handleAppointmentNotAvailableException(AppointmentNotAvailableException ex) {
+        return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.BAD_REQUEST));
+    }
+
     private ResponseEntity<ErrorResponseDto> errorResponse(ErrorResponseDto errorResponseDto){
         return new ResponseEntity<>(errorResponseDto, errorResponseDto.getHttpStatus());
     }

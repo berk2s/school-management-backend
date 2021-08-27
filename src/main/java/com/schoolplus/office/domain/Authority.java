@@ -4,8 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,5 +29,14 @@ public class Authority {
 
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
     private Set<User> users = new HashSet<>();
+
+    @CreationTimestamp
+    private Timestamp createdAt;
+
+    @UpdateTimestamp
+    private Timestamp lastModifiedAt;
+
+    @Version
+    private Long version;
 
 }

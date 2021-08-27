@@ -2,7 +2,7 @@ package com.schoolplus.office.web.controllers.backoffice;
 
 import com.schoolplus.office.services.TeacherService;
 import com.schoolplus.office.web.models.CreatingTeacherDto;
-import com.schoolplus.office.web.models.EditTeacherDto;
+import com.schoolplus.office.web.models.EditingTeacherDto;
 import com.schoolplus.office.web.models.TeacherDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -35,7 +35,7 @@ public class TeacherManagementController {
 
     @PutMapping(value = "/{teacherId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateTeacher(@Valid @PathVariable UUID teacherId,
-                                        @Valid @RequestBody EditTeacherDto editTeacher) {
+                                        @Valid @RequestBody EditingTeacherDto editTeacher) {
         teacherService.updateTeacher(teacherId, editTeacher);
 
         return ResponseEntity

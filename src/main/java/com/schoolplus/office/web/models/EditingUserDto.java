@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-public class EditUserDto {
+public class EditingUserDto {
 
     private String username;
 

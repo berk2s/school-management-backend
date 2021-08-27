@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @DiscriminatorValue("STUDENT")
 @Entity
-public class Student extends User {
+public class Student extends User implements CanAppointment{
 
     @Enumerated(EnumType.STRING)
     private GradeType gradeType;
@@ -35,6 +35,23 @@ public class Student extends User {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Grade grade;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "student")
+    private List<Appointment> appointments = new ArrayList<>();
+
+    public void addAppointment(Appointment appointment) {
+        if(!appointments.contains(appointment)) {
+            appointment.setStudent(this);
+            appointments.add(appointment);
+        }
+    }
+
+    public void deleteAppointment(Appointment appointment) {
+        if(appointments.contains(appointment)) {
+            appointment.setStudent(null);
+            appointments.remove(appointment);
+        }
+    }
 
     public void addParent(Parent parent) {
         if(!parents.contains(parent) && !parent.getStudents().contains(this)) {

@@ -20,6 +20,9 @@ public enum ErrorDesc {
     TEACHING_SUBJECT_NOT_FOUND("Teaching subject not found"),
     TEACHER_NOT_FOUND("Teacher not found"),
     GRADE_NOT_FOUND("Grade not found"),
+    APPOINTMENT_NOT_FOUND("Appointment not found"),
+    TEACHER_NOT_AVAILABLE_FOR_APPOINTMENT("The Teacher is not available for the taken appointment"),
+    STUDENT_NOT_AVAILABLE_FOR_APPOINTMENT("The Student is not available for the taken appointment"),
     SERVER_ERROR("Server error");
 
     private final String desc;

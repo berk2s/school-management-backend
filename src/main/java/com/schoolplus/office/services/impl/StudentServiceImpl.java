@@ -9,7 +9,7 @@ import com.schoolplus.office.services.StudentService;
 import com.schoolplus.office.web.exceptions.*;
 import com.schoolplus.office.web.mappers.StudentMapper;
 import com.schoolplus.office.web.models.CreatingStudentDto;
-import com.schoolplus.office.web.models.EditStudentDto;
+import com.schoolplus.office.web.models.EditingStudentDto;
 import com.schoolplus.office.web.models.ErrorDesc;
 import com.schoolplus.office.web.models.StudentDto;
 import lombok.RequiredArgsConstructor;
@@ -123,7 +123,7 @@ public class StudentServiceImpl implements StudentService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:students') || hasAuthority('edit:student'))")
     @Override
-    public void editStudent(UUID studentId, EditStudentDto editStudent) {
+    public void editStudent(UUID studentId, EditingStudentDto editStudent) {
         Student student = (Student) userRepository.findById(studentId)
                         .orElseThrow(() -> {
                             log.warn("Student with given id does not exists [studentId: {}]", studentId.toString());

@@ -2,7 +2,7 @@ package com.schoolplus.office.web.controllers.backoffice;
 
 import com.schoolplus.office.services.StudentService;
 import com.schoolplus.office.web.models.CreatingStudentDto;
-import com.schoolplus.office.web.models.EditStudentDto;
+import com.schoolplus.office.web.models.EditingStudentDto;
 import com.schoolplus.office.web.models.StudentDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +37,7 @@ public class StudentManagementController {
 
     @PutMapping(value = {"/{studentId}"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity handleEditingStudent(@Valid @PathVariable UUID studentId,
-                                               @Valid @RequestBody EditStudentDto editStudent) {
+                                               @Valid @RequestBody EditingStudentDto editStudent) {
         studentService.editStudent(studentId, editStudent);
 
         return ResponseEntity

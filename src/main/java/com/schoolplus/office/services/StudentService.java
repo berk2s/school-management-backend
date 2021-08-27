@@ -1,7 +1,7 @@
 package com.schoolplus.office.services;
 
 import com.schoolplus.office.web.models.CreatingStudentDto;
-import com.schoolplus.office.web.models.EditStudentDto;
+import com.schoolplus.office.web.models.EditingStudentDto;
 import com.schoolplus.office.web.models.StudentDto;
 
 import java.util.UUID;
@@ -12,6 +12,6 @@ public interface StudentService {
 
     StudentDto createStudent(CreatingStudentDto creatingStudent);
 
-    void editStudent(UUID studentId, EditStudentDto editStudent);
+    void editStudent(UUID studentId, EditingStudentDto editStudent);
 
 }
