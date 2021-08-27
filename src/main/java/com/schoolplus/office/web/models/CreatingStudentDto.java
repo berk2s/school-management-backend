@@ -20,4 +20,6 @@ public class CreatingStudentDto extends CreatingUserDto {
     @NotNull
     private List<String> parents;
 
+    private Long gradeId;
+
 }

@@ -1,17 +1,12 @@
 package com.schoolplus.office.services.impl;
 
-import com.schoolplus.office.domain.Authority;
-import com.schoolplus.office.domain.Parent;
-import com.schoolplus.office.domain.Role;
-import com.schoolplus.office.domain.Student;
+import com.schoolplus.office.domain.*;
 import com.schoolplus.office.repository.AuthorityRepository;
+import com.schoolplus.office.repository.GradeRepository;
 import com.schoolplus.office.repository.RoleRepository;
 import com.schoolplus.office.repository.UserRepository;
 import com.schoolplus.office.services.StudentService;
-import com.schoolplus.office.web.exceptions.AuthorityNotFoundException;
-import com.schoolplus.office.web.exceptions.ParentNotFoundException;
-import com.schoolplus.office.web.exceptions.RoleNotFoundException;
-import com.schoolplus.office.web.exceptions.StudentNotFoundException;
+import com.schoolplus.office.web.exceptions.*;
 import com.schoolplus.office.web.mappers.StudentMapper;
 import com.schoolplus.office.web.models.CreatingStudentDto;
 import com.schoolplus.office.web.models.EditStudentDto;
@@ -34,6 +29,7 @@ public class StudentServiceImpl implements StudentService {
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
     private final RoleRepository roleRepository;
+    private final GradeRepository gradeRepository;
     private final StudentMapper studentMapper;
     private final PasswordEncoder passwordEncoder;
 
@@ -65,6 +61,17 @@ public class StudentServiceImpl implements StudentService {
         student.setIsCredentialsNonExpired(creatingStudent.getIsCredentialsNonExpired());
         student.setGradeType(creatingStudent.getGradeType());
         student.setGradeLevel(creatingStudent.getGradeLevel());
+
+        if (creatingStudent.getGradeId() != null) {
+            Long gradeId = creatingStudent.getGradeId();
+            Grade grade = gradeRepository.findById(gradeId)
+                    .orElseThrow(() -> {
+                       log.warn("Grade with given id does not exists [gradeId: {}]", gradeId);
+                       throw new GradeNotFoundException(ErrorDesc.GRADE_NOT_FOUND.getDesc());
+                    });
+
+            grade.addStudent(student);
+        }
 
         if(creatingStudent.getParents() != null && creatingStudent.getParents().size() > 0) {
             creatingStudent.getParents().forEach(_parentId -> {
@@ -158,6 +165,18 @@ public class StudentServiceImpl implements StudentService {
 
             });
         }
+
+        if (editStudent.getGradeId() != null) {
+            Long gradeId = editStudent.getGradeId();
+            Grade grade = gradeRepository.findById(gradeId)
+                    .orElseThrow(() -> {
+                        log.warn("Grade with given id does not exists [gradeId: {}]", gradeId);
+                        throw new GradeNotFoundException(ErrorDesc.GRADE_NOT_FOUND.getDesc());
+                    });
+
+            grade.addStudent(student);
+        }
+
 
         log.info("User has been edited [userId: {}, performedBy: {}]", student.getId().toString(),
                 SecurityContextHolder.getContext().getAuthentication().getName());

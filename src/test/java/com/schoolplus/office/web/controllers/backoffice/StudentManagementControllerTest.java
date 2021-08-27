@@ -3,6 +3,7 @@ package com.schoolplus.office.web.controllers.backoffice;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.schoolplus.office.domain.*;
 import com.schoolplus.office.repository.AuthorityRepository;
+import com.schoolplus.office.repository.GradeRepository;
 import com.schoolplus.office.repository.RoleRepository;
 import com.schoolplus.office.repository.UserRepository;
 import com.schoolplus.office.web.models.*;
@@ -49,6 +50,9 @@ public class StudentManagementControllerTest {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    GradeRepository gradeRepository;
+
     @DisplayName("Creating Student")
     @Nested
     class CreatingStudent {
@@ -57,9 +61,11 @@ public class StudentManagementControllerTest {
         Authority authority;
         Role role;
         Parent parent;
+        Grade grade;
 
         @BeforeEach
         void setUp() {
+
             role = roleRepository.findByRoleName("STUDENT").get();
             authority = authorityRepository.findByAuthorityName("profile:manage").get();
 
@@ -67,6 +73,13 @@ public class StudentManagementControllerTest {
             parent.setUsername(RandomStringUtils.random(10, true, false));
 
             userRepository.save(parent);
+
+            grade = new Grade();
+            grade.setGradeType(GradeType.HIGH_SCHOOL);
+            grade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
+            grade.setGradeTag(RandomStringUtils.random(10, true, false));
+
+            gradeRepository.save(grade);
 
             creatingStudent = new CreatingStudentDto();
             creatingStudent.setUsername(RandomStringUtils.random(10, true, false));
@@ -84,6 +97,7 @@ public class StudentManagementControllerTest {
             creatingStudent.setGradeType(GradeType.HIGH_SCHOOL);
             creatingStudent.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
             creatingStudent.setParents(List.of(parent.getId().toString()));
+            creatingStudent.setGradeId(grade.getId());
 
         }
 
@@ -113,6 +127,7 @@ public class StudentManagementControllerTest {
                     .andExpect(jsonPath("$.lastModifiedAt").isNotEmpty())
                     .andExpect(jsonPath("$.gradeType", is(creatingStudent.getGradeType().getType())))
                     .andExpect(jsonPath("$.gradeLevel", is(creatingStudent.getGradeLevel().getGradeYear())))
+                    .andExpect(jsonPath("$.grade.gradeId", is(grade.getId().intValue())))
                     .andExpect(jsonPath("$.parents[*]..username", anyOf(hasItem(is(parent.getUsername())))));
         }
 
@@ -167,6 +182,23 @@ public class StudentManagementControllerTest {
 
         }
 
+        @DisplayName("Creating Student Grade Not Found Error")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
+        @Test
+        void creatingStudentGradeNotFoundError() throws Exception {
+
+            creatingStudent.setGradeId(31513L); // invalid
+
+            mockMvc.perform(post(StudentManagementController.ENDPOINT)
+                            .content(objectMapper.writeValueAsString(creatingStudent))
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.GRADE_NOT_FOUND.getDesc())));
+
+        }
+
     }
 
     @DisplayName("Editing Student")
@@ -176,6 +208,7 @@ public class StudentManagementControllerTest {
         Parent parent;
         Student student;
         EditStudentDto editStudent;
+        Grade grade;
 
         @BeforeEach
         void setUp() {
@@ -191,8 +224,17 @@ public class StudentManagementControllerTest {
 
             student = userRepository.save(student);
 
+            grade = new Grade();
+            grade.setGradeType(GradeType.HIGH_SCHOOL);
+            grade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
+            grade.setGradeTag(RandomStringUtils.random(10, true, false));
+
+            gradeRepository.save(grade);
+
+
             editStudent = new EditStudentDto();
             editStudent.setGradeType(GradeType.GRADUATED);
+            editStudent.setGradeId(grade.getId());
         }
 
         @DisplayName("Edit Student Successfully")
@@ -213,6 +255,7 @@ public class StudentManagementControllerTest {
                     .andExpect(jsonPath("$.username", is(student.getUsername())))
                     .andExpect(jsonPath("$.gradeType", is(editStudent.getGradeType().getType())))
                     .andExpect(jsonPath("$.gradeLevel", is(student.getGradeLevel().getGradeYear())))
+                    .andExpect(jsonPath("$.grade.gradeId", is(grade.getId().intValue())))
                     .andExpect(jsonPath("$.parents[*]..username", anyOf(hasItem(is(parent.getUsername())))));
         }
 
@@ -243,6 +286,22 @@ public class StudentManagementControllerTest {
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
                     .andExpect(jsonPath("$.error_description", is(ErrorDesc.PARENT_NOT_FOUND.getDesc())));
+
+        }
+
+        @DisplayName("Edit Student Grade Found Error")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
+        @Test
+        void editStudentGradeNotFoundError() throws Exception {
+
+            editStudent.setGradeId(12312312312L);
+
+            mockMvc.perform(put(StudentManagementController.ENDPOINT + "/" + student.getId().toString())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(editStudent)))
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.GRADE_NOT_FOUND.getDesc())));
 
         }
 
