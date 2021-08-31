@@ -2,6 +2,7 @@ package com.schoolplus.office.web.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.schoolplus.office.config.ServerConfiguration;
 import com.schoolplus.office.web.models.ErrorDesc;
 import com.schoolplus.office.web.models.ErrorType;
 import com.schoolplus.office.web.models.LoginRequestDto;
@@ -35,6 +36,9 @@ public class LoginControllerTest {
 
     LoginRequestDto loginRequest;
 
+    @Autowired
+    ServerConfiguration serverConfiguration;
+
     @BeforeEach
     void setUp() {
         loginRequest = LoginRequestDto.builder()
@@ -55,7 +59,8 @@ public class LoginControllerTest {
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.access_token", matchesPattern("^[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$")))
-                .andExpect(jsonPath("$.refresh_token", hasLength(48)));
+                .andExpect(jsonPath("$.refresh_token", hasLength(48)))
+                .andExpect(jsonPath("$.expires_in", is((int) serverConfiguration.getAccessToken().getLifetime().toSeconds())));
 
     }
 
