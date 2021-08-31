@@ -3,6 +3,7 @@ package com.schoolplus.office.web.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+
 import org.springframework.http.HttpStatus;
 
 @Data

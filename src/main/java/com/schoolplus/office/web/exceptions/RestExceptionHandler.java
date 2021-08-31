@@ -84,11 +84,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.BAD_REQUEST));
     }
 
-//    @ExceptionHandler(NullPointerException.class)
-//    protected ResponseEntity<ErrorResponseDto> handleNullPointerException(NullPointerException ex) {
-//        log.warn("NullPointerException: {} {}", ex.getLocalizedMessage(), ex.getMessage());
-//        return errorResponse(new ErrorResponseDto(ErrorType.SERVER_ERROR, ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
-//    }
+    @ExceptionHandler(NullPointerException.class)
+    protected ResponseEntity<ErrorResponseDto> handleNullPointerException(NullPointerException ex) {
+        log.warn("NullPointerException: {} {}", ex.getLocalizedMessage(), ex.getMessage());
+        return errorResponse(new ErrorResponseDto(ErrorType.SERVER_ERROR, ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
+    }
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ErrorResponseDto> handleBadCredentialsException(BadCredentialsException ex) {
