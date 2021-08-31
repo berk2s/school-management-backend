@@ -16,9 +16,20 @@ public class ErrorResponseDto {
     @JsonProperty("error_description")
     private String errorDescription;
 
+    @JsonProperty("code")
+    private Integer code;
+
+    public ErrorResponseDto(ErrorType errorType, ErrorDesc errorDescription, HttpStatus httpStatus){
+        this.error = errorType.getError();
+        this.errorDescription = errorDescription.getDesc();
+        this.code = errorDescription.getCode();
+        this.httpStatus = httpStatus;
+    }
+
     public ErrorResponseDto(ErrorType errorType, String errorDescription, HttpStatus httpStatus){
         this.error = errorType.getError();
         this.errorDescription = errorDescription;
+        this.code = ErrorDesc.getCodeFormDesc(errorDescription);
         this.httpStatus = httpStatus;
     }
 
