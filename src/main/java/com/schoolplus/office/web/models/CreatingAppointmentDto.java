@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Data
 public class CreatingAppointmentDto {
 
+    @Size(max = 99)
     private String appointmentName;
 
     @Size(max = 300)

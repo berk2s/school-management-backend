@@ -16,21 +16,27 @@ import java.util.List;
 @Data
 public abstract class CreatingUserDto {
 
+    @Size(max = 99)
     @NotEmpty
     private String username;
 
+    @Size(min = 6, max = 99)
     @NotEmpty
     private String password;
 
+    @Size(min = 2, max = 99)
     @NotEmpty
     private String firstName;
 
+    @Size(min = 2, max = 99)
     @NotEmpty
     private String lastName;
 
+    @Size(min = 11, max = 12)
     @NotEmpty
     private String phoneNumber;
 
+    @Size(min = 3, max = 99)
     @NotEmpty
     private String email;
 

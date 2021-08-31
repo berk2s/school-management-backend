@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -17,8 +18,10 @@ public class EditingStudentDto extends EditingUserDto {
 
     private GradeLevel gradeLevel;
 
+    @Size(max = 99)
     private List<String> addedParents;
 
+    @Size(max = 99)
     private List<String> deletedParents;
 
     private Long gradeId;

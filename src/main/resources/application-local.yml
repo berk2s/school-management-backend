@@ -1,5 +1,6 @@
 server:
   port: 8080
+
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
@@ -11,7 +12,14 @@ spring:
     generate-ddl: true
     show-sql: true
 
+springdoc:
+  version: v1
+  api-docs:
+    path: /api-docs
+
+
 school-plus:
+  appName: School+ Management
   url: http://localhost:8080
   auth-config:
     access-token:

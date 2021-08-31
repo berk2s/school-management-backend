@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @AllArgsConstructor
@@ -17,12 +18,16 @@ public class EditingUserDto {
 
     private String password;
 
+    @Size(max = 99)
     private List<Long> newAuthorities;
 
+    @Size(max = 99)
     private List<Long> deletedAuthorities;
 
+    @Size(max = 99)
     private List<Long> newRoles;
 
+    @Size(max = 99)
     private List<Long> deletedRoles;
 
     private Boolean isAccountNonExpired;
