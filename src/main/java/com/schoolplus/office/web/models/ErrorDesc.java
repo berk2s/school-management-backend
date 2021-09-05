@@ -24,7 +24,8 @@ public enum ErrorDesc {
     APPOINTMENT_NOT_FOUND("Appointment not found", 14),
     TEACHER_NOT_AVAILABLE_FOR_APPOINTMENT("The Teacher is not available for the taken appointment", 15),
     STUDENT_NOT_AVAILABLE_FOR_APPOINTMENT("The Student is not available for the taken appointment", 16),
-    SERVER_ERROR("Server error", 17);
+    SERVER_ERROR("Server error", 17),
+    ANNOUNCEMENT_NOT_FOUND("Announcement not found", 18);
 
     private final String desc;
     private final Integer code;
