@@ -1,5 +1,6 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.config.ServerConfiguration;
 import com.schoolplus.office.security.SecurityUser;
 import com.schoolplus.office.security.SecurityUserDetailsService;
 import com.schoolplus.office.security.UserAuthenticationProvider;
@@ -22,6 +23,7 @@ public class LoginServiceImpl implements LoginService {
 
     private final UserAuthenticationProvider userAuthenticationProvider;
     private final SecurityUserDetailsService securityUserDetailsService;
+    private final ServerConfiguration serverConfiguration;
     private final AccessTokenService accessTokenService;
     private final RefreshTokenService refreshTokenService;
 
@@ -52,6 +54,7 @@ public class LoginServiceImpl implements LoginService {
         return LoginResponseDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
+                .expiresIn(serverConfiguration.getAccessToken().getLifetime().toSeconds())
                 .build();
     }
 }

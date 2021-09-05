@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @RequiredArgsConstructor
+@Tag(name = "Teacher Management Controller", description = "Exposes teacher management endpoints")
 @RequestMapping(TeacherManagementController.ENDPOINT)
 @RestController
 public class TeacherManagementController {
