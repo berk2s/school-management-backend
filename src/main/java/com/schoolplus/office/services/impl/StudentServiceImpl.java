@@ -1,10 +1,7 @@
 package com.schoolplus.office.services.impl;
 
 import com.schoolplus.office.domain.*;
-import com.schoolplus.office.repository.AuthorityRepository;
-import com.schoolplus.office.repository.GradeRepository;
-import com.schoolplus.office.repository.RoleRepository;
-import com.schoolplus.office.repository.UserRepository;
+import com.schoolplus.office.repository.*;
 import com.schoolplus.office.services.StudentService;
 import com.schoolplus.office.web.exceptions.*;
 import com.schoolplus.office.web.mappers.StudentMapper;
@@ -28,6 +25,7 @@ public class StudentServiceImpl implements StudentService {
 
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
+    private final OrganizationRepository organizationRepository;
     private final RoleRepository roleRepository;
     private final GradeRepository gradeRepository;
     private final StudentMapper studentMapper;
@@ -61,6 +59,14 @@ public class StudentServiceImpl implements StudentService {
         student.setIsCredentialsNonExpired(creatingStudent.getIsCredentialsNonExpired());
         student.setGradeType(creatingStudent.getGradeType());
         student.setGradeLevel(creatingStudent.getGradeLevel());
+
+        Organization organization = organizationRepository.findById(creatingStudent.getOrganizationId())
+                .orElseThrow(() -> {
+                    log.warn("Organization with given id does not exists");
+                    throw new OrganizationNotFoundException(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc());
+                });
+
+        student.setOrganization(organization);
 
         if (creatingStudent.getGradeId() != null) {
             Long gradeId = creatingStudent.getGradeId();

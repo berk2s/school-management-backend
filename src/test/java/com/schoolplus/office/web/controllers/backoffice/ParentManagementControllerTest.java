@@ -1,11 +1,9 @@
 package com.schoolplus.office.web.controllers.backoffice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.schoolplus.office.domain.Authority;
-import com.schoolplus.office.domain.Parent;
-import com.schoolplus.office.domain.Role;
-import com.schoolplus.office.domain.Student;
+import com.schoolplus.office.domain.*;
 import com.schoolplus.office.repository.AuthorityRepository;
+import com.schoolplus.office.repository.OrganizationRepository;
 import com.schoolplus.office.repository.RoleRepository;
 import com.schoolplus.office.repository.UserRepository;
 import com.schoolplus.office.web.models.*;
@@ -52,6 +50,17 @@ public class ParentManagementControllerTest {
     @Autowired
     AuthorityRepository authorityRepository;
 
+    @Autowired
+    OrganizationRepository organizationRepository;
+
+    Organization organization;
+
+    @BeforeEach
+    void setUp() {
+        organization = new Organization();
+        organizationRepository.save(organization);
+    }
+
     @DisplayName("Creating Parent")
     @Nested
     class CreatingParent {
@@ -63,6 +72,7 @@ public class ParentManagementControllerTest {
 
         @BeforeEach
         void setUp() {
+
             role = roleRepository.findByRoleName("STUDENT").get();
             authority = authorityRepository.findByAuthorityName("profile:manage").get();
 
@@ -79,6 +89,7 @@ public class ParentManagementControllerTest {
             student.setIsAccountNonExpired(true);
             student.setIsCredentialsNonExpired(true);
             student.setIsEnabled(true);
+            student.setOrganization(organization);
 
             userRepository.save(student);
 
@@ -96,6 +107,7 @@ public class ParentManagementControllerTest {
             creatingParent.setIsCredentialsNonExpired(true);
             creatingParent.setIsEnabled(true);
             creatingParent.setStudents(List.of(student.getId().toString()));
+            creatingParent.setOrganizationId(organization.getId());
         }
 
         @DisplayName("Create Parent Successfully")

@@ -187,6 +187,7 @@ public class AppointmentManagementControllerTest {
             Appointment newAppointment = new Appointment();
             newAppointment.setAppointmentStartDate(startDate);
             newAppointment.setAppointmentEndDate(endDate);
+            newAppointment.setOrganization(organization);
 
             teacher.addAppointment(newAppointment);
 
@@ -194,6 +195,7 @@ public class AppointmentManagementControllerTest {
 
             createAppointment.setAppointmentStartDate(startDate);
             createAppointment.setAppointmentEndDate(endDate);
+            createAppointment.setOrganizationId(organization.getId());
 
             mockMvc.perform(post(AppointmentManagementController.ENDPOINT)
                             .contentType(MediaType.APPLICATION_JSON)
@@ -216,6 +218,7 @@ public class AppointmentManagementControllerTest {
             Appointment newAppointment = new Appointment();
             newAppointment.setAppointmentStartDate(startDate);
             newAppointment.setAppointmentEndDate(endDate);
+            newAppointment.setOrganization(organization);
 
             student.addAppointment(newAppointment);
 
@@ -223,6 +226,7 @@ public class AppointmentManagementControllerTest {
 
             createAppointment.setAppointmentStartDate(startDate);
             createAppointment.setAppointmentEndDate(endDate);
+            createAppointment.setOrganizationId(organization.getId());
 
             mockMvc.perform(post(AppointmentManagementController.ENDPOINT)
                             .contentType(MediaType.APPLICATION_JSON)
@@ -397,30 +401,40 @@ public class AppointmentManagementControllerTest {
         Teacher teacher;
         TeachingSubject teachingSubject;
         Grade grade;
+        Organization organization;
 
         String APPOINTMENT_NAME;
 
         @BeforeEach
         void setUp() {
+            organization = new Organization();
+
+            organizationRepository.save(organization);
+
             appointment = new Appointment();
             appointment.setAppointmentNote(RandomStringUtils.random(50, true, false));
             appointment.setAppointmentStartDate(LocalDateTime.of(2021, Month.AUGUST, 28, 15, 0));
             appointment.setAppointmentName("Appointment name");
+            appointment.setOrganization(organization);
+
             student = new Student();
             student.setGradeType(GradeType.HIGH_SCHOOL);
             student.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
             student.addAppointment(appointment);
+            student.setOrganization(organization);
 
             grade = new Grade();
             grade.setGradeType(GradeType.HIGH_SCHOOL);
             grade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
             grade.setGradeTag(RandomStringUtils.random(10, true, false));
             grade.addStudent(student);
+            grade.setOrganization(organization);
 
             gradeRepository.save(grade);
 
             teachingSubject = new TeachingSubject();
             teachingSubject.setSubjectName("A Subject");
+            teachingSubject.setOrganization(organization);
 
             teachingSubjectRepository.save(teachingSubject);
 
@@ -430,6 +444,7 @@ public class AppointmentManagementControllerTest {
             teacher.setUsername(RandomStringUtils.random(10, true, false));
             teacher.addTeachingSubject(teachingSubject);
             teacher.addAppointment(appointment);
+            teacher.setOrganization(organization);
 
             userRepository.saveAll(List.of(student, teacher));
             appointmentRepository.save(appointment);
@@ -637,6 +652,7 @@ public class AppointmentManagementControllerTest {
             newAppointment.setAppointmentStartDate(LocalDateTime.of(2021, Month.AUGUST, 28, 15, 0));
             newAppointment.setAppointmentEndDate(LocalDateTime.of(2021, Month.AUGUST, 28, 15, 30));
             newAppointment.setAppointmentName("Appointment name");
+            newAppointment.setOrganization(organization);
 
             appointmentRepository.save(newAppointment);
 
@@ -702,6 +718,7 @@ public class AppointmentManagementControllerTest {
             newAppointment.setAppointmentStartDate(LocalDateTime.of(2021, Month.AUGUST, 28, 15, 0));
             newAppointment.setAppointmentEndDate(LocalDateTime.of(2021, Month.AUGUST, 28, 15, 30));
             newAppointment.setAppointmentName("Appointment name for new student");
+            newAppointment.setOrganization(organization);
 
             appointmentRepository.save(newAppointment);
 

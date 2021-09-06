@@ -1,10 +1,13 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.domain.Organization;
 import com.schoolplus.office.domain.Teacher;
 import com.schoolplus.office.domain.TeachingSubject;
+import com.schoolplus.office.repository.OrganizationRepository;
 import com.schoolplus.office.repository.TeachingSubjectRepository;
 import com.schoolplus.office.repository.UserRepository;
 import com.schoolplus.office.services.TeacherService;
+import com.schoolplus.office.web.exceptions.OrganizationNotFoundException;
 import com.schoolplus.office.web.exceptions.TeacherNotFoundException;
 import com.schoolplus.office.web.exceptions.TeachingSubjectNotFoundException;
 import com.schoolplus.office.web.mappers.TeacherMapper;
@@ -28,6 +31,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     private final UserRepository userRepository;
     private final TeachingSubjectRepository teachingSubjectRepository;
+    private final OrganizationRepository organizationRepository;
     private final PasswordEncoder passwordEncoder;
     private final TeacherMapper teacherMapper;
 
@@ -57,6 +61,14 @@ public class TeacherServiceImpl implements TeacherService {
         teacher.setIsAccountNonLocked(creatingTeacher.getIsAccountNonLocked());
         teacher.setIsAccountNonExpired(creatingTeacher.getIsAccountNonExpired());
         teacher.setIsCredentialsNonExpired(creatingTeacher.getIsCredentialsNonExpired());
+
+        Organization organization = organizationRepository.findById(creatingTeacher.getOrganizationId())
+                .orElseThrow(() -> {
+                    log.warn("Organization with given id does not exists");
+                    throw new OrganizationNotFoundException(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc());
+                });
+
+        teacher.setOrganization(organization);
 
         if(creatingTeacher.getTeachingSubjects() != null && creatingTeacher.getTeachingSubjects().size() != 0) {
             creatingTeacher.getTeachingSubjects().forEach(teachingSubjectId -> {

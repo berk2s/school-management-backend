@@ -1,11 +1,9 @@
 package com.schoolplus.office.web.models;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,16 +11,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Builder
-public class TeachingSubjectDto {
-
-    private Long teachingSubjectId;
+public class EditingTeachingSubjectDto {
 
     private String subjectName;
 
-    private List<TeacherDto> teachers = new ArrayList<>();
+    private List<String> addedTeachers = new ArrayList<>();
 
-    private OrganizationDto organization;
+    private List<String> removedTeachers = new ArrayList<>();
+
+    private Long organizationId;
 
     private Timestamp createdAt;
 
