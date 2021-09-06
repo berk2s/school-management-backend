@@ -71,7 +71,7 @@ public class ParentManagementControllerTest {
             student.setPassword(RandomStringUtils.random(10, true, false));
             student.setFirstName(RandomStringUtils.random(10, true, false));
             student.setLastName(RandomStringUtils.random(10, true, false));
-            student.setPhoneNumber(RandomStringUtils.random(10, true, false));
+            student.setPhoneNumber(RandomStringUtils.random(11, true, false));
             student.setEmail(RandomStringUtils.random(10, true, false));
             student.addRole(role);
             student.addAuthority(authority);
@@ -87,7 +87,7 @@ public class ParentManagementControllerTest {
             creatingParent.setPassword(RandomStringUtils.random(10, true, false));
             creatingParent.setFirstName(RandomStringUtils.random(10, true, false));
             creatingParent.setLastName(RandomStringUtils.random(10, true, false));
-            creatingParent.setPhoneNumber(RandomStringUtils.random(10, true, false));
+            creatingParent.setPhoneNumber(RandomStringUtils.random(11, true, false));
             creatingParent.setEmail(RandomStringUtils.random(10, true, false));
             creatingParent.setRoles(List.of(role.getId()));
             creatingParent.setAuthorities(List.of(authority.getId()));

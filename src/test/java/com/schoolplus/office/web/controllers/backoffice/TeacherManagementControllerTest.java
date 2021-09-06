@@ -79,7 +79,7 @@ public class TeacherManagementControllerTest {
             creatingTeacher.setPassword(RandomStringUtils.random(10, true, false));
             creatingTeacher.setFirstName(RandomStringUtils.random(10, true, false));
             creatingTeacher.setLastName(RandomStringUtils.random(10, true, false));
-            creatingTeacher.setPhoneNumber(RandomStringUtils.random(10, true, false));
+            creatingTeacher.setPhoneNumber(RandomStringUtils.random(11, true, false));
             creatingTeacher.setEmail(RandomStringUtils.random(10, true, false));
             creatingTeacher.setRoles(List.of(role.getId()));
             creatingTeacher.setAuthorities(List.of(authority.getId()));

@@ -1,28 +1,26 @@
 package com.schoolplus.office.services.impl;
 
 import com.schoolplus.office.domain.Announcement;
+import com.schoolplus.office.domain.Organization;
 import com.schoolplus.office.repository.AnnouncementRepository;
-import com.schoolplus.office.security.SecurityUser;
+import com.schoolplus.office.repository.OrganizationRepository;
 import com.schoolplus.office.services.AnnouncementService;
 import com.schoolplus.office.web.exceptions.AnnouncementNotFoundException;
+import com.schoolplus.office.web.exceptions.OrganizationNotFoundException;
 import com.schoolplus.office.web.mappers.AnnouncementMapper;
 import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -30,6 +28,7 @@ import java.util.Random;
 public class AnnouncementServiceImpl implements AnnouncementService {
 
     private final AnnouncementRepository announcementRepository;
+    private final OrganizationRepository organizationRepository;
     private final AnnouncementMapper announcementMapper;
 
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:announcements') || hasAuthority('view:announcements'))")
@@ -60,6 +59,14 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         announcement.setAnnouncementTitle(creatingAnnouncement.getAnnouncementTitle());
         announcement.setAnnouncementDescription(creatingAnnouncement.getAnnouncementDescription());
 
+        Organization organization = organizationRepository.findById(creatingAnnouncement.getOrganizationId())
+                .orElseThrow(() -> {
+                    log.warn("Organization with given id does not exists [organizationId: {}]", creatingAnnouncement.getOrganizationId());
+                    throw new OrganizationNotFoundException(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc());
+                });
+
+        announcement.setOrganization(organization);
+
         creatingAnnouncement.getAnnouncementChannels().forEach(_channel -> {
             AnnouncementChannel channel = AnnouncementChannel.valueOf(_channel);
             announcement.addChannel(channel);
@@ -76,7 +83,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:announcements') || hasAuthority('update:announcement'))")
     @Override
-    public void updateAnnouncement(Long announcementId, UpdatingAnnouncementDto updatingAnnouncement) {
+    public void updateAnnouncement(Long announcementId, EditingAnnouncementDto updatingAnnouncement) {
         Announcement announcement = announcementRepository.findById(announcementId)
                 .orElseThrow(() -> {
                     log.warn("Announcement with given id does not exists [announcementId: {}]", announcementId);
@@ -91,8 +98,18 @@ public class AnnouncementServiceImpl implements AnnouncementService {
             announcement.setAnnouncementDescription(updatingAnnouncement.getAnnouncementDescription());
         }
 
-        if (updatingAnnouncement.getRemovedChanels() != null && updatingAnnouncement.getRemovedChanels().size() > 0) {
-            updatingAnnouncement.getRemovedChanels().forEach(_channel -> {
+        if (updatingAnnouncement.getOrganizationId() != null) {
+            Organization organization = organizationRepository.findById(updatingAnnouncement.getOrganizationId())
+                    .orElseThrow(() -> {
+                        log.warn("Organization with given id does not exists [organizationId: {}]", updatingAnnouncement.getOrganizationId());
+                        throw new OrganizationNotFoundException(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc());
+                    });
+
+            announcement.setOrganization(organization);
+        }
+
+        if (updatingAnnouncement.getRemovedChannels() != null && updatingAnnouncement.getRemovedChannels().size() > 0) {
+            updatingAnnouncement.getRemovedChannels().forEach(_channel -> {
                 AnnouncementChannel channel = AnnouncementChannel.valueOf(_channel);
                 announcement.removeChannel(channel);
             });
@@ -117,8 +134,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     public List<AnnouncementImageDto> uploadImages(Long announcementId, MultipartFile[] images) {
         Announcement announcement = announcementRepository.findById(announcementId)
                 .orElseThrow(() -> {
-                   log.warn("Announcement with given id does not exists [announcementId: {}]", announcementId);
-                   throw new AnnouncementNotFoundException(ErrorDesc.ANNOUNCEMENT_NOT_FOUND.getDesc());
+                    log.warn("Announcement with given id does not exists [announcementId: {}]", announcementId);
+                    throw new AnnouncementNotFoundException(ErrorDesc.ANNOUNCEMENT_NOT_FOUND.getDesc());
                 });
 
         List<AnnouncementImageDto> announcementImages = new ArrayList<>();
@@ -129,7 +146,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
             AnnouncementImageDto announcementImage = new AnnouncementImageDto();
             announcementImage.setAnnouncementId(announcementId);
             announcementImage.setImageUrl(image.getOriginalFilename());
-            announcementImage.setImageSize(Integer.valueOf(String.valueOf(image.getSize()/1000000)));
+            announcementImage.setImageSize(Integer.valueOf(String.valueOf(image.getSize() / 1000000)));
 
             announcementImages.add(announcementImage);
         }

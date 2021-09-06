@@ -18,6 +18,7 @@ public interface GradeMapper {
             @Mapping(target = "gradeType", expression = "java( grade.getGradeType().getType() )"),
             @Mapping(target = "gradeLevel", expression = "java( grade.getGradeLevel().getGradeYear() )"),
             @Mapping(source = "advisorTeacher", target = "advisorTeacher"),
+            @Mapping(source = "organization", target = "organization"),
             @Mapping(target = "students", qualifiedByName="WithoutParents"),
     })
     GradeDto gradeToGradeDto(Grade grade);
@@ -29,6 +30,7 @@ public interface GradeMapper {
             @Mapping(target = "gradeType", expression = "java( grade.getGradeType().getType() )"),
             @Mapping(target = "gradeLevel", expression = "java( grade.getGradeLevel().getGradeYear() )"),
             @Mapping(source = "advisorTeacher", target = "advisorTeacher"),
+            @Mapping(source = "organization", target = "organization"),
             @Mapping(source = "students", target = "students", ignore = true),
     })
     GradeDto gradeToGradeDtoWithoutStudents(Grade grade);
@@ -39,6 +41,7 @@ public interface GradeMapper {
             @Mapping(target = "gradeType", expression = "java( grade.getGradeType().getType() )"),
             @Mapping(target = "gradeLevel", expression = "java( grade.getGradeLevel().getGradeYear() )"),
             @Mapping(target = "advisorTeacher", source = "advisorTeacher"),
+            @Mapping(source = "organization", target = "organization"),
             @Mapping(target = "students", source="WithoutParents"),
     })
     List<GradeDto> gradeToGradeDto(List<Grade> grade);

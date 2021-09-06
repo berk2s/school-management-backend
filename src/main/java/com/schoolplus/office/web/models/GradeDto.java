@@ -24,4 +24,6 @@ public class GradeDto {
 
     private List<StudentDto> students = new ArrayList<>();
 
+    private OrganizationDto organization;
+
 }

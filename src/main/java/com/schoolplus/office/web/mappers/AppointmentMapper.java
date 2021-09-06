@@ -22,6 +22,7 @@ public interface AppointmentMapper {
             @Mapping(target = "student", qualifiedByName = "ForAppointment"),
             @Mapping(source = "createdAt", target = "createdAt"),
             @Mapping(source = "lastModifiedAt", target = "lastModifiedAt"),
+            @Mapping(source = "organization", target = "organization"),
     })
     AppointmentDto appointmentToAppointmentDto(Appointment appointment);
 
@@ -35,6 +36,7 @@ public interface AppointmentMapper {
             @Mapping(target = "student", qualifiedByName = "ForAppointment"),
             @Mapping(source = "createdAt", target = "createdAt"),
             @Mapping(source = "lastModifiedAt", target = "lastModifiedAt"),
+            @Mapping(source = "organization", target = "organization"),
     })
     List<AppointmentDto> appointmentToAppointmentDto(List<Appointment> appointment);
 

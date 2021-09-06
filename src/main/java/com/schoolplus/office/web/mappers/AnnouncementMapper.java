@@ -13,11 +13,13 @@ public interface AnnouncementMapper {
 
     @Mappings({
             @Mapping(target = "announcementId", source = "id"),
+            @Mapping(target = "organization", source = "organization"),
     })
     AnnouncementDto announcementToAnnouncementDto(Announcement announcement);
 
     @Mappings({
             @Mapping(target = "announcementId", source = "id"),
+            @Mapping(target = "organiaztion", source = "organization"),
     })
     List<AnnouncementDto> announcementToAnnouncementDto(List<Announcement> announcement);
 

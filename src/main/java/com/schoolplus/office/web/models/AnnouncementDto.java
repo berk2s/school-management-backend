@@ -26,6 +26,8 @@ public class AnnouncementDto {
 
     private List<AnnouncementChannel> announcementChannels;
 
+    private OrganizationDto organization;
+
     private Timestamp createdAt;
 
     private Timestamp lastModifiedAt;

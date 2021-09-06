@@ -1,15 +1,11 @@
 package com.schoolplus.office.bootstrap;
 
-import com.schoolplus.office.domain.Authority;
-import com.schoolplus.office.domain.Role;
-import com.schoolplus.office.domain.TeachingSubject;
-import com.schoolplus.office.domain.User;
-import com.schoolplus.office.repository.AuthorityRepository;
-import com.schoolplus.office.repository.RoleRepository;
-import com.schoolplus.office.repository.TeachingSubjectRepository;
-import com.schoolplus.office.repository.UserRepository;
+import com.schoolplus.office.domain.*;
+import com.schoolplus.office.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Random;
 
 @Slf4j
 @Profile({"test", "local"})
@@ -28,6 +25,7 @@ public class DataLoader implements CommandLineRunner {
     private final RoleRepository roleRepository;
     private final AuthorityRepository authorityRepository;
     private final TeachingSubjectRepository teachingSubjectRepository;
+    private final OrganizationRepository organizationRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -37,8 +35,14 @@ public class DataLoader implements CommandLineRunner {
 
     @Transactional
     private void loadUsers() {
+        Organization organization = new Organization();
+        organization.setOrganizationName("Test Organization");
+
+        organizationRepository.save(organization);
+
         TeachingSubject teachingSubject = new TeachingSubject();
         teachingSubject.setSubjectName("Matematik");
+        teachingSubject.setOrganization(organization);
 
         teachingSubjectRepository.save(teachingSubject);
 
@@ -63,6 +67,7 @@ public class DataLoader implements CommandLineRunner {
         roleRepository.saveAll(List.of(role, role1, role2));
         authorityRepository.saveAll(List.of(authority, authority1, authority2));
 
+
         User user = new User();
         user.setUsername("username");
         user.setPassword(passwordEncoder.encode("password"));
@@ -78,6 +83,7 @@ public class DataLoader implements CommandLineRunner {
         user.setLastName("lastName");
         user.setEmail("email@email.com");
         user.setPhoneNumber("05553332211");
+        user.setOrganization(organization);
 
         userRepository.save(user);
 

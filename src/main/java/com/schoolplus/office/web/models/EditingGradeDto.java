@@ -24,4 +24,6 @@ public class EditingGradeDto {
 
     private List<String> deletedStudents = new ArrayList<>();
 
+    private Long organizationId;
+
 }

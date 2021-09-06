@@ -117,7 +117,7 @@ public class AnnouncementManagementController {
     })
     @PutMapping(value = "/{announcementId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateAnnouncement(@Valid @PathVariable Long announcementId,
-                                                                         @Valid @RequestBody UpdatingAnnouncementDto updatingAnnouncement) {
+                                                                         @Valid @RequestBody EditingAnnouncementDto updatingAnnouncement) {
         announcementService.updateAnnouncement(announcementId, updatingAnnouncement);
 
         return ResponseEntity

@@ -14,7 +14,7 @@ public interface AnnouncementService {
 
     AnnouncementDto createAnnouncement(CreatingAnnouncementDto creatingAnnouncement);
 
-    void updateAnnouncement(Long announcementId, UpdatingAnnouncementDto updatingAnnouncement);
+    void updateAnnouncement(Long announcementId, EditingAnnouncementDto updatingAnnouncement);
 
     List<AnnouncementImageDto> uploadImages(Long announcementId, MultipartFile[] images);
 
