@@ -359,6 +359,7 @@ public class GradeManagementControllerTest {
             grade.setGradeType(GradeUtils.levelConverter(GradeLevel.ELEVENTH_GRADE));
             grade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
             grade.addStudent(student);
+            grade.setOrganization(organization);
 
             gradeRepository.save(grade);
         }
@@ -394,15 +395,18 @@ public class GradeManagementControllerTest {
             for (int i = 0; i < 20; i++) {
                 Teacher teacher = new Teacher();
                 teacher.setUsername(RandomStringUtils.random(10, true, false));
+                teacher.setOrganization(organization);
 
                 Parent parent = new Parent();
                 parent.setUsername(RandomStringUtils.random(10, true, false));
+                parent.setOrganization(organization);
 
                 Student newStudent = new Student();
                 newStudent.setUsername(RandomStringUtils.random(10, true, false));
                 newStudent.addParent(parent);
                 newStudent.setGradeType(GradeType.HIGH_SCHOOL);
                 newStudent.setGradeLevel(GradeLevel.EIGHTH_GRADE);
+                newStudent.setOrganization(organization);
 
                 userRepository.saveAll(List.of(teacher, parent, newStudent));
 
@@ -411,6 +415,7 @@ public class GradeManagementControllerTest {
                 grade.setGradeType(GradeUtils.levelConverter(GradeLevel.ELEVENTH_GRADE));
                 grade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
                 grade.addStudent(newStudent);
+                grade.setOrganization(organization);
 
                 gradeRepository.save(grade);
             }

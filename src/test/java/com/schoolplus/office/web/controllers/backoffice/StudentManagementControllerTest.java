@@ -2,10 +2,7 @@ package com.schoolplus.office.web.controllers.backoffice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.schoolplus.office.domain.*;
-import com.schoolplus.office.repository.AuthorityRepository;
-import com.schoolplus.office.repository.GradeRepository;
-import com.schoolplus.office.repository.RoleRepository;
-import com.schoolplus.office.repository.UserRepository;
+import com.schoolplus.office.repository.*;
 import com.schoolplus.office.web.models.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,6 +48,19 @@ public class StudentManagementControllerTest {
     @Autowired
     GradeRepository gradeRepository;
 
+    @Autowired
+    OrganizationRepository organizationRepository;
+
+    Organization organization;
+
+    @BeforeEach
+    void setUp() {
+        organization = new Organization();
+        organization.setOrganizationName(RandomStringUtils.random(10, true, false));
+
+        organizationRepository.save(organization);
+    }
+
     @DisplayName("Creating Student")
     @Nested
     class CreatingStudent {
@@ -69,6 +79,7 @@ public class StudentManagementControllerTest {
 
             parent = new Parent();
             parent.setUsername(RandomStringUtils.random(10, true, false));
+            parent.setOrganization(organization);
 
             userRepository.save(parent);
 
@@ -76,6 +87,7 @@ public class StudentManagementControllerTest {
             grade.setGradeType(GradeType.HIGH_SCHOOL);
             grade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
             grade.setGradeTag(RandomStringUtils.random(10, true, false));
+            grade.setOrganization(organization);
 
             gradeRepository.save(grade);
 
@@ -96,7 +108,7 @@ public class StudentManagementControllerTest {
             creatingStudent.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
             creatingStudent.setParents(List.of(parent.getId().toString()));
             creatingStudent.setGradeId(grade.getId());
-
+            creatingStudent.setOrganizationId(organization.getId());
         }
 
         @DisplayName("Creating Student Successfully")
@@ -212,6 +224,7 @@ public class StudentManagementControllerTest {
         void setUp() {
             parent = new Parent();
             parent.setUsername(RandomStringUtils.random(10, true, false));
+            parent.setOrganization(organization);
 
             userRepository.save(parent);
 
@@ -219,6 +232,7 @@ public class StudentManagementControllerTest {
             student.setGradeType(GradeType.HIGH_SCHOOL);
             student.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
             student.addParent(parent);
+            student.setOrganization(organization);
 
             student = userRepository.save(student);
 
@@ -226,9 +240,9 @@ public class StudentManagementControllerTest {
             grade.setGradeType(GradeType.HIGH_SCHOOL);
             grade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
             grade.setGradeTag(RandomStringUtils.random(10, true, false));
+            grade.setOrganization(organization);
 
             gradeRepository.save(grade);
-
 
             editStudent = new EditingStudentDto();
             editStudent.setGradeType(GradeType.GRADUATED);
@@ -316,6 +330,7 @@ public class StudentManagementControllerTest {
 
             Parent parent = new Parent();
             parent.setUsername(RandomStringUtils.random(10, true, false));
+            parent.setOrganization(organization);
 
             userRepository.save(parent);
 
@@ -323,6 +338,7 @@ public class StudentManagementControllerTest {
             student.setGradeType(GradeType.HIGH_SCHOOL);
             student.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
             student.addParent(parent);
+            student.setOrganization(organization);
 
             student = userRepository.save(student);
 

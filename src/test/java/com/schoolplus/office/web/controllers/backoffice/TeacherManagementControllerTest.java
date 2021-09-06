@@ -1,14 +1,8 @@
 package com.schoolplus.office.web.controllers.backoffice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.schoolplus.office.domain.Authority;
-import com.schoolplus.office.domain.Role;
-import com.schoolplus.office.domain.Teacher;
-import com.schoolplus.office.domain.TeachingSubject;
-import com.schoolplus.office.repository.AuthorityRepository;
-import com.schoolplus.office.repository.RoleRepository;
-import com.schoolplus.office.repository.TeachingSubjectRepository;
-import com.schoolplus.office.repository.UserRepository;
+import com.schoolplus.office.domain.*;
+import com.schoolplus.office.repository.*;
 import com.schoolplus.office.web.models.CreatingTeacherDto;
 import com.schoolplus.office.web.models.EditingTeacherDto;
 import com.schoolplus.office.web.models.ErrorDesc;
@@ -56,6 +50,19 @@ public class TeacherManagementControllerTest {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    OrganizationRepository organizationRepository;
+
+    Organization organization;
+
+    @BeforeEach
+    void setUp() {
+        organization = new Organization();
+        organization.setOrganizationName(RandomStringUtils.random(10, true, false));
+
+        organizationRepository.save(organization);
+    }
+
     @DisplayName("Creating Teacher")
     @Nested
     class CreatingTeacher {
@@ -88,6 +95,7 @@ public class TeacherManagementControllerTest {
             creatingTeacher.setIsCredentialsNonExpired(true);
             creatingTeacher.setIsEnabled(true);
             creatingTeacher.setTeachingSubjects(List.of(teachingSubject.getId()));
+            creatingTeacher.setOrganizationId(organization.getId());
         }
 
         @DisplayName("Create Teacher Successfully")
@@ -136,12 +144,14 @@ public class TeacherManagementControllerTest {
         void setUp() {
             teachingSubject = new TeachingSubject();
             teachingSubject.setSubjectName("A Subject");
+            teachingSubject.setOrganization(organization);
 
             teachingSubjectRepository.save(teachingSubject);
 
             teacher = new Teacher();
             teacher.setUsername(RandomStringUtils.random(10, true, false));
             teacher.addTeachingSubject(teachingSubject);
+            teacher.setOrganization(organization);
 
             userRepository.save(teacher);
         }
@@ -189,12 +199,14 @@ public class TeacherManagementControllerTest {
         void setUp() {
             teachingSubject = new TeachingSubject();
             teachingSubject.setSubjectName("A Subject");
+            teachingSubject.setOrganization(organization);
 
             teachingSubjectRepository.save(teachingSubject);
 
             teacher = new Teacher();
             teacher.setUsername(RandomStringUtils.random(10, true, false));
             teacher.addTeachingSubject(teachingSubject);
+            teacher.setOrganization(organization);
 
             userRepository.save(teacher);
 

@@ -60,5 +60,7 @@ public abstract class CreatingUserDto {
     @NotNull
     private Boolean isCredentialsNonExpired;
 
+    @NotNull
+    private Long organizationId;
 
 }

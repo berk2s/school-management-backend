@@ -1,9 +1,12 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.domain.Organization;
 import com.schoolplus.office.domain.Parent;
 import com.schoolplus.office.domain.Student;
+import com.schoolplus.office.repository.OrganizationRepository;
 import com.schoolplus.office.repository.UserRepository;
 import com.schoolplus.office.services.ParentService;
+import com.schoolplus.office.web.exceptions.OrganizationNotFoundException;
 import com.schoolplus.office.web.exceptions.ParentNotFoundException;
 import com.schoolplus.office.web.exceptions.StudentNotFoundException;
 import com.schoolplus.office.web.mappers.ParentMapper;
@@ -26,6 +29,7 @@ import java.util.UUID;
 public class ParentServiceImpl implements ParentService {
 
     private final UserRepository userRepository;
+    private final OrganizationRepository organizationRepository;
     private final PasswordEncoder passwordEncoder;
     private final ParentMapper parentMapper;
 
@@ -55,6 +59,14 @@ public class ParentServiceImpl implements ParentService {
         parent.setIsAccountNonLocked(creatingParent.getIsAccountNonLocked());
         parent.setIsAccountNonExpired(creatingParent.getIsAccountNonExpired());
         parent.setIsCredentialsNonExpired(creatingParent.getIsCredentialsNonExpired());
+
+        Organization organization = organizationRepository.findById(creatingParent.getOrganizationId())
+                .orElseThrow(() -> {
+                    log.warn("Organization with given id does not exists");
+                    throw new OrganizationNotFoundException(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc());
+                });
+
+        parent.setOrganization(organization);
 
         Parent savedParent = userRepository.save(parent);
 

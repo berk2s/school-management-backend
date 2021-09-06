@@ -44,6 +44,16 @@ public class AnnouncementManagementControllerTest {
     @Autowired
     OrganizationRepository organizationRepository;
 
+    Organization organization;
+
+    @BeforeEach
+    void setUp() {
+        organization = new Organization();
+        organization.setOrganizationName(RandomStringUtils.random(10, true, false));
+
+        organizationRepository.save(organization);
+    }
+
     @DisplayName("Getting Announcement")
     @Nested
     class GettingAnnouncement {
@@ -188,6 +198,8 @@ public class AnnouncementManagementControllerTest {
             _announcement.setAnnouncementTitle(RandomStringUtils.random(10, true, false));
             _announcement.setAnnouncementDescription(RandomStringUtils.random(10, true, false));
             _announcement.addImage("imageUrl");
+            _announcement.setOrganization(organization);
+
             announcement = announcementRepository.save(_announcement);
         }
 
@@ -239,6 +251,8 @@ public class AnnouncementManagementControllerTest {
             _announcement.setAnnouncementTitle(RandomStringUtils.random(10, true, false));
             _announcement.setAnnouncementDescription(RandomStringUtils.random(10, true, false));
             _announcement.addImage("imageUrl");
+            _announcement.setOrganization(organization);
+
             announcement = announcementRepository.save(_announcement);
         }
 
@@ -283,13 +297,10 @@ public class AnnouncementManagementControllerTest {
     class UpdatingAnnouncement {
 
         Announcement announcement;
-        Organization organization;
         Organization newOrganization;
 
         @BeforeEach
         void setUp() {
-            organization = new Organization();
-            organization.setOrganizationName(RandomStringUtils.random(10, true, false));
 
             newOrganization = new Organization();
             newOrganization.setOrganizationName(RandomStringUtils.random(10, true, false));
@@ -385,6 +396,7 @@ public class AnnouncementManagementControllerTest {
             Announcement _announcement = new Announcement();
             _announcement.setAnnouncementTitle(RandomStringUtils.random(10, true, false));
             _announcement.setAnnouncementDescription(RandomStringUtils.random(10, true, false));
+            _announcement.setOrganization(organization);
 
             announcement = announcementRepository.save(_announcement);
         }
