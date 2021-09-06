@@ -30,6 +30,9 @@ public class TeachingSubject {
     @ManyToMany(mappedBy = "teachingSubjects", fetch = FetchType.LAZY)
     private List<Teacher> teachers = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, optional = false)
+    private Organization organization;
+
     @CreationTimestamp
     private Timestamp createdAt;
 

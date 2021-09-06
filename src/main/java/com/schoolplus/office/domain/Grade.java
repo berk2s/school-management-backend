@@ -42,6 +42,9 @@ public class Grade {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "grade")
     private List<Student> students = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, optional = false)
+    private Organization organization;
+
     @CreationTimestamp
     private Timestamp createdAt;
 

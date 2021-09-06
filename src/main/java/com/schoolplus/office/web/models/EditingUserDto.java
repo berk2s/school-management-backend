@@ -18,6 +18,8 @@ public class EditingUserDto {
 
     private String password;
 
+    private Long organizationId;
+
     @Size(max = 99)
     private List<Long> newAuthorities;
 
@@ -37,5 +39,6 @@ public class EditingUserDto {
     private Boolean isCredentialsNonExpired;
 
     private Boolean isEnabled;
+
 
 }

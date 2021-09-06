@@ -37,6 +37,9 @@ public class User extends BaseEntity {
     @Column(name = "email", unique = true)
     private String email;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, optional = false)
+    private Organization organization;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {
             CascadeType.MERGE,
     })

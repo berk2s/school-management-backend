@@ -23,6 +23,8 @@ public class UserDto {
 
     private String email;
 
+    private OrganizationDto organization;
+
     private List<String> authorities;
 
     private List<String> roles;

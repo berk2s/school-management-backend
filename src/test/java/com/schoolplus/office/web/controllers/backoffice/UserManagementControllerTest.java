@@ -2,9 +2,11 @@ package com.schoolplus.office.web.controllers.backoffice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.schoolplus.office.domain.Authority;
+import com.schoolplus.office.domain.Organization;
 import com.schoolplus.office.domain.Role;
 import com.schoolplus.office.domain.User;
 import com.schoolplus.office.repository.AuthorityRepository;
+import com.schoolplus.office.repository.OrganizationRepository;
 import com.schoolplus.office.repository.RoleRepository;
 import com.schoolplus.office.repository.UserRepository;
 import com.schoolplus.office.web.models.EditingUserDto;
@@ -52,6 +54,9 @@ public class UserManagementControllerTest {
     AuthorityRepository authorityRepository;
 
     @Autowired
+    OrganizationRepository organizationRepository;
+
+    @Autowired
     PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -71,9 +76,10 @@ public class UserManagementControllerTest {
         @BeforeEach
         void setUp() {
 
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 20; i++) {
                 Role role = roleRepository.findByRoleName("STUDENT").get();
                 Authority authority = authorityRepository.findByAuthorityName("profile:manage").get();
+                Organization organization = organizationRepository.findByOrganizationName("Test Organization").get();
 
                 Hibernate.initialize(role.getUsers());
                 Hibernate.initialize(authority.getUsers());
@@ -92,6 +98,7 @@ public class UserManagementControllerTest {
                 user.setUsername(RandomStringUtils.random(10, true, false));
                 user.setPhoneNumber(RandomStringUtils.random(10, true, false));
                 user.setEmail(RandomStringUtils.random(10, true, false));
+                user.setOrganization(organization);
 
                 userRepository.save(user);
             }
@@ -114,6 +121,7 @@ public class UserManagementControllerTest {
                     .andExpect(jsonPath("$..lastName").isNotEmpty())
                     .andExpect(jsonPath("$..phoneNumber").isNotEmpty())
                     .andExpect(jsonPath("$..email").isNotEmpty())
+                    .andExpect(jsonPath("$..organization").isNotEmpty())
                     .andExpect(jsonPath("$..authorities").isNotEmpty())
                     .andExpect(jsonPath("$..roles").isNotEmpty())
                     .andExpect(jsonPath("$..isEnabled").isNotEmpty())
@@ -129,7 +137,7 @@ public class UserManagementControllerTest {
         @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users"})
         @Test
         void pagingUserSuccessfully() throws Exception {
-            int size = 50;
+            int size = 20;
             mockMvc.perform(get(UserManagementController.ENDPOINT + "?size=" + size))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -298,6 +306,24 @@ public class UserManagementControllerTest {
 
         }
 
+        @DisplayName("Organization Not Found Error")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "edit:user", "view:user"})
+        @Test
+        void organizationNotFoundError() throws Exception {
+
+            EditingUserDto editingUserDto = new EditingUserDto();
+            editingUserDto.setOrganizationId(12312312L);
+
+            mockMvc.perform(put(UserManagementController.ENDPOINT + "/" + user.getId().toString())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(editingUserDto)))
+                    .andDo(print())
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc())));
+
+        }
+
     }
 
     @DisplayName("Get User Successfully")
@@ -315,6 +341,7 @@ public class UserManagementControllerTest {
                 .andExpect(jsonPath("$.lastName").isNotEmpty())
                 .andExpect(jsonPath("$.phoneNumber").isNotEmpty())
                 .andExpect(jsonPath("$.email").isNotEmpty())
+                .andExpect(jsonPath("$.organization").isNotEmpty())
                 .andExpect(jsonPath("$.authorities").isNotEmpty())
                 .andExpect(jsonPath("$.roles").isNotEmpty())
                 .andExpect(jsonPath("$.isEnabled").isNotEmpty())
@@ -336,10 +363,16 @@ public class UserManagementControllerTest {
         Authority authority = authorityRepository.findByAuthorityName("profile:manage").get();
         Authority authority1 = authorityRepository.findByAuthorityName("list:users").get();
 
+        Organization organization = new Organization();
+        organization.setOrganizationName("New organization");
+
+        organizationRepository.save(organization);
+
         EditingUserDto editingUserDto = new EditingUserDto();
         editingUserDto.setUsername("new_username");
         editingUserDto.setNewRoles(List.of(role1.getId()));
         editingUserDto.setNewAuthorities(List.of(authority1.getId()));
+        editingUserDto.setOrganizationId(organization.getId());
 
         editingUserDto.setDeletedRoles(List.of(role.getId()));
         editingUserDto.setDeletedAuthorities(List.of(authority.getId()));
@@ -361,6 +394,7 @@ public class UserManagementControllerTest {
                 .andExpect(jsonPath("$.lastName").isNotEmpty())
                 .andExpect(jsonPath("$.phoneNumber").isNotEmpty())
                 .andExpect(jsonPath("$.email").isNotEmpty())
+                .andExpect(jsonPath("$.organization.organizationName", is(organization.getOrganizationName())))
                 .andExpect(jsonPath("$.authorities[*]", anyOf(hasItem(is("list:users")))))
                 .andExpect(jsonPath("$.roles[*]", anyOf(hasItem(is("USER")))))
                 .andExpect(jsonPath("$.isEnabled").isNotEmpty())

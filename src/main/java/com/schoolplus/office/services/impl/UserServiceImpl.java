@@ -1,13 +1,16 @@
 package com.schoolplus.office.services.impl;
 
 import com.schoolplus.office.domain.Authority;
+import com.schoolplus.office.domain.Organization;
 import com.schoolplus.office.domain.Role;
 import com.schoolplus.office.domain.User;
 import com.schoolplus.office.repository.AuthorityRepository;
+import com.schoolplus.office.repository.OrganizationRepository;
 import com.schoolplus.office.repository.RoleRepository;
 import com.schoolplus.office.repository.UserRepository;
 import com.schoolplus.office.services.UserService;
 import com.schoolplus.office.web.exceptions.AuthorityNotFoundException;
+import com.schoolplus.office.web.exceptions.OrganizationNotFoundException;
 import com.schoolplus.office.web.exceptions.RoleNotFoundException;
 import com.schoolplus.office.web.exceptions.UserNotFoundException;
 import com.schoolplus.office.web.mappers.UserMapper;
@@ -34,6 +37,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
+    private final OrganizationRepository organizationRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
@@ -84,6 +88,16 @@ public class UserServiceImpl implements UserService {
         if (editUser.getIsEnabled() != null)
             user.setIsEnabled(editUser.getIsEnabled());
 
+        if (editUser.getOrganizationId() != null && !editUser.getOrganizationId().equals(user.getOrganization().getId())) {
+            Organization organization = organizationRepository.findById(editUser.getOrganizationId())
+                    .orElseThrow(() -> {
+                        log.warn("Organization with given id does not exists");
+                        throw new OrganizationNotFoundException(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc());
+                    });
+
+            user.setOrganization(organization);
+        }
+
         if (editUser.getDeletedAuthorities() != null && editUser.getNewAuthorities().size() != 0)
             addNewAuthority(editUser, user);
 
@@ -105,7 +119,7 @@ public class UserServiceImpl implements UserService {
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users') || hasAuthority('delete:user'))")
     @Override
     public void deleteUser(UUID userId) {
-        if(!userRepository.existsById(userId)) {
+        if (!userRepository.existsById(userId)) {
             log.warn("User with given id does not exists given [userId: {}]", userId);
             throw new UserNotFoundException(ErrorDesc.USER_NOT_FOUND.getDesc());
         }

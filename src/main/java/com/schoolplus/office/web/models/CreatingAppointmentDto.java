@@ -32,4 +32,7 @@ public class CreatingAppointmentDto {
     @NotNull
     private String teacherId;
 
+    @NotNull
+    private Long organizationId;
+
 }

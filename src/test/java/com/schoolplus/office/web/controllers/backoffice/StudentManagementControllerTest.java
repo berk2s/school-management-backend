@@ -84,7 +84,7 @@ public class StudentManagementControllerTest {
             creatingStudent.setPassword(RandomStringUtils.random(10, true, false));
             creatingStudent.setFirstName(RandomStringUtils.random(10, true, false));
             creatingStudent.setLastName(RandomStringUtils.random(10, true, false));
-            creatingStudent.setPhoneNumber(RandomStringUtils.random(10, true, false));
+            creatingStudent.setPhoneNumber(RandomStringUtils.random(11, true, false));
             creatingStudent.setEmail(RandomStringUtils.random(10, true, false));
             creatingStudent.setRoles(List.of(role.getId()));
             creatingStudent.setAuthorities(List.of(authority.getId()));

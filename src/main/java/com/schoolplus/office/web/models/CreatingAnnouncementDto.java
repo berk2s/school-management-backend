@@ -24,4 +24,7 @@ public class CreatingAnnouncementDto {
     @Size(min = 1)
     private List<String> announcementChannels;
 
+    @NotNull
+    private Long organizationId;
+
 }

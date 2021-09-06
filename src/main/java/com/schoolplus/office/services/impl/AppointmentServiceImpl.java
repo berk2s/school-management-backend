@@ -2,13 +2,11 @@ package com.schoolplus.office.services.impl;
 
 import com.schoolplus.office.domain.*;
 import com.schoolplus.office.repository.AppointmentRepository;
+import com.schoolplus.office.repository.OrganizationRepository;
 import com.schoolplus.office.repository.UserRepository;
 import com.schoolplus.office.services.AppointmentService;
 import com.schoolplus.office.utils.AppointmentUtils;
-import com.schoolplus.office.web.exceptions.AppointmentNotAvailableException;
-import com.schoolplus.office.web.exceptions.AppointmentNotFoundException;
-import com.schoolplus.office.web.exceptions.StudentNotFoundException;
-import com.schoolplus.office.web.exceptions.TeacherNotFoundException;
+import com.schoolplus.office.web.exceptions.*;
 import com.schoolplus.office.web.mappers.AppointmentMapper;
 import com.schoolplus.office.web.models.AppointmentDto;
 import com.schoolplus.office.web.models.CreatingAppointmentDto;
@@ -34,6 +32,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     private final AppointmentRepository appointmentRepository;
     private final UserRepository userRepository;
+    private final OrganizationRepository organizationRepository;
     private final AppointmentMapper appointmentMapper;
 
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:appointments') || hasAuthority('read:appointments'))")
@@ -68,6 +67,14 @@ public class AppointmentServiceImpl implements AppointmentService {
         if (creatingAppointment.getAppointmentNote() != null) {
             appointment.setAppointmentNote(creatingAppointment.getAppointmentNote());
         }
+
+        Organization organization = organizationRepository.findById(creatingAppointment.getOrganizationId())
+                .orElseThrow(() -> {
+                    log.warn("Organization with given id does not exists [organizationId: {}]", creatingAppointment.getOrganizationId());
+                    throw new OrganizationNotFoundException(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc());
+                });
+
+        appointment.setOrganization(organization);
 
         UUID teacherId = UUID.fromString(creatingAppointment.getTeacherId());
         UUID studentId = UUID.fromString(creatingAppointment.getStudentId());
@@ -136,6 +143,16 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         if (editingAppointment.getAppointmentNote() != null)
             appointment.setAppointmentNote(editingAppointment.getAppointmentNote());
+
+        if (editingAppointment.getOrganizationId() != null) {
+            Organization organization = organizationRepository.findById(editingAppointment.getOrganizationId())
+                            .orElseThrow(() -> {
+                                log.warn("Organization with given id does not exists [organizationId: {}]", editingAppointment.getOrganizationId());
+                                throw new OrganizationNotFoundException(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc());
+                            });
+
+            appointment.setOrganization(organization);
+        }
 
         if(editingAppointment.getTeacherId() != null
                 && !editingAppointment.getTeacherId().equals(appointment.getTeacher().getId().toString())) {

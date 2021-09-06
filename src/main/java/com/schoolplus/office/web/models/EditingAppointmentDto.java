@@ -26,4 +26,6 @@ public class EditingAppointmentDto {
 
     private String teacherId;
 
+    private Long organizationId;
+
 }

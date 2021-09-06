@@ -6,26 +6,27 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CreatingGradeDto {
+public class EditingAnnouncementDto {
 
+    @Size(min = 2, max = 299)
     @NotNull
-    private GradeLevel gradeLevel;
+    private String announcementTitle;
 
-    @Size(max = 300)
-    private String gradeTag;
+    @Size(max = 99999)
+    private String announcementDescription;
 
-    @NotNull
-    private String advisorTeacher;
+    @Size(max = 99)
+    private List<String> removedChannels;
 
-    @NotNull
+    @Size(max = 99)
+    private List<String> addedChannels;
+
     private Long organizationId;
 
-    private List<String> students = new ArrayList<>();
 
 }

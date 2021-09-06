@@ -26,6 +26,8 @@ public class AppointmentDto {
 
     private TeacherDto teacher;
 
+    private OrganizationDto organization;
+
     private Timestamp createdAt;
 
     private Timestamp lastModifiedAt;

@@ -21,6 +21,9 @@ public class Appointment extends BaseEntity {
     @Column(name = "appointment_note")
     private String appointmentNote;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, optional = false)
+    private Organization organization;
+
     @Column(name = "appointment_start_date")
     private LocalDateTime appointmentStartDate;
 
