@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping(TeachingSubjectController.ENDPOINT)
@@ -27,6 +29,21 @@ public class TeachingSubjectController {
     public static final String ENDPOINT = "/management/teachingsubjects";
 
     private final TeachingSubjectService teachingSubjectService;
+
+    @Operation(summary = "Get Teaching Subjects")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Teaching Subject are listed"),
+            @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+                    }),
+            @ApiResponse(responseCode = "403", description = "Don't have permission")
+    })
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TeachingSubjectDto>> getTeachingSubjects(@RequestParam(defaultValue = "0") Integer page,
+                                                                        @RequestParam(defaultValue = "10") Integer size) {
+        return new ResponseEntity<>(teachingSubjectService.getTeachingSubjects(PageRequest.of(page, size)), HttpStatus.OK);
+    }
 
     @Operation(summary = "Get Teaching Subject")
     @ApiResponses(value = {
