@@ -24,7 +24,7 @@ public class Teacher extends User implements CanAppointment {
     private List<TeachingSubject> teachingSubjects = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "advisorTeacher")
-    private List<Grade> responsibleGrades = new ArrayList<>();
+    private List<Classroom> responsibleClassrooms = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "teacher")
     private List<Appointment> appointments = new ArrayList<>();
@@ -43,17 +43,17 @@ public class Teacher extends User implements CanAppointment {
         }
     }
 
-    public void addGrade(Grade grade) {
-        if (!responsibleGrades.contains(grade)) {
-            grade.setAdvisorTeacher(this);
-            responsibleGrades.add(grade);
+    public void addClassroom(Classroom classRoom) {
+        if (!responsibleClassrooms.contains(classRoom)) {
+            classRoom.setAdvisorTeacher(this);
+            responsibleClassrooms.add(classRoom);
         }
     }
 
-    public void removeGrade(Grade grade) {
-        if (responsibleGrades.contains(grade)) {
-            grade.setAdvisorTeacher(null);
-            responsibleGrades.remove(grade);
+    public void removeClassroom(Classroom classRoom) {
+        if (responsibleClassrooms.contains(classRoom)) {
+            classRoom.setAdvisorTeacher(null);
+            responsibleClassrooms.remove(classRoom);
         }
     }
 

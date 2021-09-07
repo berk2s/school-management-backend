@@ -145,8 +145,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.NOT_FOUND));
     }
 
-    @ExceptionHandler(GradeNotFoundException.class)
-    public ResponseEntity<ErrorResponseDto> handleGradeNotFoundException(GradeNotFoundException ex) {
+    @ExceptionHandler(ClassroomNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleClassroomNotFoundException(ClassroomNotFoundException ex) {
         return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.NOT_FOUND));
     }
 
@@ -167,6 +167,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(OrganizationNotFoundException.class)
     public ResponseEntity<ErrorResponseDto> handleOrganizationNotFoundException(OrganizationNotFoundException ex) {
+        return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.NOT_FOUND));
+    }
+
+    @ExceptionHandler(GradeNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleGradeNotFoundException(GradeNotFoundException ex) {
         return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.NOT_FOUND));
     }
 

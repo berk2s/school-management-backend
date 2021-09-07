@@ -17,11 +17,14 @@ import com.schoolplus.office.web.models.ErrorDesc;
 import com.schoolplus.office.web.models.TeachingSubjectDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -33,6 +36,15 @@ public class TeachingSubjectServiceImpl implements TeachingSubjectService {
     private final UserRepository userRepository;
     private final OrganizationRepository organizationRepository;
     private final TeachingSubjectMapper teachingSubjectMapper;
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:teachingsubjects') || hasAuthority('read:teachingsubject'))")
+    @Override
+    public List<TeachingSubjectDto> getTeachingSubjects(Pageable pageable) {
+        Page<TeachingSubject> teachingSubjects = teachingSubjectRepository
+                .findAll(pageable);
+
+        return teachingSubjectMapper.teachingSubjectToTeachingSubjectDto(teachingSubjects.getContent());
+    }
 
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:teachingsubjects') || hasAuthority('read:teachingsubject'))")
     @Override

@@ -14,16 +14,12 @@ import java.util.List;
 @Data
 public class EditingStudentDto extends EditingUserDto {
 
-    private GradeType gradeType;
-
-    private GradeLevel gradeLevel;
-
     @Size(max = 99)
     private List<String> addedParents;
 
     @Size(max = 99)
     private List<String> deletedParents;
 
-    private Long gradeId;
+    private Long classRoomId;
 
 }

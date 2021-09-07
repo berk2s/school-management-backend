@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,17 +12,20 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class EditingGradeDto {
+public class CreatingClassroomDto {
 
-    @Size(min = 1, max = 99)
-    private String gradeName;
+    @Size(max = 300)
+    private String classRoomId;
 
-    @Size(max = 99)
-    private List<Long> addedClassrooms = new ArrayList<>();
+    @NotNull
+    private String advisorTeacher;
 
-    @Size(max = 99)
-    private List<Long> removedClassrooms = new ArrayList<>();
-
+    @NotNull
     private Long organizationId;
+
+    @NotNull
+    private Long gradeId;
+
+    private List<String> students = new ArrayList<>();
 
 }

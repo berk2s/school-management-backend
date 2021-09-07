@@ -13,15 +13,9 @@ import java.util.List;
 public class CreatingStudentDto extends CreatingUserDto {
 
     @NotNull
-    private GradeType gradeType;
-
-    @NotNull
-    private GradeLevel gradeLevel;
-
-    @NotNull
     @Size(max = 99)
     private List<String> parents;
 
-    private Long gradeId;
+    private Long classRoomId;
 
 }

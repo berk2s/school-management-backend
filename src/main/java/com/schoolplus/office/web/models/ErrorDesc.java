@@ -20,17 +20,18 @@ public enum ErrorDesc {
     STUDENT_NOT_FOUND("Student not found", 10),
     TEACHING_SUBJECT_NOT_FOUND("Teaching subject not found", 11),
     TEACHER_NOT_FOUND("Teacher not found", 12),
-    GRADE_NOT_FOUND("Grade not found", 13),
+    CLASSROOM_NOT_FOUND("Classroom not found", 13),
     APPOINTMENT_NOT_FOUND("Appointment not found", 14),
     TEACHER_NOT_AVAILABLE_FOR_APPOINTMENT("The Teacher is not available for the taken appointment", 15),
     STUDENT_NOT_AVAILABLE_FOR_APPOINTMENT("The Student is not available for the taken appointment", 16),
     SERVER_ERROR("Server error", 17),
     ANNOUNCEMENT_NOT_FOUND("Announcement not found", 18),
-    ORGANIZATION_NOT_FOUND("Organization not found", 19);
+    ORGANIZATION_NOT_FOUND("Organization not found", 19),
+    GRADE_NOT_FOUND("Grade not found", 20);
 
     private final String desc;
     private final Integer code;
-    private static final Map<String, Integer> errorMap =  new HashMap<>();;
+    private static final Map<String, Integer> errorMap =  new HashMap<>();
 
     ErrorDesc(String desc, Integer code) {
         this.desc = desc;

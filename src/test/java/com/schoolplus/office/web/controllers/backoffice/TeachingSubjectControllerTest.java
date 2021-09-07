@@ -176,6 +176,20 @@ public class TeachingSubjectControllerTest {
                     .andExpect(jsonPath("$.lastModifiedAt").isNotEmpty());
         }
 
+        @DisplayName("Get Teaching Subjects Successfully")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:teachingsubjects"})
+        @Test
+        void getTeachingSubjectsSuccessfully() throws Exception {
+            mockMvc.perform(get(TeachingSubjectController.ENDPOINT + "?page=0&size=10"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$..teachingSubjectId").isNotEmpty())
+                    .andExpect(jsonPath("$..subjectName").isNotEmpty())
+                    .andExpect(jsonPath("$..organization.organizationName").isNotEmpty())
+                    .andExpect(jsonPath("$..teachers[*].userId").isNotEmpty())
+                    .andExpect(jsonPath("$..createdAt").isNotEmpty())
+                    .andExpect(jsonPath("$..lastModifiedAt").isNotEmpty());
+        }
+
         @DisplayName("Get Teaching Subject Not Found Error")
         @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:teachingsubjects"})
         @Test
