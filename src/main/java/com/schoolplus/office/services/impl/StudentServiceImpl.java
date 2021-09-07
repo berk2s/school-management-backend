@@ -27,7 +27,7 @@ public class StudentServiceImpl implements StudentService {
     private final AuthorityRepository authorityRepository;
     private final OrganizationRepository organizationRepository;
     private final RoleRepository roleRepository;
-    private final GradeRepository gradeRepository;
+    private final ClassroomRepository classroomRepository;
     private final StudentMapper studentMapper;
     private final PasswordEncoder passwordEncoder;
 
@@ -57,8 +57,6 @@ public class StudentServiceImpl implements StudentService {
         student.setIsAccountNonLocked(creatingStudent.getIsAccountNonLocked());
         student.setIsAccountNonExpired(creatingStudent.getIsAccountNonExpired());
         student.setIsCredentialsNonExpired(creatingStudent.getIsCredentialsNonExpired());
-        student.setGradeType(creatingStudent.getGradeType());
-        student.setGradeLevel(creatingStudent.getGradeLevel());
 
         Organization organization = organizationRepository.findById(creatingStudent.getOrganizationId())
                 .orElseThrow(() -> {
@@ -68,15 +66,15 @@ public class StudentServiceImpl implements StudentService {
 
         student.setOrganization(organization);
 
-        if (creatingStudent.getGradeId() != null) {
-            Long gradeId = creatingStudent.getGradeId();
-            Grade grade = gradeRepository.findById(gradeId)
+        if (creatingStudent.getClassRoomId() != null) {
+            Long gradeId = creatingStudent.getClassRoomId();
+            Classroom classRoom = classroomRepository.findById(gradeId)
                     .orElseThrow(() -> {
                        log.warn("Grade with given id does not exists [gradeId: {}]", gradeId);
-                       throw new GradeNotFoundException(ErrorDesc.GRADE_NOT_FOUND.getDesc());
+                       throw new ClassroomNotFoundException(ErrorDesc.CLASSROOM_NOT_FOUND.getDesc());
                     });
 
-            grade.addStudent(student);
+            classRoom.addStudent(student);
         }
 
         if(creatingStudent.getParents() != null && creatingStudent.getParents().size() > 0) {
@@ -136,12 +134,6 @@ public class StudentServiceImpl implements StudentService {
                             throw new StudentNotFoundException(ErrorDesc.STUDENT_NOT_FOUND.getDesc());
                         });
 
-        if (editStudent.getGradeLevel() != null)
-            student.setGradeLevel(editStudent.getGradeLevel());
-
-        if (editStudent.getGradeType() != null)
-            student.setGradeType(editStudent.getGradeType());
-
         if (editStudent.getAddedParents() != null && editStudent.getAddedParents().size() != 0) {
             editStudent.getAddedParents().forEach(_parentId -> {
                 UUID parentId = UUID.fromString(_parentId);
@@ -172,15 +164,15 @@ public class StudentServiceImpl implements StudentService {
             });
         }
 
-        if (editStudent.getGradeId() != null) {
-            Long gradeId = editStudent.getGradeId();
-            Grade grade = gradeRepository.findById(gradeId)
+        if (editStudent.getClassRoomId() != null) {
+            Long gradeId = editStudent.getClassRoomId();
+            Classroom classRoom = classroomRepository.findById(gradeId)
                     .orElseThrow(() -> {
                         log.warn("Grade with given id does not exists [gradeId: {}]", gradeId);
-                        throw new GradeNotFoundException(ErrorDesc.GRADE_NOT_FOUND.getDesc());
+                        throw new ClassroomNotFoundException(ErrorDesc.CLASSROOM_NOT_FOUND.getDesc());
                     });
 
-            grade.addStudent(student);
+            classRoom.addStudent(student);
         }
 
 

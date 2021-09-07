@@ -1,5 +1,6 @@
 package com.schoolplus.office.web.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -9,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
 
     private String userId;

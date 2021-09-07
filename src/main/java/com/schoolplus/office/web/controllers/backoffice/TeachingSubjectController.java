@@ -66,7 +66,7 @@ public class TeachingSubjectController {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
                     }),
             @ApiResponse(responseCode = "403", description = "Don't have permission"),
-            @ApiResponse(responseCode = "404", description = "Teaching Subject | Teacher | Organization was not found"),
+            @ApiResponse(responseCode = "404", description = "Teaching Subject || Teacher || Organization was not found"),
     })
     @PutMapping(path = "/{teachingSubjectId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateTeachingSubject(@Valid @PathVariable Long teachingSubjectId,
@@ -87,7 +87,7 @@ public class TeachingSubjectController {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
                     }),
             @ApiResponse(responseCode = "403", description = "Don't have permission"),
-            @ApiResponse(responseCode = "404", description = "Teaching Subject | Teacher | Organization was not found"),
+            @ApiResponse(responseCode = "404", description = "Teaching Subject || Teacher || Organization was not found"),
     })
     @DeleteMapping(path = "/{teachingSubjectId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

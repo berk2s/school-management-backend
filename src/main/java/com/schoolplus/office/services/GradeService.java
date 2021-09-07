@@ -15,7 +15,7 @@ public interface GradeService {
 
     GradeDto createGrade(CreatingGradeDto creatingGrade);
 
-    void updateGrade(Long gradeId, EditingGradeDto editingGrade);
+    void editGrade(Long gradeId, EditingGradeDto editingGrade);
 
     void deleteGrade(Long gradeId);
 

@@ -11,7 +11,7 @@ import org.mapstruct.Named;
 
 import java.util.UUID;
 
-@Mapper(imports = {UUID.class}, uses = {ParentMapper.class, GradeMapper.class})
+@Mapper(imports = {UUID.class}, uses = {ParentMapper.class, ClassroomMapper.class})
 public interface StudentMapper {
 
     @Mappings({
@@ -20,14 +20,12 @@ public interface StudentMapper {
             @Mapping(target = "lastName", expression = "java( student.getLastName() )"),
             @Mapping(target = "phoneNumber", expression = "java( student.getPhoneNumber() )"),
             @Mapping(target = "email", expression = "java( student.getEmail() )"),
-            @Mapping(target = "gradeType", expression = "java( student.getGradeType().getType() )"),
-            @Mapping(target = "gradeLevel", expression = "java( student.getGradeLevel().getGradeYear() )"),
             @Mapping(target = "isAccountNonExpired", expression = "java( student.getIsAccountNonExpired() )"),
             @Mapping(target = "isAccountNonLocked", expression = "java( student.getIsAccountNonLocked() )"),
             @Mapping(target = "isCredentialsNonExpired", expression = "java( student.getIsCredentialsNonExpired() )"),
             @Mapping(target = "isEnabled", expression = "java( student.getIsEnabled() )"),
             @Mapping(target = "parents", source = "parents"),
-            @Mapping(target = "grade", qualifiedByName = "WithoutStudents"),
+            @Mapping(target = "classRoom", qualifiedByName = "WithoutStudents"),
     })
     StudentDto studentToStudentDto(Student student);
 
@@ -38,14 +36,12 @@ public interface StudentMapper {
             @Mapping(target = "lastName", expression = "java( student.getLastName() )"),
             @Mapping(target = "phoneNumber", expression = "java( student.getPhoneNumber() )"),
             @Mapping(target = "email", expression = "java( student.getEmail() )"),
-            @Mapping(target = "gradeType", expression = "java( student.getGradeType().getType() )"),
-            @Mapping(target = "gradeLevel", expression = "java( student.getGradeLevel().getGradeYear() )"),
             @Mapping(target = "isAccountNonExpired", expression = "java( student.getIsAccountNonExpired() )"),
             @Mapping(target = "isAccountNonLocked", expression = "java( student.getIsAccountNonLocked() )"),
             @Mapping(target = "isCredentialsNonExpired", expression = "java( student.getIsCredentialsNonExpired() )"),
             @Mapping(target = "isEnabled", expression = "java( student.getIsEnabled() )"),
             @Mapping(target = "parents", source = "parents", ignore = true),
-            @Mapping(target = "grade", qualifiedByName = "WithoutStudents"),
+            @Mapping(target = "classRoom", qualifiedByName = "WithoutStudents"),
     })
     StudentDto studentToStudentDtoWithoutParents(Student student);
 
@@ -55,7 +51,7 @@ public interface StudentMapper {
             @Mapping(target = "firstName", expression = "java( student.getFirstName() )"),
             @Mapping(target = "lastName", expression = "java( student.getLastName() )"),
             @Mapping(target = "parents", source = "parents", ignore = true),
-            @Mapping(target = "grade", qualifiedByName = "WithoutStudents"),
+            @Mapping(target = "classRoom", qualifiedByName = "WithoutStudents"),
             @Mapping(target = "username", source = "username", ignore = true),
             @Mapping(target = "phoneNumber", source = "phoneNumber", ignore = true),
             @Mapping(target = "email", source = "email", ignore = true),

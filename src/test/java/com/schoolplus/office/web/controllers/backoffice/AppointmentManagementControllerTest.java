@@ -45,7 +45,7 @@ public class AppointmentManagementControllerTest {
     TeachingSubjectRepository teachingSubjectRepository;
 
     @Autowired
-    GradeRepository gradeRepository;
+    ClassroomRepository classroomRepository;
 
     @Autowired
     AppointmentRepository appointmentRepository;
@@ -61,7 +61,7 @@ public class AppointmentManagementControllerTest {
         Student student;
         Teacher teacher;
         TeachingSubject teachingSubject;
-        Grade grade;
+        Classroom classRoom;
         Organization organization;
 
         String APPOINTMENT_NAME;
@@ -74,18 +74,14 @@ public class AppointmentManagementControllerTest {
             organizationRepository.save(organization);
 
             student = new Student();
-            student.setGradeType(GradeType.HIGH_SCHOOL);
-            student.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
             student.setOrganization(organization);
 
-            grade = new Grade();
-            grade.setGradeType(GradeType.HIGH_SCHOOL);
-            grade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
-            grade.setGradeTag(RandomStringUtils.random(10, true, false));
-            grade.addStudent(student);
-            grade.setOrganization(organization);
+            classRoom = new Classroom();
+            classRoom.setClassRoomTag(RandomStringUtils.random(10, true, false));
+            classRoom.addStudent(student);
+            classRoom.setOrganization(organization);
 
-            gradeRepository.save(grade);
+            classroomRepository.save(classRoom);
 
             teachingSubject = new TeachingSubject();
             teachingSubject.setSubjectName("A Subject");
@@ -134,11 +130,7 @@ public class AppointmentManagementControllerTest {
                     .andExpect(jsonPath("$.teacher.firstName", is(teacher.getFirstName())))
                     .andExpect(jsonPath("$.teacher.lastName", is(teacher.getLastName())))
                     .andExpect(jsonPath("$.teacher.teachingSubjects[*]..subjectName", anyOf(hasItem(is(teacher.getTeachingSubjects().get(0).getSubjectName())))))
-                    .andExpect(jsonPath("$.student.userId").isNotEmpty())
-                    .andExpect(jsonPath("$.student.firstName", is(student.getFirstName())))
-                    .andExpect(jsonPath("$.student.lastName", is(student.getLastName())))
-                    .andExpect(jsonPath("$.student.grade.gradeLevel", is(student.getGrade().getGradeLevel().getGradeYear())))
-                    .andExpect(jsonPath("$.student.grade.gradeType", is(student.getGrade().getGradeType().getType())));
+                    .andExpect(jsonPath("$.student.userId").isNotEmpty());
 
         }
 
@@ -266,7 +258,7 @@ public class AppointmentManagementControllerTest {
         Student student;
         Teacher teacher;
         TeachingSubject teachingSubject;
-        Grade grade;
+        Classroom classRoom;
         Organization organization;
 
         String APPOINTMENT_NAME;
@@ -286,19 +278,15 @@ public class AppointmentManagementControllerTest {
             appointment.setOrganization(organization);
 
             student = new Student();
-            student.setGradeType(GradeType.HIGH_SCHOOL);
-            student.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
             student.addAppointment(appointment);
             student.setOrganization(organization);
 
-            grade = new Grade();
-            grade.setGradeType(GradeType.HIGH_SCHOOL);
-            grade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
-            grade.setGradeTag(RandomStringUtils.random(10, true, false));
-            grade.addStudent(student);
-            grade.setOrganization(organization);
+            classRoom = new Classroom();
+            classRoom.setClassRoomTag(RandomStringUtils.random(10, true, false));
+            classRoom.addStudent(student);
+            classRoom.setOrganization(organization);
 
-            gradeRepository.save(grade);
+            classroomRepository.save(classRoom);
 
             teachingSubject = new TeachingSubject();
             teachingSubject.setSubjectName("A Subject");
@@ -339,12 +327,7 @@ public class AppointmentManagementControllerTest {
                     .andExpect(jsonPath("$..teacher.firstName", anyOf(hasItem(is(teacher.getFirstName())))))
                     .andExpect(jsonPath("$..teacher.lastName", anyOf(hasItem(is(teacher.getLastName())))))
                     .andExpect(jsonPath("$..teacher.teachingSubjects[*]..subjectName", anyOf(hasItem(is(teacher.getTeachingSubjects().get(0).getSubjectName())))))
-                    .andExpect(jsonPath("$..student.userId").isNotEmpty())
-                    .andExpect(jsonPath("$..student.firstName", anyOf(hasItem(is(student.getFirstName())))))
-                    .andExpect(jsonPath("$..student.lastName", anyOf(hasItem(is(student.getLastName())))))
-                    .andExpect(jsonPath("$..student.grade.gradeLevel", anyOf(hasItem(is(student.getGrade().getGradeLevel().getGradeYear())))))
-                    .andExpect(jsonPath("$..student.grade.gradeType", anyOf(hasItem(is(student.getGrade().getGradeType().getType())))));
-
+                    .andExpect(jsonPath("$..student.userId").isNotEmpty());
 
         }
 
@@ -367,13 +350,7 @@ public class AppointmentManagementControllerTest {
                     .andExpect(jsonPath("$.teacher.firstName", is(teacher.getFirstName())))
                     .andExpect(jsonPath("$.teacher.lastName", is(teacher.getLastName())))
                     .andExpect(jsonPath("$.teacher.teachingSubjects[*]..subjectName", anyOf(hasItem(is(teacher.getTeachingSubjects().get(0).getSubjectName())))))
-                    .andExpect(jsonPath("$.student.userId").isNotEmpty())
-                    .andExpect(jsonPath("$.student.firstName", is(student.getFirstName())))
-                    .andExpect(jsonPath("$.student.lastName", is(student.getLastName())))
-                    .andExpect(jsonPath("$.student.grade.gradeLevel", is(student.getGrade().getGradeLevel().getGradeYear())))
-                    .andExpect(jsonPath("$.student.grade.gradeType", is(student.getGrade().getGradeType().getType())));
-
-
+                    .andExpect(jsonPath("$.student.userId").isNotEmpty());
         }
 
         @DisplayName("Get Appointment Not Found Error")
@@ -400,7 +377,7 @@ public class AppointmentManagementControllerTest {
         Student student;
         Teacher teacher;
         TeachingSubject teachingSubject;
-        Grade grade;
+        Classroom classRoom;
         Organization organization;
 
         String APPOINTMENT_NAME;
@@ -418,19 +395,15 @@ public class AppointmentManagementControllerTest {
             appointment.setOrganization(organization);
 
             student = new Student();
-            student.setGradeType(GradeType.HIGH_SCHOOL);
-            student.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
             student.addAppointment(appointment);
             student.setOrganization(organization);
 
-            grade = new Grade();
-            grade.setGradeType(GradeType.HIGH_SCHOOL);
-            grade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
-            grade.setGradeTag(RandomStringUtils.random(10, true, false));
-            grade.addStudent(student);
-            grade.setOrganization(organization);
+            classRoom = new Classroom();
+            classRoom.setClassRoomTag(RandomStringUtils.random(10, true, false));
+            classRoom.addStudent(student);
+            classRoom.setOrganization(organization);
 
-            gradeRepository.save(grade);
+            classroomRepository.save(classRoom);
 
             teachingSubject = new TeachingSubject();
             teachingSubject.setSubjectName("A Subject");
@@ -489,7 +462,7 @@ public class AppointmentManagementControllerTest {
         Student student;
         Teacher teacher;
         TeachingSubject teachingSubject;
-        Grade grade;
+        Classroom classRoom;
         Student newStudent;
         Teacher newTeacher;
         EditingAppointmentDto editingAppointment;
@@ -516,19 +489,15 @@ public class AppointmentManagementControllerTest {
             appointment.setOrganization(organization);
 
             student = new Student();
-            student.setGradeType(GradeType.HIGH_SCHOOL);
-            student.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
             student.addAppointment(appointment);
             student.setOrganization(organization);
 
-            grade = new Grade();
-            grade.setGradeType(GradeType.HIGH_SCHOOL);
-            grade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
-            grade.setGradeTag(RandomStringUtils.random(10, true, false));
-            grade.addStudent(student);
-            grade.setOrganization(organization);
+            classRoom = new Classroom();
+            classRoom.setClassRoomTag(RandomStringUtils.random(10, true, false));
+            classRoom.addStudent(student);
+            classRoom.setOrganization(organization);
 
-            gradeRepository.save(grade);
+            classroomRepository.save(classRoom);
 
             teachingSubject = new TeachingSubject();
             teachingSubject.setSubjectName("A Subject");
@@ -549,8 +518,7 @@ public class AppointmentManagementControllerTest {
 
             newStudent = new Student();
             newStudent.setUsername(RandomStringUtils.random(10, true, false));
-            newStudent.setGradeType(GradeType.HIGH_SCHOOL);
-            newStudent.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
+
             newStudent.setOrganization(organization);
 
             newTeacher = new Teacher();
@@ -562,9 +530,9 @@ public class AppointmentManagementControllerTest {
 
             userRepository.saveAll(List.of(newTeacher, newStudent));
 
-            grade.addStudent(newStudent);
+            classRoom.addStudent(newStudent);
 
-            gradeRepository.save(grade);
+            classroomRepository.save(classRoom);
 
 
 
@@ -606,11 +574,7 @@ public class AppointmentManagementControllerTest {
                     .andExpect(jsonPath("$.teacher.firstName", is(newTeacher.getFirstName())))
                     .andExpect(jsonPath("$.teacher.lastName", is(newTeacher.getLastName())))
                     .andExpect(jsonPath("$.teacher.teachingSubjects[*]..subjectName", anyOf(hasItem(is(newTeacher.getTeachingSubjects().get(0).getSubjectName())))))
-                    .andExpect(jsonPath("$.student.userId").isNotEmpty())
-                    .andExpect(jsonPath("$.student.firstName", is(newStudent.getFirstName())))
-                    .andExpect(jsonPath("$.student.lastName", is(newStudent.getLastName())))
-                    .andExpect(jsonPath("$.student.grade.gradeLevel", is(newStudent.getGrade().getGradeLevel().getGradeYear())))
-                    .andExpect(jsonPath("$.student.grade.gradeType", is(newStudent.getGrade().getGradeType().getType())));
+                    .andExpect(jsonPath("$.student.userId").isNotEmpty());
 
 
         }

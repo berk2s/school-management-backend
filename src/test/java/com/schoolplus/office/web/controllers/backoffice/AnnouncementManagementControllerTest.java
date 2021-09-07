@@ -111,7 +111,7 @@ public class AnnouncementManagementControllerTest {
         @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:announcements"})
         @Test
         void getAnnouncementNotFoundError() throws Exception {
-            mockMvc.perform(get(AnnouncementManagementController.ENDPOINT + "/123"))
+            mockMvc.perform(get(AnnouncementManagementController.ENDPOINT + "/123123123"))
                     .andDo(print())
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))

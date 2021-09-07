@@ -1,7 +1,5 @@
 package com.schoolplus.office.domain;
 
-import com.schoolplus.office.web.models.GradeLevel;
-import com.schoolplus.office.web.models.GradeType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,12 +17,6 @@ import java.util.List;
 @Entity
 public class Student extends User implements CanAppointment{
 
-    @Enumerated(EnumType.STRING)
-    private GradeType gradeType;
-
-    @Enumerated(EnumType.STRING)
-    private GradeLevel gradeLevel;
-
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.MERGE
     })
@@ -34,7 +26,7 @@ public class Student extends User implements CanAppointment{
     private List<Parent> parents = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    private Grade grade;
+    private Classroom classRoom;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "student")
     private List<Appointment> appointments = new ArrayList<>();

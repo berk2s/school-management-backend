@@ -14,18 +14,14 @@ import java.util.List;
 @Data
 public class CreatingGradeDto {
 
+    @Size(min = 1, max = 99)
     @NotNull
-    private GradeLevel gradeLevel;
+    private String gradeName;
 
-    @Size(max = 300)
-    private String gradeTag;
-
-    @NotNull
-    private String advisorTeacher;
+    @Size(max = 99)
+    private List<Long> classRooms = new ArrayList<>();
 
     @NotNull
     private Long organizationId;
-
-    private List<String> students = new ArrayList<>();
 
 }

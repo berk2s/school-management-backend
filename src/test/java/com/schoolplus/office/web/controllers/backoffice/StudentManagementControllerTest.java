@@ -46,7 +46,7 @@ public class StudentManagementControllerTest {
     UserRepository userRepository;
 
     @Autowired
-    GradeRepository gradeRepository;
+    ClassroomRepository classroomRepository;
 
     @Autowired
     OrganizationRepository organizationRepository;
@@ -69,7 +69,7 @@ public class StudentManagementControllerTest {
         Authority authority;
         Role role;
         Parent parent;
-        Grade grade;
+        Classroom classRoom;
 
         @BeforeEach
         void setUp() {
@@ -83,13 +83,11 @@ public class StudentManagementControllerTest {
 
             userRepository.save(parent);
 
-            grade = new Grade();
-            grade.setGradeType(GradeType.HIGH_SCHOOL);
-            grade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
-            grade.setGradeTag(RandomStringUtils.random(10, true, false));
-            grade.setOrganization(organization);
+            classRoom = new Classroom();
+            classRoom.setClassRoomTag(RandomStringUtils.random(10, true, false));
+            classRoom.setOrganization(organization);
 
-            gradeRepository.save(grade);
+            classroomRepository.save(classRoom);
 
             creatingStudent = new CreatingStudentDto();
             creatingStudent.setUsername(RandomStringUtils.random(10, true, false));
@@ -104,10 +102,8 @@ public class StudentManagementControllerTest {
             creatingStudent.setIsAccountNonExpired(true);
             creatingStudent.setIsCredentialsNonExpired(true);
             creatingStudent.setIsEnabled(true);
-            creatingStudent.setGradeType(GradeType.HIGH_SCHOOL);
-            creatingStudent.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
             creatingStudent.setParents(List.of(parent.getId().toString()));
-            creatingStudent.setGradeId(grade.getId());
+            creatingStudent.setClassRoomId(classRoom.getId());
             creatingStudent.setOrganizationId(organization.getId());
         }
 
@@ -135,9 +131,7 @@ public class StudentManagementControllerTest {
                     .andExpect(jsonPath("$.isCredentialsNonExpired", is(creatingStudent.getIsAccountNonExpired())))
                     .andExpect(jsonPath("$.createdAt").isNotEmpty())
                     .andExpect(jsonPath("$.lastModifiedAt").isNotEmpty())
-                    .andExpect(jsonPath("$.gradeType", is(creatingStudent.getGradeType().getType())))
-                    .andExpect(jsonPath("$.gradeLevel", is(creatingStudent.getGradeLevel().getGradeYear())))
-                    .andExpect(jsonPath("$.grade.gradeId", is(grade.getId().intValue())))
+                    .andExpect(jsonPath("$.classRoom.classRoomId", is(classRoom.getId().intValue())))
                     .andExpect(jsonPath("$.parents[*]..username", anyOf(hasItem(is(parent.getUsername())))));
         }
 
@@ -197,7 +191,7 @@ public class StudentManagementControllerTest {
         @Test
         void creatingStudentGradeNotFoundError() throws Exception {
 
-            creatingStudent.setGradeId(31513L); // invalid
+            creatingStudent.setClassRoomId(31513L); // invalid
 
             mockMvc.perform(post(StudentManagementController.ENDPOINT)
                             .content(objectMapper.writeValueAsString(creatingStudent))
@@ -205,7 +199,7 @@ public class StudentManagementControllerTest {
                     .andDo(print())
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
-                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.GRADE_NOT_FOUND.getDesc())));
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.CLASSROOM_NOT_FOUND.getDesc())));
 
         }
 
@@ -218,7 +212,7 @@ public class StudentManagementControllerTest {
         Parent parent;
         Student student;
         EditingStudentDto editStudent;
-        Grade grade;
+        Classroom classRoom;
 
         @BeforeEach
         void setUp() {
@@ -229,24 +223,19 @@ public class StudentManagementControllerTest {
             userRepository.save(parent);
 
             student = new Student();
-            student.setGradeType(GradeType.HIGH_SCHOOL);
-            student.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
             student.addParent(parent);
             student.setOrganization(organization);
 
             student = userRepository.save(student);
 
-            grade = new Grade();
-            grade.setGradeType(GradeType.HIGH_SCHOOL);
-            grade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
-            grade.setGradeTag(RandomStringUtils.random(10, true, false));
-            grade.setOrganization(organization);
+            classRoom = new Classroom();
+            classRoom.setClassRoomTag(RandomStringUtils.random(10, true, false));
+            classRoom.setOrganization(organization);
 
-            gradeRepository.save(grade);
+            classroomRepository.save(classRoom);
 
             editStudent = new EditingStudentDto();
-            editStudent.setGradeType(GradeType.GRADUATED);
-            editStudent.setGradeId(grade.getId());
+            editStudent.setClassRoomId(classRoom.getId());
         }
 
         @DisplayName("Edit Student Successfully")
@@ -264,10 +253,7 @@ public class StudentManagementControllerTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.userId").isNotEmpty())
-                    .andExpect(jsonPath("$.username", is(student.getUsername())))
-                    .andExpect(jsonPath("$.gradeType", is(editStudent.getGradeType().getType())))
-                    .andExpect(jsonPath("$.gradeLevel", is(student.getGradeLevel().getGradeYear())))
-                    .andExpect(jsonPath("$.grade.gradeId", is(grade.getId().intValue())))
+                    .andExpect(jsonPath("$.classRoom.classRoomId", is(classRoom.getId().intValue())))
                     .andExpect(jsonPath("$.parents[*]..username", anyOf(hasItem(is(parent.getUsername())))));
         }
 
@@ -306,14 +292,14 @@ public class StudentManagementControllerTest {
         @Test
         void editStudentGradeNotFoundError() throws Exception {
 
-            editStudent.setGradeId(12312312312L);
+            editStudent.setClassRoomId(12312312312L);
 
             mockMvc.perform(put(StudentManagementController.ENDPOINT + "/" + student.getId().toString())
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(editStudent)))
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
-                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.GRADE_NOT_FOUND.getDesc())));
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.CLASSROOM_NOT_FOUND.getDesc())));
 
         }
 
@@ -335,8 +321,6 @@ public class StudentManagementControllerTest {
             userRepository.save(parent);
 
             Student student = new Student();
-            student.setGradeType(GradeType.HIGH_SCHOOL);
-            student.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
             student.addParent(parent);
             student.setOrganization(organization);
 
@@ -346,10 +330,7 @@ public class StudentManagementControllerTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.userId").isNotEmpty())
-                    .andExpect(jsonPath("$.username", is(student.getUsername())))
-                    .andExpect(jsonPath("$.gradeType", is(student.getGradeType().getType())))
-                    .andExpect(jsonPath("$.gradeLevel", is(student.getGradeLevel().getGradeYear())))
-                    .andExpect(jsonPath("$.parents[*]..username", anyOf(hasItem(is(parent.getUsername())))));
+                    .andExpect(jsonPath("$.parents[*]..userId", anyOf(hasItem(is(parent.getId().toString())))));
 
         }
 

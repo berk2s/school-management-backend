@@ -1,5 +1,6 @@
 package com.schoolplus.office.web.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -9,14 +10,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class StudentDto extends UserDto {
-
-    private String gradeType;
-
-    private String gradeLevel;
 
     private List<ParentDto> parents = new ArrayList<>();
 
-    private GradeDto grade;
+    private ClassroomDto classRoom;
 
 }

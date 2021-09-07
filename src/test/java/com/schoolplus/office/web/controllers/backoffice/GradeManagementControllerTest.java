@@ -1,13 +1,16 @@
 package com.schoolplus.office.web.controllers.backoffice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.schoolplus.office.domain.*;
-import com.schoolplus.office.repository.AuthorityRepository;
+import com.schoolplus.office.domain.Classroom;
+import com.schoolplus.office.domain.Grade;
+import com.schoolplus.office.domain.Organization;
+import com.schoolplus.office.repository.ClassroomRepository;
 import com.schoolplus.office.repository.GradeRepository;
 import com.schoolplus.office.repository.OrganizationRepository;
-import com.schoolplus.office.repository.UserRepository;
-import com.schoolplus.office.utils.GradeUtils;
-import com.schoolplus.office.web.models.*;
+import com.schoolplus.office.web.models.CreatingGradeDto;
+import com.schoolplus.office.web.models.EditingGradeDto;
+import com.schoolplus.office.web.models.ErrorDesc;
+import com.schoolplus.office.web.models.ErrorType;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,21 +22,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.anyOf;
-import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Transactional
 public class GradeManagementControllerTest {
 
     @Autowired
@@ -43,21 +41,17 @@ public class GradeManagementControllerTest {
     ObjectMapper objectMapper;
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    AuthorityRepository authorityRepository;
-
-    @Autowired
     GradeRepository gradeRepository;
 
     @Autowired
     OrganizationRepository organizationRepository;
 
-    Teacher teacher;
-    Student student;
-    Parent parent;
+    @Autowired
+    ClassroomRepository classroomRepository;
+
+    Grade grade;
     Organization organization;
+    Classroom classroom;
 
     @BeforeEach
     void setUp() {
@@ -66,30 +60,70 @@ public class GradeManagementControllerTest {
 
         organizationRepository.save(organization);
 
-        Authority authority = new Authority();
-        authority.setAuthorityName(RandomStringUtils.random(10, true, false));
+        classroom = new Classroom();
+        classroom.setClassRoomTag(RandomStringUtils.random(10, true, false));
+        classroom.setOrganization(organization);
 
-        authorityRepository.save(authority);
+        grade = new Grade();
+        grade.setGradeName(RandomStringUtils.random(10, true, false));
+        grade.setOrganization(organization);
+        grade.addClassroom(classroom);
 
-        parent = new Parent();
-        parent.setUsername(RandomStringUtils.random(10, true, false));
-        parent.addAuthority(authority);
-        parent.setOrganization(organization);
+        gradeRepository.save(grade);
 
-        teacher = new Teacher();
-        teacher.setUsername(RandomStringUtils.random(10, true, false));
-        teacher.addAuthority(authority);
-        teacher.setOrganization(organization);
+        classroomRepository.save(classroom);
+    }
 
-        student = new Student();
-        student.setGradeType(GradeType.HIGH_SCHOOL);
-        student.setGradeLevel(GradeLevel.EIGHTH_GRADE);
-        student.setUsername(RandomStringUtils.random(10, true, false));
-        student.addParent(parent);
-        student.addAuthority(authority);
-        student.setOrganization(organization);
+    @DisplayName("Getting Grades")
+    @Nested
+    class GettingGrades {
 
-        userRepository.saveAll(List.of(student, teacher, parent));
+        @DisplayName("Get Grade Successfully")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:grades"})
+        @Test
+        void getGradeSuccessfully() throws Exception {
+
+            mockMvc.perform(get(GradeManagementController.ENDPOINT + "/" + grade.getId()))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.gradeId", is(grade.getId().intValue())))
+                    .andExpect(jsonPath("$.gradeName", is(grade.getGradeName())))
+                    .andExpect(jsonPath("$.classrooms..classRoomId", anyOf(hasItem(is(classroom.getId().intValue())))))
+                    .andExpect(jsonPath("$.organization.organizationId", is(organization.getId().intValue())))
+                    .andExpect(jsonPath("$.createdAt").isNotEmpty())
+                    .andExpect(jsonPath("$.lastModifiedAt").isNotEmpty());
+
+        }
+
+
+        @DisplayName("Get Grades Successfully")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:grades"})
+        @Test
+        void getGradesSuccessfully() throws Exception {
+
+            mockMvc.perform(get(GradeManagementController.ENDPOINT + "?page=0&size=10"))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$..gradeId", anyOf(hasItem(is(grade.getId().intValue())))))
+                    .andExpect(jsonPath("$..gradeName", anyOf(hasItem(is(grade.getGradeName())))))
+                    .andExpect(jsonPath("$..organization.organizationId", anyOf(hasItem(is(organization.getId().intValue())))))
+                    .andExpect(jsonPath("$..createdAt").isNotEmpty())
+                    .andExpect(jsonPath("$..lastModifiedAt").isNotEmpty());
+
+        }
+
+        @DisplayName("Get Grade Not Found Error")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:grades"})
+        @Test
+        void getGradeNotFoundError() throws Exception {
+
+            mockMvc.perform(get(GradeManagementController.ENDPOINT + "/123123123"))
+                    .andDo(print())
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.GRADE_NOT_FOUND.getDesc())));
+
+        }
 
     }
 
@@ -97,91 +131,9 @@ public class GradeManagementControllerTest {
     @Nested
     class CreatingGrade {
 
-        CreatingGradeDto creatingGrade;
-
-        @BeforeEach
-        void setUp() {
-            creatingGrade = new CreatingGradeDto();
-            creatingGrade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
-            creatingGrade.setAdvisorTeacher(teacher.getId().toString());
-            creatingGrade.setGradeTag("grade tag");
-            creatingGrade.setStudents(List.of(student.getId().toString()));
-            creatingGrade.setOrganizationId(organization.getId());
-        }
-
-        @DisplayName("Create Grade Successfully")
-        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:grades"})
-        @Test
-        void createGradeSuccessfully() throws Exception {
-
-            mockMvc.perform(post(GradeManagementController.ENDPOINT)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(creatingGrade)))
-                    .andDo(print())
-                    .andExpect(status().isCreated())
-                    .andExpect(jsonPath("$.gradeId").isNotEmpty())
-                    .andExpect(jsonPath("$.gradeType", is(GradeUtils.levelConverter(creatingGrade.getGradeLevel()).getType())))
-                    .andExpect(jsonPath("$.gradeLevel", is(creatingGrade.getGradeLevel().getGradeYear())))
-                    .andExpect(jsonPath("$.gradeTag", is(creatingGrade.getGradeTag())))
-                    .andExpect(jsonPath("$.organization.organizationName", is(organization.getOrganizationName())))
-                    .andExpect(jsonPath("$.advisorTeacher.userId", is(teacher.getId().toString())))
-                    .andExpect(jsonPath("$.advisorTeacher.username", is(teacher.getUsername())))
-                    .andExpect(jsonPath("$.students[*]..userId", anyOf(hasItem(is(student.getId().toString())))))
-                    .andExpect(jsonPath("$.students[*]..username", anyOf(hasItem(is(student.getUsername())))));
-
-        }
-
-        @DisplayName("Create Grade Teacher Not Found Error")
-        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:grades"})
-        @Test
-        void createGradeTeacherNotFoundError() throws Exception {
-            creatingGrade.setAdvisorTeacher(UUID.randomUUID().toString());
-            mockMvc.perform(post(GradeManagementController.ENDPOINT)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(creatingGrade)))
-                    .andDo(print())
-                    .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
-                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.TEACHER_NOT_FOUND.getDesc())));
-        }
-
-        @DisplayName("Create Grade Student Not Found Error")
-        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:grades"})
-        @Test
-        void createGradeStudentNotFoundError() throws Exception {
-            creatingGrade.setStudents(List.of(UUID.randomUUID().toString()));
-            mockMvc.perform(post(GradeManagementController.ENDPOINT)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(creatingGrade)))
-                    .andDo(print())
-                    .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
-                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.STUDENT_NOT_FOUND.getDesc())));
-        }
-
-        @DisplayName("Create Grade Organization Not Found Error")
-        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:grades"})
-        @Test
-        void createGradeOrganizationNotFoundError() throws Exception {
-            creatingGrade.setOrganizationId(123123123L);
-            mockMvc.perform(post(GradeManagementController.ENDPOINT)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(creatingGrade)))
-                    .andDo(print())
-                    .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
-                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc())));
-        }
-
-    }
-
-    @DisplayName("Editing Grade")
-    @Nested
-    class EditingGrade {
-
-        EditingGradeDto editingGrade;
-        Grade grade;
+        Classroom newClassroom;
         Organization newOrganization;
+        CreatingGradeDto creatingGrade;
 
         @BeforeEach
         void setUp() {
@@ -190,254 +142,190 @@ public class GradeManagementControllerTest {
 
             organizationRepository.save(newOrganization);
 
-            grade = new Grade();
-            grade.setAdvisorTeacher(teacher);
-            grade.setGradeType(GradeUtils.levelConverter(GradeLevel.ELEVENTH_GRADE));
-            grade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
-            grade.addStudent(student);
-            grade.setOrganization(organization);
+            newClassroom = new Classroom();
+            newClassroom.setClassRoomTag(RandomStringUtils.random(10, true, false));
+            newClassroom.setOrganization(organization);
 
-            gradeRepository.save(grade);
+            classroomRepository.save(newClassroom);
+
+            creatingGrade = new CreatingGradeDto();
+            creatingGrade.setGradeName(RandomStringUtils.random(10, true, false));
+            creatingGrade.setOrganizationId(newOrganization.getId());
+            creatingGrade.setClassRooms(List.of(newClassroom.getId()));
+
+        }
+
+        @DisplayName("Create Grade Successfully")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:grades"})
+        @Test
+        void createGradeSuccessfully() throws Exception {
+
+            mockMvc.perform(post(GradeManagementController.ENDPOINT)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(creatingGrade)))
+                    .andDo(print())
+                    .andExpect(status().isCreated())
+                    .andExpect(jsonPath("$.gradeId").isNotEmpty())
+                    .andExpect(jsonPath("$.gradeName", is(creatingGrade.getGradeName())))
+                    .andExpect(jsonPath("$.classrooms..classRoomId", anyOf(hasItem(is(newClassroom.getId().intValue())))))
+                    .andExpect(jsonPath("$.organization.organizationId", is(newOrganization.getId().intValue())))
+                    .andExpect(jsonPath("$.createdAt").isNotEmpty())
+                    .andExpect(jsonPath("$.lastModifiedAt").isNotEmpty());;
+
+        }
+
+        @DisplayName("Create Grade Organization Not Found Error")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:grades"})
+        @Test
+        void createGradeOrganizationNotFoundError() throws Exception {
+
+            creatingGrade.setOrganizationId(123123123L);
+
+            mockMvc.perform(post(GradeManagementController.ENDPOINT)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(creatingGrade)))
+                    .andDo(print())
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc())));
+
+        }
+
+        @DisplayName("Create Grade Classroom Not Found Error")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:grades"})
+        @Test
+        void createGradeClassroomNotFoundError() throws Exception {
+
+            creatingGrade.setClassRooms(List.of(123123L));
+
+            mockMvc.perform(post(GradeManagementController.ENDPOINT)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(creatingGrade)))
+                    .andDo(print())
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.CLASSROOM_NOT_FOUND.getDesc())));
+
+        }
+
+    }
+
+    @DisplayName("Editing Grade")
+    @Nested
+    class EditingGrade {
+
+        Classroom newClassroom;
+        Organization newOrganization;
+        EditingGradeDto editingGrade;
+
+        @BeforeEach
+        void setUp() {
+            newOrganization = new Organization();
+            newOrganization.setOrganizationName(RandomStringUtils.random(10, true, false));
+
+            organizationRepository.save(newOrganization);
+
+            newClassroom = new Classroom();
+            newClassroom.setClassRoomTag(RandomStringUtils.random(10, true, false));
+            newClassroom.setOrganization(organization);
+
+            classroomRepository.save(newClassroom);
 
             editingGrade = new EditingGradeDto();
-            editingGrade.setGradeTag(RandomStringUtils.random(10, true, false));
-            editingGrade.setGradeLevel(GradeLevel.FIFTH_GRADE.name());
-            editingGrade.setDeletedStudents(List.of(student.getId().toString()));
-            editingGrade.setGradeTag(RandomStringUtils.random(10, true, false));
+            editingGrade.setGradeName(RandomStringUtils.random(10, true, false));
             editingGrade.setOrganizationId(newOrganization.getId());
+            editingGrade.setAddedClassrooms(List.of(newClassroom.getId()));
+            editingGrade.setRemovedClassrooms(List.of(classroom.getId()));
         }
 
         @DisplayName("Edit Grade Successfully")
-        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:grades"})
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:grades"})
         @Test
         void editGradeSuccessfully() throws Exception {
 
-            mockMvc.perform(put(GradeManagementController.ENDPOINT + "/" + grade.getId().toString())
+            mockMvc.perform(put(GradeManagementController.ENDPOINT + "/" + grade.getId())
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(editingGrade)))
                     .andDo(print())
                     .andExpect(status().isPermanentRedirect())
-                    .andExpect(redirectedUrl(GradeManagementController.ENDPOINT + "/" + grade.getId().toString()));
+                    .andExpect(redirectedUrl(GradeManagementController.ENDPOINT + "/" + grade.getId()));
 
-            mockMvc.perform(get(GradeManagementController.ENDPOINT + "/" + grade.getId().toString()))
+            mockMvc.perform(get(GradeManagementController.ENDPOINT + "/" + grade.getId()))
                     .andDo(print())
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.gradeId").isNotEmpty())
-                    .andExpect(jsonPath("$.gradeType", is(GradeUtils.levelConverter(GradeLevel.valueOf(editingGrade.getGradeLevel())).getType())))
-                    .andExpect(jsonPath("$.gradeLevel", is(GradeLevel.valueOf(editingGrade.getGradeLevel()).getGradeYear())))
-                    .andExpect(jsonPath("$.gradeTag", is(editingGrade.getGradeTag())))
-                    .andExpect(jsonPath("$.organization.organizationName", is(newOrganization.getOrganizationName())))
-                    .andExpect(jsonPath("$.advisorTeacher.userId", is(teacher.getId().toString())))
-                    .andExpect(jsonPath("$.advisorTeacher.username", is(teacher.getUsername())))
-                    .andExpect(jsonPath("$.students.length()", is(0)));
+                    .andExpect(jsonPath("$.gradeId", is(grade.getId().intValue())))
+                    .andExpect(jsonPath("$.gradeName", is(editingGrade.getGradeName())))
+                    .andExpect(jsonPath("$.classrooms.length()", is(1)))
+                    .andExpect(jsonPath("$.classrooms..classRoomId", anyOf(hasItem(is(newClassroom.getId().intValue())))))
+                    .andExpect(jsonPath("$.organization.organizationId", is(newOrganization.getId().intValue())))
+                    .andExpect(jsonPath("$.createdAt").isNotEmpty())
+                    .andExpect(jsonPath("$.lastModifiedAt").isNotEmpty());
 
-        }
-
-        @DisplayName("Edit Grade Not Found Error")
-        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:grades"})
-        @Test
-        void editGradeNotFoundError() throws Exception {
-            mockMvc.perform(put(GradeManagementController.ENDPOINT + "/12341210")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(editingGrade)))
-                    .andDo(print())
-                    .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
-                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.GRADE_NOT_FOUND.getDesc())));
-        }
-
-        @DisplayName("Edit Grade Advisor Teacher Not Found Error")
-        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:grades"})
-        @Test
-        void editGradeAdvisorTeacherNotFoundError() throws Exception {
-            editingGrade.setAdvisorTeacher(UUID.randomUUID().toString());
-
-            mockMvc.perform(put(GradeManagementController.ENDPOINT + "/" + grade.getId().toString())
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(editingGrade)))
-                    .andDo(print())
-                    .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
-                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.TEACHER_NOT_FOUND.getDesc())));
-        }
-
-        @DisplayName("Edit Grade Student Not Found Error")
-        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:grades"})
-        @Test
-        void editGradeStudentNotFoundError() throws Exception {
-            editingGrade.setAddedStudents(List.of(UUID.randomUUID().toString()));
-
-            mockMvc.perform(put(GradeManagementController.ENDPOINT + "/" + grade.getId().toString())
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(editingGrade)))
-                    .andDo(print())
-                    .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
-                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.STUDENT_NOT_FOUND.getDesc())));
         }
 
         @DisplayName("Edit Grade Organization Not Found Error")
-        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:grades"})
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:grades"})
         @Test
         void editGradeOrganizationNotFoundError() throws Exception {
-            editingGrade.setOrganizationId(12312312L);
 
-            mockMvc.perform(put(GradeManagementController.ENDPOINT + "/" + grade.getId().toString())
+            editingGrade.setOrganizationId(123123123L);
+
+            mockMvc.perform(put(GradeManagementController.ENDPOINT + "/" + grade.getId())
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(editingGrade)))
                     .andDo(print())
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
                     .andExpect(jsonPath("$.error_description", is(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc())));
+
         }
 
-    }
-
-    @DisplayName("Getting Grade")
-    @Nested
-    class GettingGrade {
-
-        Grade grade;
-        Organization organization;
-
-        @BeforeEach
-        void setUp() {
-            organization = new Organization();
-            organization.setOrganizationName(RandomStringUtils.random(10, true, false));
-
-            organizationRepository.save(organization);
-
-            grade = new Grade();
-            grade.setAdvisorTeacher(teacher);
-            grade.setGradeType(GradeUtils.levelConverter(GradeLevel.ELEVENTH_GRADE));
-            grade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
-            grade.addStudent(student);
-            grade.setOrganization(organization);
-
-            gradeRepository.save(grade);
-        }
-
-        @DisplayName("Get Grade Successfully")
-        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:grades"})
+        @DisplayName("Edit Grade Classroom Not Found Error")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:grades"})
         @Test
-        void getGradeSuccessfully() throws Exception {
-            mockMvc.perform(get(GradeManagementController.ENDPOINT + "/" + grade.getId().toString()))
-                    .andDo(print())
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.gradeId").isNotEmpty())
-                    .andExpect(jsonPath("$.gradeType", is(grade.getGradeType().getType())))
-                    .andExpect(jsonPath("$.gradeLevel", is(grade.getGradeLevel().getGradeYear())))
-                    .andExpect(jsonPath("$.gradeTag", is(grade.getGradeTag())))
-                    .andExpect(jsonPath("$.organization.organizationName", is(organization.getOrganizationName())))
-                    .andExpect(jsonPath("$.advisorTeacher.userId", is(teacher.getId().toString())))
-                    .andExpect(jsonPath("$.advisorTeacher.username", is(teacher.getUsername())))
-                    .andExpect(jsonPath("$.students.length()", is(1)));
-        }
+        void editGradeClassroomNotFoundError() throws Exception {
 
-        @DisplayName("Get Grade Not Found Error")
-        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:grades"})
-        @Test
-        void getGradeNotFoundError() throws Exception {
-            mockMvc.perform(get(GradeManagementController.ENDPOINT + "/12312312"))
+            editingGrade.setAddedClassrooms(List.of(123123L));
+
+            mockMvc.perform(put(GradeManagementController.ENDPOINT + "/" + grade.getId())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(editingGrade)))
                     .andDo(print())
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
-                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.GRADE_NOT_FOUND.getDesc())));
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.CLASSROOM_NOT_FOUND.getDesc())));
+
         }
+
     }
 
     @DisplayName("Deleting Grade")
     @Nested
     class DeletingGrade {
 
-        Grade grade;
-
-        @BeforeEach
-        void setUp() {
-            grade = new Grade();
-            grade.setAdvisorTeacher(teacher);
-            grade.setGradeType(GradeUtils.levelConverter(GradeLevel.ELEVENTH_GRADE));
-            grade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
-            grade.addStudent(student);
-            grade.setOrganization(organization);
-
-            gradeRepository.save(grade);
-        }
-
         @DisplayName("Delete Grade Successfully")
-        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:grades"})
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:grades"})
         @Test
         void deleteGradeSuccessfully() throws Exception {
-            mockMvc.perform(delete(GradeManagementController.ENDPOINT + "/" + grade.getId().toString()))
-                    .andDo(print())
+
+            mockMvc.perform(delete(GradeManagementController.ENDPOINT + "/" + grade.getId()))
                     .andExpect(status().isNoContent());
+
         }
 
-
         @DisplayName("Delete Grade Not Found Error")
-        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:grades"})
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:grades"})
         @Test
         void deleteGradeNotFoundError() throws Exception {
-            mockMvc.perform(delete(GradeManagementController.ENDPOINT + "/12312312"))
+
+            mockMvc.perform(delete(GradeManagementController.ENDPOINT + "/123123123"))
                     .andDo(print())
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
                     .andExpect(jsonPath("$.error_description", is(ErrorDesc.GRADE_NOT_FOUND.getDesc())));
+
+
         }
-    }
-
-    @DisplayName("Listing Grades")
-    @Nested
-    class ListingGrades {
-
-        @BeforeEach
-        void setUp() {
-            for (int i = 0; i < 20; i++) {
-                Teacher teacher = new Teacher();
-                teacher.setUsername(RandomStringUtils.random(10, true, false));
-                teacher.setOrganization(organization);
-
-                Parent parent = new Parent();
-                parent.setUsername(RandomStringUtils.random(10, true, false));
-                parent.setOrganization(organization);
-
-                Student newStudent = new Student();
-                newStudent.setUsername(RandomStringUtils.random(10, true, false));
-                newStudent.addParent(parent);
-                newStudent.setGradeType(GradeType.HIGH_SCHOOL);
-                newStudent.setGradeLevel(GradeLevel.EIGHTH_GRADE);
-                newStudent.setOrganization(organization);
-
-                userRepository.saveAll(List.of(teacher, parent, newStudent));
-
-                Grade grade = new Grade();
-                grade.setAdvisorTeacher(teacher);
-                grade.setGradeType(GradeUtils.levelConverter(GradeLevel.ELEVENTH_GRADE));
-                grade.setGradeLevel(GradeLevel.ELEVENTH_GRADE);
-                grade.addStudent(newStudent);
-                grade.setOrganization(organization);
-
-                gradeRepository.save(grade);
-            }
-        }
-
-        @DisplayName("Get Grade List Successfully")
-        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:grades"})
-        @Test
-        void getGradeListSuccessfully() throws Exception {
-            mockMvc.perform(get(GradeManagementController.ENDPOINT + "?page=1&size=10"))
-                    .andDo(print())
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$..gradeId").isNotEmpty())
-                    .andExpect(jsonPath("$..gradeType").isNotEmpty())
-                    .andExpect(jsonPath("$..gradeLevel").isNotEmpty())
-                    .andExpect(jsonPath("$..gradeTag").isNotEmpty())
-                    .andExpect(jsonPath("$..advisorTeacher.userId").isNotEmpty())
-                    .andExpect(jsonPath("$..advisorTeacher.username").isNotEmpty())
-                    .andExpect(jsonPath("$..students..userId").isNotEmpty())
-                    .andExpect(jsonPath("$..students..username").isNotEmpty());
-        }
-
     }
 
 }

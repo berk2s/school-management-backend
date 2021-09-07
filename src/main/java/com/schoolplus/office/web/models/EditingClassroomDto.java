@@ -11,16 +11,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class EditingGradeDto {
+public class EditingClassroomDto {
 
-    @Size(min = 1, max = 99)
-    private String gradeName;
+    @Size(max = 300)
+    private String classRoomTag;
 
-    @Size(max = 99)
-    private List<Long> addedClassrooms = new ArrayList<>();
+    private String advisorTeacher;
 
-    @Size(max = 99)
-    private List<Long> removedClassrooms = new ArrayList<>();
+    private List<String> addedStudents = new ArrayList<>();
+
+    private List<String> deletedStudents = new ArrayList<>();
 
     private Long organizationId;
 
