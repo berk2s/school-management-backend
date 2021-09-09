@@ -9,7 +9,7 @@ import com.schoolplus.office.services.LoginService;
 import com.schoolplus.office.services.RefreshTokenService;
 import com.schoolplus.office.web.models.AccessTokenCommand;
 import com.schoolplus.office.web.models.LoginRequestDto;
-import com.schoolplus.office.web.models.LoginResponseDto;
+import com.schoolplus.office.web.models.TokenResponseDto;
 import com.schoolplus.office.web.models.RefreshTokenCommand;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class LoginServiceImpl implements LoginService {
     private final RefreshTokenService refreshTokenService;
 
     @Override
-    public LoginResponseDto authenticate(LoginRequestDto loginRequest) {
+    public TokenResponseDto authenticate(LoginRequestDto loginRequest) {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();
 
@@ -51,7 +51,7 @@ public class LoginServiceImpl implements LoginService {
 
         log.info("The User has been logged successfully [userId: {}]", securityUser.getId().toString());
 
-        return LoginResponseDto.builder()
+        return TokenResponseDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .expiresIn(serverConfiguration.getAccessToken().getLifetime().toSeconds())

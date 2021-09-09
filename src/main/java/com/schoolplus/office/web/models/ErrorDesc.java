@@ -30,7 +30,8 @@ public enum ErrorDesc {
     GRADE_NOT_FOUND("Grade not found", 20),
     LESSON_NOT_FOUND("Lesson not found", 21),
     SYLLABUS_NOT_FOUND("Syllabus not found", 22),
-    CONTINUITY_NOT_FOUND("Continuity not found", 22);
+    CONTINUITY_NOT_FOUND("Continuity not found", 22),
+    INVALID_GRANT_TYPE("Invalid grant type", 22);
 
     private final String desc;
     private final Integer code;

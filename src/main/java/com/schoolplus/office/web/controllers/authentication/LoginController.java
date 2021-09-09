@@ -1,8 +1,8 @@
-package com.schoolplus.office.web.controllers;
+package com.schoolplus.office.web.controllers.authentication;
 
 import com.schoolplus.office.web.models.ErrorResponseDto;
 import com.schoolplus.office.web.models.LoginRequestDto;
-import com.schoolplus.office.web.models.LoginResponseDto;
+import com.schoolplus.office.web.models.TokenResponseDto;
 import com.schoolplus.office.services.LoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -41,7 +41,7 @@ public class LoginController {
             })
     })
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<LoginResponseDto> handleLogin(@Valid @RequestBody LoginRequestDto loginRequest) {
+    public ResponseEntity<TokenResponseDto> handleLogin(@Valid @RequestBody LoginRequestDto loginRequest) {
         return new ResponseEntity<>(loginService.authenticate(loginRequest), HttpStatus.OK);
     }
 
