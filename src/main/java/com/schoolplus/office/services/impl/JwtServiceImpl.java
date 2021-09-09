@@ -98,7 +98,7 @@ public class JwtServiceImpl implements JwtService {
     public boolean validate(String token) {
         try {
             SignedJWT signedJWT = SignedJWT.parse(token);
-            return  signedJWT.verify(jwtPkiConfiguration.getJwsVerifier());
+            return signedJWT.verify(jwtPkiConfiguration.getJwsVerifier());
         } catch (JOSEException | ParseException ex) {
             log.warn("Error while parsing jwt [message: {}]", ex.getMessage());
             throw new JWTException(ErrorDesc.INVALID_TOKEN.getDesc());

@@ -1,13 +1,13 @@
 package com.schoolplus.office.services.impl;
 
+import com.nimbusds.jwt.JWTClaimsSet;
 import com.schoolplus.office.config.ServerConfiguration;
 import com.schoolplus.office.security.SecurityUser;
 import com.schoolplus.office.services.AccessTokenService;
 import com.schoolplus.office.services.JwtService;
 import com.schoolplus.office.web.exceptions.InvalidGrantException;
-import com.schoolplus.office.web.models.AccessTokenCommand;
-import com.schoolplus.office.web.models.ErrorDesc;
-import com.schoolplus.office.web.models.TokenCommand;
+import com.schoolplus.office.web.exceptions.TokenNotFoundException;
+import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.EnumUtils;
@@ -16,10 +16,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -65,5 +64,32 @@ public class AccessTokenServiceImpl implements AccessTokenService {
         log.info("Access token has been created for the User in JWT format [userId: {}]", securityUser.getId().toString());
 
         return jwtService.createJwt(tokenCommand).serialize();
+    }
+
+    @Override
+    public TokenResponseDto checkToken(TokenRequestDto tokenRequest) {
+        if(tokenRequest.getAccessToken() == null) {
+            log.warn("Token is empty");
+            throw new InvalidGrantException(ErrorDesc.INVALID_TOKEN.getDesc());
+        }
+
+        String token = tokenRequest.getAccessToken();
+
+        if (!jwtService.validate(token)) {
+            log.warn("The given token couldn't validated [token: {}]", token);
+            throw new InvalidGrantException(ErrorDesc.INVALID_TOKEN.getDesc());
+        }
+
+        JWTClaimsSet jwtClaimsSet = jwtService.parseAndValidate(token);
+
+        LocalDateTime expiryDate = jwtClaimsSet.getExpirationTime()
+                .toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+        if (expiryDate.isBefore(LocalDateTime.now())) {
+            log.warn("The given token is expired [token: {}]", token);
+            throw new InvalidGrantException(ErrorDesc.INVALID_TOKEN.getDesc());
+        }
+
+        return TokenResponseDto.builder().build();
     }
 }
