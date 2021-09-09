@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @DiscriminatorValue("STUDENT")
 @Entity
-public class Student extends User implements CanAppointment{
+public class Student extends User implements CanAppointment {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.MERGE
