@@ -434,15 +434,14 @@ public class ClassroomManagementControllerTest {
 
                 userRepository.saveAll(List.of(teacher, parent, newStudent));
                 classroomRepository.save(classRoom);
-
             }
         }
 
         @DisplayName("Get Classroom List Successfully")
         @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:classrooms"})
         @Test
-        void classRoomsroomListSuccessfully() throws Exception {
-            mockMvc.perform(get(ClassroomManagementController.ENDPOINT + "?page=1&size=10"))
+        void classRoomsListSuccessfully() throws Exception {
+            mockMvc.perform(get(ClassroomManagementController.ENDPOINT + "?page=0&size=100"))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$..classRoomId").isNotEmpty())

@@ -110,11 +110,10 @@ public class UserManagementControllerTest {
         @Test
         void listingUsersSuccessfully() throws Exception {
 
-            mockMvc.perform(get(UserManagementController.ENDPOINT))
+            mockMvc.perform(get(UserManagementController.ENDPOINT+ "?size=100"))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(jsonPath("$.length()", is(10)))
                     .andExpect(jsonPath("$..userId").isNotEmpty())
                     .andExpect(jsonPath("$..username").isNotEmpty())
                     .andExpect(jsonPath("$..firstName").isNotEmpty())
