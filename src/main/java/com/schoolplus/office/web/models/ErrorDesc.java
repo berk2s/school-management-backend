@@ -29,7 +29,8 @@ public enum ErrorDesc {
     ORGANIZATION_NOT_FOUND("Organization not found", 19),
     GRADE_NOT_FOUND("Grade not found", 20),
     LESSON_NOT_FOUND("Lesson not found", 21),
-    SYLLABUS_NOT_FOUND("Syllabus not found", 22);
+    SYLLABUS_NOT_FOUND("Syllabus not found", 22),
+    CONTINUITY_NOT_FOUND("Continuity not found", 22);
 
     private final String desc;
     private final Integer code;
