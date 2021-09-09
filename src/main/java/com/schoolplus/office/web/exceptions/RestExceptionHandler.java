@@ -107,7 +107,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(JWTException.class)
     public ResponseEntity<ErrorResponseDto> handleJWTCreatingException(JWTException ex) {
-        return errorResponse(new ErrorResponseDto(ErrorType.SERVER_ERROR, ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
+        return errorResponse(new ErrorResponseDto(ErrorType.INVALID_GRANT, ex.getMessage(), HttpStatus.UNAUTHORIZED));
     }
 
     @ExceptionHandler(UserNotFoundException.class)

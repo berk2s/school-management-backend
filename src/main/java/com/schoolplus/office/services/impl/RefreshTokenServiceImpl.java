@@ -9,6 +9,7 @@ import com.schoolplus.office.security.SecurityUser;
 import com.schoolplus.office.services.AccessTokenService;
 import com.schoolplus.office.services.RefreshTokenService;
 import com.schoolplus.office.utils.TokenUtils;
+import com.schoolplus.office.web.exceptions.InvalidGrantException;
 import com.schoolplus.office.web.exceptions.InvalidRequestException;
 import com.schoolplus.office.web.exceptions.TokenNotFoundException;
 import com.schoolplus.office.web.exceptions.UserNotFoundException;
@@ -74,7 +75,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     public TokenResponseDto createToken(TokenRequestDto tokenRequest) {
         if (StringUtils.isEmpty(tokenRequest.getRefreshToken())) {
             log.warn("Refresh token is empty or it was not inside request [refreshToken: {}]", tokenRequest.getRefreshToken());
-            throw new InvalidRequestException(ErrorDesc.INVALID_TOKEN.getDesc());
+            throw new InvalidGrantException(ErrorDesc.INVALID_TOKEN.getDesc());
         }
 
         RefreshToken refreshToken = refreshTokenRepository.findByToken(tokenRequest.getRefreshToken())

@@ -19,12 +19,14 @@ public class TokenRequestDto {
     @JsonProperty("grant_type")
     private String grantType;
 
-    @NotNull
     @JsonProperty("client_id")
     private String clientId;
 
     @JsonProperty("refresh_token")
     private String refreshToken;
+
+    @JsonProperty("access_token")
+    private String accessToken;
 
     @JsonProperty("scopes")
     private String scopes;
