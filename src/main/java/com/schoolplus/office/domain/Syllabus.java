@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class Syllabus {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "syllabus_note")

@@ -23,7 +23,7 @@ import java.util.List;
 public class Announcement {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "announcement_title")

@@ -21,7 +21,7 @@ import java.util.List;
 public class Classroom {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "classroom_tag")

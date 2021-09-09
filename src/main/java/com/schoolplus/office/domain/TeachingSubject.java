@@ -20,7 +20,7 @@ import java.util.List;
 public class TeachingSubject {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", insertable = false, updatable = false)
     private Long id;
 
