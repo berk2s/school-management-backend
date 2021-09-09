@@ -1,8 +1,8 @@
-package com.schoolplus.office.web.controllers;
+package com.schoolplus.office.web.controllers.authentication;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.schoolplus.office.config.ServerConfiguration;
+import com.schoolplus.office.web.controllers.authentication.LoginController;
 import com.schoolplus.office.web.models.ErrorDesc;
 import com.schoolplus.office.web.models.ErrorType;
 import com.schoolplus.office.web.models.LoginRequestDto;
@@ -13,10 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;

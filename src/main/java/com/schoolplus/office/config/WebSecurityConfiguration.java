@@ -51,6 +51,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/api-docs").permitAll()
                 .mvcMatchers("/api-docs/**").permitAll()
                 .mvcMatchers("/login").permitAll()
+                .mvcMatchers("/token").permitAll()
                 .anyRequest().authenticated();
 
     }
