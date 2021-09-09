@@ -20,7 +20,7 @@ import java.util.Set;
 public class Role {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", insertable = false, updatable = false)
     private Long id;
 
