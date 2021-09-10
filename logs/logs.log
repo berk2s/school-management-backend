@@ -197,3 +197,32 @@
 2021-09-10 06:49:17,753 INFO com.schoolplus.office.services.impl.GradeServiceImpl [main] Grade has been created successfully [gradeId: 248, performedBy: username]
 2021-09-10 06:49:17,783 WARN com.schoolplus.office.services.impl.GradeServiceImpl [main] Classroom with given id does not exists [classRoomId: 123123]
 2021-09-10 06:49:17,842 WARN com.schoolplus.office.services.impl.GradeServiceImpl [main] Grade with given id does not exists [gradeId: 123123123]
+2021-09-10 08:14:42,587 INFO org.springframework.boot.StartupInfoLogger [main] Starting AnnouncementManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 32422 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 08:14:42,591 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 08:14:42,592 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 08:14:45,061 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 08:14:49,036 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 08:14:51,613 INFO org.springframework.boot.StartupInfoLogger [main] Started AnnouncementManagementControllerTest in 9.708 seconds (JVM running for 11.484)
+2021-09-10 08:14:51,903 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 08:15:44,146 INFO org.springframework.boot.StartupInfoLogger [main] Starting AnnouncementManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 32434 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 08:15:44,149 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 08:15:44,150 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 08:15:46,568 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 08:15:50,550 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 08:15:53,072 INFO org.springframework.boot.StartupInfoLogger [main] Started AnnouncementManagementControllerTest in 9.352 seconds (JVM running for 10.934)
+2021-09-10 08:15:53,337 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 08:15:53,758 WARN com.schoolplus.office.web.exceptions.RestExceptionHandler [main] IllegalArgumentException: Failed to evaluate expression 'hasPermission(announcementId, 'announcement', 'ROLE_ADMIN')'
+2021-09-10 08:16:19,702 INFO org.springframework.boot.StartupInfoLogger [main] Starting AnnouncementManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 32448 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 08:16:19,704 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 08:16:19,704 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 08:16:21,897 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 08:16:25,699 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 08:16:28,026 INFO org.springframework.boot.StartupInfoLogger [main] Started AnnouncementManagementControllerTest in 8.639 seconds (JVM running for 10.178)
+2021-09-10 08:16:28,287 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 08:16:44,693 INFO org.springframework.boot.StartupInfoLogger [main] Starting AnnouncementManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 32460 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 08:16:44,696 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 08:16:44,696 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 08:16:47,138 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 08:16:51,824 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 08:16:54,127 INFO org.springframework.boot.StartupInfoLogger [main] Started AnnouncementManagementControllerTest in 9.938 seconds (JVM running for 11.584)
+2021-09-10 08:16:54,392 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created

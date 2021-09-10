@@ -93,10 +93,7 @@ public class JWTFilter extends OncePerRequestFilter {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
         } catch (UsernameNotFoundException | JWTException | ParseException e) {
             httpServletResponse.sendError(HttpStatus.UNAUTHORIZED.value());
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
         }
-
-        return;
     }
 
     @Override
