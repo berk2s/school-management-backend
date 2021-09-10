@@ -41,6 +41,8 @@ public class TokenController {
             return new ResponseEntity<>(refreshTokenService.createToken(tokenRequest), HttpStatus.OK);
         } else if (tokenRequest.getGrantType().equalsIgnoreCase(GrantType.CHECK_TOKEN.getGrant())) {
             return new ResponseEntity<>(accessTokenService.checkToken(tokenRequest), HttpStatus.OK);
+        } else if (tokenRequest.getGrantType().equalsIgnoreCase(GrantType.REVOKE.getGrant())) {
+            return new ResponseEntity<>(refreshTokenService.revokeToken(tokenRequest), HttpStatus.OK);
         } else {
             log.warn("A client attempted a request with an invalid grant type [grantType: {}]", tokenRequest.getGrantType());
             throw new InvalidRequestException(ErrorDesc.INVALID_GRANT_TYPE.getDesc());
