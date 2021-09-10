@@ -76,7 +76,7 @@ public class JWTFilterTest {
 
     @DisplayName("Expired Jwt Error")
     @Test
-    void expirefJwtFilterError() throws Exception {
+    void expiredJwtFilterError() throws Exception {
 
         generateToken(true);
 
