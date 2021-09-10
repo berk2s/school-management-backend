@@ -2120,3 +2120,1194 @@ com.schoolplus.office.web.controllers.backoffice.HomeworkManagementController#cr
 2021-09-10 13:42:14,301 INFO com.schoolplus.office.services.impl.GradeServiceImpl [main] Grade has been created successfully [gradeId: 248, performedBy: username]
 2021-09-10 13:42:14,332 WARN com.schoolplus.office.services.impl.GradeServiceImpl [main] Classroom with given id does not exists [classRoomId: 123123]
 2021-09-10 13:42:14,399 WARN com.schoolplus.office.services.impl.GradeServiceImpl [main] Grade with given id does not exists [gradeId: 123123123]
+2021-09-10 14:45:42,516 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35263 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 14:45:42,519 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 14:45:42,520 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 14:45:44,910 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 14:45:49,132 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 14:45:51,442 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 9.544 seconds (JVM running for 11.397)
+2021-09-10 14:45:51,731 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 14:45:51,997 WARN com.schoolplus.office.web.exceptions.RestExceptionHandler [main] HttpMessageNotReadableException: Required request body is missing: public org.springframework.http.ResponseEntity com.schoolplus.office.web.controllers.backoffice.PersonalHomeworkManagementController.createPersonalHomework(com.schoolplus.office.web.models.CreatingPersonalHomeworkDto)
+2021-09-10 14:46:27,255 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35274 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 14:46:27,257 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 14:46:27,258 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 14:46:29,551 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 14:46:33,703 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 14:46:36,002 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 9.107 seconds (JVM running for 10.695)
+2021-09-10 14:46:36,280 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:15:11,065 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35430 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:15:11,068 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:15:11,069 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:15:13,583 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:15:15,474 WARN org.hibernate.tool.schema.internal.ExceptionHandlerLoggedImpl [main] GenerationTarget encountered exception accepting command : Error executing DDL "alter table personal_homework drop foreign key FK1d70w9oqwemw31dthnkxpqjqa" via JDBC Statement
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table personal_homework drop foreign key FK1d70w9oqwemw31dthnkxpqjqa" via JDBC Statement
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applySqlString(SchemaDropperImpl.java:375)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applySqlStrings(SchemaDropperImpl.java:359)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applyConstraintDropping(SchemaDropperImpl.java:331)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.dropFromMetadata(SchemaDropperImpl.java:230)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.performDrop(SchemaDropperImpl.java:154)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:126)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:112)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:145)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:318)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:468)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1259)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1845)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:602)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:123)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:124)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:190)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:132)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:244)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:138)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$6(ClassBasedTestDescriptor.java:350)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:355)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$7(ClassBasedTestDescriptor.java:350)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:177)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1655)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:312)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:658)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:349)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$4(ClassBasedTestDescriptor.java:270)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:269)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$2(ClassBasedTestDescriptor.java:259)
+	at java.base/java.util.Optional.orElseGet(Optional.java:369)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$3(ClassBasedTestDescriptor.java:258)
+	at org.junit.jupiter.engine.descriptor.NestedClassTestDescriptor.instantiateTestClass(NestedClassTestDescriptor.java:85)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:267)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$2(ClassBasedTestDescriptor.java:259)
+	at java.base/java.util.Optional.orElseGet(Optional.java:369)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$3(ClassBasedTestDescriptor.java:258)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:101)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:100)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:65)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$1(NodeTestTask.java:111)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:111)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:79)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:32)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:51)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:96)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:75)
+	at com.intellij.junit5.JUnit5IdeaTestRunner.startRunnerWithArgs(JUnit5IdeaTestRunner.java:71)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:33)
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:235)
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:54)
+Caused by: java.sql.SQLSyntaxErrorException: Table 'sp_db.personal_homework' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:764)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
+	... 115 common frames omitted
+2021-09-10 15:15:15,479 WARN org.hibernate.tool.schema.internal.ExceptionHandlerLoggedImpl [main] GenerationTarget encountered exception accepting command : Error executing DDL "alter table personal_homework drop foreign key FKeu5y9wyql2vjddk3gqt8xs5ti" via JDBC Statement
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table personal_homework drop foreign key FKeu5y9wyql2vjddk3gqt8xs5ti" via JDBC Statement
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applySqlString(SchemaDropperImpl.java:375)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applySqlStrings(SchemaDropperImpl.java:359)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applyConstraintDropping(SchemaDropperImpl.java:331)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.dropFromMetadata(SchemaDropperImpl.java:230)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.performDrop(SchemaDropperImpl.java:154)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:126)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:112)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:145)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:318)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:468)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1259)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1845)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:602)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:123)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:124)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:190)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:132)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:244)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:138)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$6(ClassBasedTestDescriptor.java:350)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:355)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$7(ClassBasedTestDescriptor.java:350)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:177)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1655)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:312)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:658)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:349)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$4(ClassBasedTestDescriptor.java:270)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:269)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$2(ClassBasedTestDescriptor.java:259)
+	at java.base/java.util.Optional.orElseGet(Optional.java:369)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$3(ClassBasedTestDescriptor.java:258)
+	at org.junit.jupiter.engine.descriptor.NestedClassTestDescriptor.instantiateTestClass(NestedClassTestDescriptor.java:85)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:267)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$2(ClassBasedTestDescriptor.java:259)
+	at java.base/java.util.Optional.orElseGet(Optional.java:369)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$3(ClassBasedTestDescriptor.java:258)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:101)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:100)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:65)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$1(NodeTestTask.java:111)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:111)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:79)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:32)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:51)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:96)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:75)
+	at com.intellij.junit5.JUnit5IdeaTestRunner.startRunnerWithArgs(JUnit5IdeaTestRunner.java:71)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:33)
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:235)
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:54)
+Caused by: java.sql.SQLSyntaxErrorException: Table 'sp_db.personal_homework' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:764)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
+	... 115 common frames omitted
+2021-09-10 15:15:15,481 WARN org.hibernate.tool.schema.internal.ExceptionHandlerLoggedImpl [main] GenerationTarget encountered exception accepting command : Error executing DDL "alter table personal_homework drop foreign key FK6s6umn0fafgnuq2imi8qlacel" via JDBC Statement
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table personal_homework drop foreign key FK6s6umn0fafgnuq2imi8qlacel" via JDBC Statement
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applySqlString(SchemaDropperImpl.java:375)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applySqlStrings(SchemaDropperImpl.java:359)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.applyConstraintDropping(SchemaDropperImpl.java:331)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.dropFromMetadata(SchemaDropperImpl.java:230)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.performDrop(SchemaDropperImpl.java:154)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:126)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:112)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:145)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:318)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:468)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1259)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1845)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:602)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:123)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:124)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:190)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:132)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:244)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:138)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$6(ClassBasedTestDescriptor.java:350)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:355)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$7(ClassBasedTestDescriptor.java:350)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:177)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1655)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:312)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:658)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:349)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$4(ClassBasedTestDescriptor.java:270)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:269)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$2(ClassBasedTestDescriptor.java:259)
+	at java.base/java.util.Optional.orElseGet(Optional.java:369)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$3(ClassBasedTestDescriptor.java:258)
+	at org.junit.jupiter.engine.descriptor.NestedClassTestDescriptor.instantiateTestClass(NestedClassTestDescriptor.java:85)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:267)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$2(ClassBasedTestDescriptor.java:259)
+	at java.base/java.util.Optional.orElseGet(Optional.java:369)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$3(ClassBasedTestDescriptor.java:258)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:101)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:100)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:65)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$1(NodeTestTask.java:111)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:111)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:79)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:32)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:51)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:96)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:75)
+	at com.intellij.junit5.JUnit5IdeaTestRunner.startRunnerWithArgs(JUnit5IdeaTestRunner.java:71)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:33)
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:235)
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:54)
+Caused by: java.sql.SQLSyntaxErrorException: Table 'sp_db.personal_homework' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:764)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
+	... 115 common frames omitted
+2021-09-10 15:15:18,113 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:15:20,411 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 9.736 seconds (JVM running for 11.603)
+2021-09-10 15:15:20,689 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:15:21,113 INFO com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] The Personal Homework has been created successfully [personalHomeWorkId: 11, performedBy: username]
+2021-09-10 15:15:41,111 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35443 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:15:41,115 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:15:41,115 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:15:43,198 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:15:47,185 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:15:49,338 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 8.569 seconds (JVM running for 10.152)
+2021-09-10 15:15:49,595 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:15:49,947 INFO com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] The Personal Homework has been created successfully [personalHomeWorkId: 11, performedBy: username]
+2021-09-10 15:16:10,487 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35448 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:16:10,490 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:16:10,491 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:16:13,173 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:16:17,797 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:16:19,942 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 9.824 seconds (JVM running for 11.86)
+2021-09-10 15:16:20,203 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:16:20,558 INFO com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] The Personal Homework has been created successfully [personalHomeWorkId: 11, performedBy: username]
+2021-09-10 15:16:27,795 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35453 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:16:27,800 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:16:27,801 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:16:29,915 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:16:34,731 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:16:36,916 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 9.45 seconds (JVM running for 10.967)
+2021-09-10 15:16:37,201 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:16:37,600 INFO com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] The Personal Homework has been created successfully [personalHomeWorkId: 11, performedBy: username]
+2021-09-10 15:29:42,135 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35495 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:29:42,139 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:29:42,139 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:29:44,651 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:29:49,069 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:29:51,206 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 9.515 seconds (JVM running for 11.099)
+2021-09-10 15:29:51,471 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:29:51,957 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Student with given id does not exists [studentId: 8b84d3a0-d231-4310-898b-b08db9b210e3]
+2021-09-10 15:30:21,318 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35504 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:30:21,321 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:30:21,321 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:30:23,526 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:30:28,352 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:30:30,440 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 9.677 seconds (JVM running for 11.763)
+2021-09-10 15:30:30,707 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:30:31,055 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Lesson with given id does not exists [lessonId: 123123]
+2021-09-10 15:30:36,463 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35508 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:30:36,466 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:30:36,466 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:30:38,597 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:30:43,573 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:30:45,808 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 9.701 seconds (JVM running for 11.601)
+2021-09-10 15:30:46,080 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:30:46,455 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Teacher with given id does not exists [teacherId: 2d47ad66-ad26-4a49-96b5-1f3cee6bbe3c]
+2021-09-10 15:30:54,575 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35513 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:30:54,580 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:30:54,581 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:30:57,085 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:31:02,026 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:31:04,253 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 10.047 seconds (JVM running for 11.657)
+2021-09-10 15:31:04,520 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:31:04,912 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Lesson with given id does not exists [lessonId: 123123]
+2021-09-10 15:35:44,515 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35546 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:35:44,519 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:35:44,519 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:35:47,051 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:35:52,417 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:35:54,902 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 10.916 seconds (JVM running for 12.821)
+2021-09-10 15:35:55,177 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:40:08,491 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35582 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:40:08,494 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:40:08,494 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:40:10,752 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:40:14,924 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:40:17,363 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 9.462 seconds (JVM running for 11.007)
+2021-09-10 15:40:17,635 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:41:34,967 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35596 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:41:34,970 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:41:34,970 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:41:37,795 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:41:44,137 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:41:46,686 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 12.232 seconds (JVM running for 13.987)
+2021-09-10 15:41:46,962 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:43:24,834 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35621 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:43:24,837 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:43:24,838 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:43:27,123 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:43:32,145 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:43:34,343 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 10.138 seconds (JVM running for 11.728)
+2021-09-10 15:43:34,624 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:43:34,878 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Personal Homework with given id does not exists [personalHomeworkId: 12312312312]
+2021-09-10 15:44:10,579 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35630 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:44:10,583 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:44:10,584 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:44:12,914 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:44:17,688 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:44:19,885 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 9.704 seconds (JVM running for 11.34)
+2021-09-10 15:44:20,165 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:51:25,354 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35651 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:51:25,357 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:51:25,357 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:51:27,434 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:51:31,444 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:51:33,779 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 8.997 seconds (JVM running for 10.442)
+2021-09-10 15:51:34,093 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:52:21,349 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35664 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:52:21,352 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:52:21,353 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:52:23,815 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:52:28,771 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:52:30,970 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 10.005 seconds (JVM running for 11.596)
+2021-09-10 15:52:31,238 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:54:09,421 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35679 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:54:09,426 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:54:09,426 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:54:12,674 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:54:19,426 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:54:22,489 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 13.822 seconds (JVM running for 15.823)
+2021-09-10 15:54:22,922 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:54:59,091 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35687 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:54:59,094 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:54:59,094 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:55:01,609 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:55:06,660 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:55:08,869 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 10.137 seconds (JVM running for 11.806)
+2021-09-10 15:55:09,156 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:55:09,412 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Student with given id does not exists [studentId: 62e0cf25-9961-429a-a1bd-b757e9f1ba06]
+2021-09-10 15:59:31,107 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35709 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:59:31,110 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:59:31,110 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:59:33,367 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:59:38,412 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:59:40,661 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 10.043 seconds (JVM running for 11.889)
+2021-09-10 15:59:40,950 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 15:59:47,080 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35714 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 15:59:47,085 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 15:59:47,092 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 15:59:50,278 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 15:59:55,054 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 15:59:57,186 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 10.609 seconds (JVM running for 12.882)
+2021-09-10 15:59:57,451 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:01:19,923 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35730 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:01:19,927 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:01:19,928 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:01:22,662 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:01:28,104 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:01:30,395 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 10.979 seconds (JVM running for 12.752)
+2021-09-10 16:01:30,670 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:01:37,240 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35738 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:01:37,242 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:01:37,243 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:01:39,341 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:01:44,031 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:01:46,263 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 9.596 seconds (JVM running for 11.205)
+2021-09-10 16:01:46,544 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:02:13,943 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35743 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:02:13,946 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:02:13,946 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:02:16,395 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:02:21,395 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:02:23,593 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 10.039 seconds (JVM running for 11.802)
+2021-09-10 16:02:23,859 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:02:40,663 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35751 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:02:40,667 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:02:40,669 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:02:43,009 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:02:48,150 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:02:50,332 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 10.02 seconds (JVM running for 11.58)
+2021-09-10 16:02:50,603 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:02:50,840 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Teacher with given id does not exists [teacherId: 575543ec-3d62-4d03-b9b6-7c06ffad6d70]
+2021-09-10 16:03:01,697 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35755 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:03:01,700 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:03:01,700 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:03:04,048 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:03:08,887 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:03:11,063 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 9.72 seconds (JVM running for 11.312)
+2021-09-10 16:03:11,330 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:03:11,564 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Lesson with given id does not exists [lessonId: 123123123]
+2021-09-10 16:08:59,905 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35779 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:08:59,908 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:08:59,911 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-09-10 16:09:01,580 WARN org.springframework.context.support.AbstractApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception; nested exception is org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+2021-09-10 16:09:01,609 ERROR org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter [main] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2021-09-10 16:09:01,613 ERROR org.springframework.test.context.TestContextManager [main] Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener@265a094b] to prepare test instance [com.schoolplus.office.web.controllers.backoffice.PersonalHomeworkManagementControllerTest@1f536481]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:132)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:124)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:190)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:132)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:244)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:138)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$6(ClassBasedTestDescriptor.java:350)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:355)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$7(ClassBasedTestDescriptor.java:350)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:177)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1655)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:312)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:658)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:349)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$4(ClassBasedTestDescriptor.java:270)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:269)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$2(ClassBasedTestDescriptor.java:259)
+	at java.base/java.util.Optional.orElseGet(Optional.java:369)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$3(ClassBasedTestDescriptor.java:258)
+	at org.junit.jupiter.engine.descriptor.NestedClassTestDescriptor.instantiateTestClass(NestedClassTestDescriptor.java:85)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:267)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$2(ClassBasedTestDescriptor.java:259)
+	at java.base/java.util.Optional.orElseGet(Optional.java:369)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$3(ClassBasedTestDescriptor.java:258)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:101)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:100)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:65)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$1(NodeTestTask.java:111)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:111)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:79)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:32)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:51)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:96)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:75)
+	at com.intellij.junit5.JUnit5IdeaTestRunner.startRunnerWithArgs(JUnit5IdeaTestRunner.java:71)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:33)
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:235)
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:54)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception; nested exception is org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:800)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:541)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1334)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1177)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:564)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:123)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
+	... 81 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception; nested exception is org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:658)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:638)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1334)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1177)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:564)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1380)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1300)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 101 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception; nested exception is org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653)
+	... 115 common frames omitted
+Caused by: org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+	at org.springframework.boot.autoconfigure.jdbc.DataSourceProperties.determineDriverClassName(DataSourceProperties.java:253)
+	at org.springframework.boot.autoconfigure.jdbc.DataSourceProperties.initializeDataSourceBuilder(DataSourceProperties.java:194)
+	at org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration.createDataSource(DataSourceConfiguration.java:48)
+	at org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration$Hikari.dataSource(DataSourceConfiguration.java:90)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	... 116 common frames omitted
+2021-09-10 16:09:01,647 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest.DeletingPersonalHomework using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35779 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:09:01,647 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:09:01,648 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-09-10 16:09:02,212 WARN org.springframework.context.support.AbstractApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception; nested exception is org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+2021-09-10 16:09:02,217 ERROR org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter [main] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2021-09-10 16:09:02,218 ERROR org.springframework.test.context.TestContextManager [main] Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener@32ab408e] to prepare test instance [com.schoolplus.office.web.controllers.backoffice.PersonalHomeworkManagementControllerTest$DeletingPersonalHomework@6ad6443]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:132)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:124)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:190)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:132)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:244)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:138)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$6(ClassBasedTestDescriptor.java:350)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:355)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$7(ClassBasedTestDescriptor.java:350)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:177)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1655)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:312)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:734)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:734)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:658)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:349)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$4(ClassBasedTestDescriptor.java:270)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:269)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$2(ClassBasedTestDescriptor.java:259)
+	at java.base/java.util.Optional.orElseGet(Optional.java:369)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$3(ClassBasedTestDescriptor.java:258)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:101)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:100)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:65)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$1(NodeTestTask.java:111)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:111)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:79)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:32)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:51)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:96)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:75)
+	at com.intellij.junit5.JUnit5IdeaTestRunner.startRunnerWithArgs(JUnit5IdeaTestRunner.java:71)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:33)
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:235)
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:54)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception; nested exception is org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:800)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:541)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1334)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1177)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:564)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:123)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:124)
+	... 78 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception; nested exception is org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:658)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:638)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1334)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1177)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:564)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1380)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1300)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 98 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception; nested exception is org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653)
+	... 112 common frames omitted
+Caused by: org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+	at org.springframework.boot.autoconfigure.jdbc.DataSourceProperties.determineDriverClassName(DataSourceProperties.java:253)
+	at org.springframework.boot.autoconfigure.jdbc.DataSourceProperties.initializeDataSourceBuilder(DataSourceProperties.java:194)
+	at org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration.createDataSource(DataSourceConfiguration.java:48)
+	at org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration$Hikari.dataSource(DataSourceConfiguration.java:90)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	... 113 common frames omitted
+2021-09-10 16:09:18,892 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35783 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:09:18,895 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:09:18,895 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:09:21,397 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:09:26,605 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:09:28,925 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 10.394 seconds (JVM running for 12.114)
+2021-09-10 16:09:29,208 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:09:34,272 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35788 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:09:34,277 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:09:34,277 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:09:36,615 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:09:41,759 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:09:44,850 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 10.943 seconds (JVM running for 12.618)
+2021-09-10 16:09:45,191 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:10:07,296 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35793 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:10:07,301 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:10:07,302 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:10:10,043 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:10:15,763 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:10:18,729 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 11.886 seconds (JVM running for 13.759)
+2021-09-10 16:10:19,029 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:10:19,283 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Personal Homework with given id does not exists [personalHomeworkId: 12312312312]
+2021-09-10 16:18:51,227 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35839 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:18:51,230 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:18:51,230 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:18:53,730 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:18:58,799 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:19:01,324 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 10.729 seconds (JVM running for 12.382)
+2021-09-10 16:19:01,627 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:19:01,962 WARN org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler [main] Request method 'PUT' not supported
+2021-09-10 16:27:50,977 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35886 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:27:50,979 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:27:50,979 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:27:53,273 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:27:58,050 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:28:00,291 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 9.93 seconds (JVM running for 11.68)
+2021-09-10 16:28:00,561 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:28:01,064 INFO com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] The Personal Homework has been updated successfully [personalHomeworkId: 11, performedBy: username]
+2021-09-10 16:28:30,466 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35898 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:28:30,468 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:28:30,469 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:28:32,855 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:28:37,750 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:28:40,023 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 9.917 seconds (JVM running for 11.631)
+2021-09-10 16:28:40,292 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:28:40,739 INFO com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] The Personal Homework has been updated successfully [personalHomeworkId: 11, performedBy: username]
+2021-09-10 16:31:50,878 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35919 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:31:50,881 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:31:50,881 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:31:53,150 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:31:57,704 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:32:00,012 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 9.711 seconds (JVM running for 11.258)
+2021-09-10 16:32:00,280 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:32:00,712 INFO com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] The Personal Homework has been updated successfully [personalHomeworkId: 11, performedBy: username]
+2021-09-10 16:32:20,657 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35938 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:32:20,660 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:32:20,661 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:32:23,016 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:32:27,976 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:32:30,206 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 9.891 seconds (JVM running for 11.509)
+2021-09-10 16:32:30,481 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:32:30,890 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Personal Homework with given id does not exists [personalHomeworkId: 12312312]
+2021-09-10 16:35:17,765 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35951 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:35:17,768 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:35:17,768 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:35:20,113 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:35:25,462 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:35:27,869 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 10.673 seconds (JVM running for 12.678)
+2021-09-10 16:35:28,143 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:35:28,572 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Student with given id does not exists [studentId: 6ea65867-c3c8-4bbc-9667-202f357195c7]
+2021-09-10 16:35:33,783 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35958 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:35:33,790 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:35:33,791 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:35:36,885 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:35:42,911 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:35:45,246 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 11.848 seconds (JVM running for 14.056)
+2021-09-10 16:35:45,524 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:35:45,928 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Teacher with given id does not exists [teacherId: 13080669-e624-469e-8112-9164b1c628ad]
+2021-09-10 16:35:50,456 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 35967 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:35:50,458 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:35:50,459 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:35:52,792 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:35:57,862 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:36:00,092 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 10.107 seconds (JVM running for 11.717)
+2021-09-10 16:36:00,371 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:36:00,787 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Lesson with given id does not exists [lessonId: 1221312312]
+2021-09-10 16:38:49,215 INFO org.springframework.boot.StartupInfoLogger [main] Starting PersonalHomeworkManagementControllerTest using Java 11.0.11 on Berk-MacBook-Pro.local with PID 36000 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:38:49,220 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:38:49,221 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:38:51,511 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:38:56,733 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:38:58,976 INFO org.springframework.boot.StartupInfoLogger [main] Started PersonalHomeworkManagementControllerTest in 10.313 seconds (JVM running for 12.542)
+2021-09-10 16:38:59,254 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:38:59,478 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Personal Homework with given id does not exists [personalHomeworkId: 12312312312]
+2021-09-10 16:38:59,681 INFO com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] The Personal Homework has been deleted successfully [personalHomeworkId: 14, performedBy: username]
+2021-09-10 16:38:59,888 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Lesson with given id does not exists [lessonId: 1221312312]
+2021-09-10 16:38:59,950 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Personal Homework with given id does not exists [personalHomeworkId: 12312312]
+2021-09-10 16:39:00,031 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Teacher with given id does not exists [teacherId: 766aae8e-2cdc-4b0b-8fd8-09926f6713a0]
+2021-09-10 16:39:00,100 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Student with given id does not exists [studentId: a1532bc1-4f94-474f-8918-84c5fb7ea8a5]
+2021-09-10 16:39:00,207 INFO com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] The Personal Homework has been updated successfully [personalHomeworkId: 33, performedBy: username]
+2021-09-10 16:39:00,308 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Lesson with given id does not exists [lessonId: 123123123]
+2021-09-10 16:39:00,642 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Personal Homework with given id does not exists [personalHomeworkId: 12312312312]
+2021-09-10 16:39:00,694 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Teacher with given id does not exists [teacherId: 8705ca0f-0855-4e96-9d20-7420c8972c54]
+2021-09-10 16:39:00,754 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Student with given id does not exists [studentId: 97e279f7-f9e2-4f76-b52c-bf177423c2a4]
+2021-09-10 16:39:00,835 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Lesson with given id does not exists [lessonId: 123123]
+2021-09-10 16:39:00,882 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Teacher with given id does not exists [teacherId: 1b74db37-510d-48b9-b9c1-608020e59ed4]
+2021-09-10 16:39:00,944 INFO com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] The Personal Homework has been created successfully [personalHomeWorkId: 68, performedBy: username]
+2021-09-10 16:39:01,011 WARN com.schoolplus.office.services.impl.PersonalHomeworkServiceImpl [main] Student with given id does not exists [studentId: eb4fbef9-6810-440c-8906-7d24beb933bb]
+2021-09-10 16:39:01,093 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [main] Access token has been created for the User in JWT format [userId: 0693b9ee-182e-4594-a466-4b183b558a1e]
+2021-09-10 16:39:01,095 INFO com.schoolplus.office.services.impl.JwtServiceImpl [main] Access token is generated for the User [userId: 0693b9ee-182e-4594-a466-4b183b558a1e]
+2021-09-10 16:39:01,162 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [main] Access token has been created for the User in JWT format [userId: 0693b9ee-182e-4594-a466-4b183b558a1e]
+2021-09-10 16:39:01,162 INFO com.schoolplus.office.services.impl.JwtServiceImpl [main] Access token is generated for the User [userId: 0693b9ee-182e-4594-a466-4b183b558a1e]
+2021-09-10 16:39:01,298 INFO com.schoolplus.office.services.impl.SyllabusServiceImpl [main] The Syllabus has been deleted successfully [syllabusId: 78, performedBy: username]
+2021-09-10 16:39:01,351 WARN com.schoolplus.office.services.impl.SyllabusServiceImpl [main] Syllabus with given id does not exists [syllabusId: 12312312]
+2021-09-10 16:39:01,485 INFO com.schoolplus.office.services.impl.SyllabusServiceImpl [main] The Syllabus has been updated successfully [syllabusId: 88, performedBy: username]
+2021-09-10 16:39:01,588 WARN com.schoolplus.office.services.impl.SyllabusServiceImpl [main] Syllabus with given id does not exists [syllabusId: 12312312]
+2021-09-10 16:39:01,671 WARN com.schoolplus.office.services.impl.SyllabusServiceImpl [main] Organization with given id does not exists [organizationId: 12312312]
+2021-09-10 16:39:01,735 WARN com.schoolplus.office.services.impl.SyllabusServiceImpl [main] Lesson with given id does not exists [lessoNid: 123123123]
+2021-09-10 16:39:01,826 WARN com.schoolplus.office.services.impl.SyllabusServiceImpl [main] Teacher with given id does not exists [teacherId: f6b69164-ea07-41c2-93c5-889880519e88]
+2021-09-10 16:39:01,893 WARN com.schoolplus.office.services.impl.SyllabusServiceImpl [main] Classroom with given id does not exists [classRoomId: 12312312]
+2021-09-10 16:39:02,097 WARN com.schoolplus.office.services.impl.SyllabusServiceImpl [main] Syllabus with given id does not exists [syllabusId: 123123123]
+2021-09-10 16:39:02,207 WARN com.schoolplus.office.services.impl.SyllabusServiceImpl [main] Teacher with given id does not exists [teacherId: 64208285-a7bc-43cf-9bf3-9d311c0134a2]
+2021-09-10 16:39:02,323 WARN com.schoolplus.office.services.impl.SyllabusServiceImpl [main] Organization with given id does not exists [organizationId: 123123]
+2021-09-10 16:39:02,425 WARN com.schoolplus.office.services.impl.SyllabusServiceImpl [main] Lesson with given id does not exists [lessonId: 123123123]
+2021-09-10 16:39:02,698 WARN com.schoolplus.office.services.impl.SyllabusServiceImpl [main] Classroom with given id does not exists [classRoomId: 123123123]
+2021-09-10 16:39:02,799 WARN com.schoolplus.office.services.impl.SyllabusServiceImpl [main] Teacher with given id does not exists [teacherId: 8252dae9-ab90-4ff0-bf11-6f4ffbd42343]
+2021-09-10 16:39:02,850 WARN com.schoolplus.office.services.impl.SyllabusServiceImpl [main] Organization with given id does not exists [organizationId: 123123123]
+2021-09-10 16:39:02,893 WARN com.schoolplus.office.services.impl.SyllabusServiceImpl [main] Classroom with given id does not exists [classRoomId: 123123]
+2021-09-10 16:39:02,935 WARN com.schoolplus.office.services.impl.SyllabusServiceImpl [main] Lesson with given id does not exists [lessoNid: 123123]
+2021-09-10 16:39:03,012 INFO com.schoolplus.office.services.impl.SyllabusServiceImpl [main] The Syllabus has been created successfully [syllabusId: 206, performedBy: username]
+2021-09-10 16:39:03,092 WARN com.schoolplus.office.services.impl.ContinuityServiceImpl [main] Continuity with given id does not exists [continuityId: 85772d16-14df-472e-ab22-5d5409e80c3e]
+2021-09-10 16:39:03,146 WARN com.schoolplus.office.services.impl.ContinuityServiceImpl [main] The Continuity has been deleted successfully [contiunityId: a5d2e331-999b-4335-900a-db8c3d75f89a, performedBy: username]
+2021-09-10 16:39:03,242 WARN com.schoolplus.office.services.impl.ContinuityServiceImpl [main] Syllabus with given id does not exists [syllabusId: 123123123]
+2021-09-10 16:39:03,322 WARN com.schoolplus.office.services.impl.ContinuityServiceImpl [main] Classroom with given id does not exists [classRoomId: 123123123]
+2021-09-10 16:39:03,412 WARN com.schoolplus.office.services.impl.ContinuityServiceImpl [main] Organization with given id does not exists [organizationId: 12312312312]
+2021-09-10 16:39:03,493 WARN com.schoolplus.office.services.impl.ContinuityServiceImpl [main] The Continuity has been updated successfully [continuityId: com.schoolplus.office.domain.Continuity@5a8f777, performedBy: username]
+2021-09-10 16:39:03,594 WARN com.schoolplus.office.services.impl.ContinuityServiceImpl [main] Continuity with given id does not exists [continuityId: ba42d458-f065-40aa-be76-0777f39a69b7]
+2021-09-10 16:39:03,676 WARN com.schoolplus.office.services.impl.ContinuityServiceImpl [main] Student with given id does not exists [studentId: 8c4f9979-82da-49ec-bda8-208368b56906]
+2021-09-10 16:39:04,062 WARN com.schoolplus.office.services.impl.ContinuityServiceImpl [main] Syllabus with given id does not exists [syllabusId: 12312312312]
+2021-09-10 16:39:04,112 WARN com.schoolplus.office.services.impl.ContinuityServiceImpl [main] Classroom with given id does not exists [classRoomId: 12312312312]
+2021-09-10 16:39:04,163 WARN com.schoolplus.office.services.impl.ContinuityServiceImpl [main] Continuity with given id does not exists [continuityId: e14a2ca0-2eea-4168-a82d-d70162c1c32f]
+2021-09-10 16:39:04,211 WARN com.schoolplus.office.services.impl.ContinuityServiceImpl [main] Organization with given id does not exists [organizationId: 12312312]
+2021-09-10 16:39:04,262 WARN com.schoolplus.office.services.impl.ContinuityServiceImpl [main] Student with given id does not exists [studentId: cb874a93-9a73-4ef5-bed9-1d7c2db1aeb0]
+2021-09-10 16:39:04,324 INFO com.schoolplus.office.services.impl.ContinuityServiceImpl [main] Continuity has been created successfully [continuityId: fe216ea8-cc53-488f-b4bb-478a0e0bae79, performedBy: username]
+2021-09-10 16:39:04,376 WARN com.schoolplus.office.services.impl.ContinuityServiceImpl [main] Syllabus with given id does not exists [syllabusId: 1231232]
+2021-09-10 16:39:04,423 WARN com.schoolplus.office.services.impl.ContinuityServiceImpl [main] Organization with given id does not exists [organizationId: 12312312]
+2021-09-10 16:39:04,477 WARN com.schoolplus.office.services.impl.ContinuityServiceImpl [main] Student with given id does not exists [studentId: 638fdce9-d98b-4ba5-a9c3-4b75e857fba5]
+2021-09-10 16:39:04,532 WARN com.schoolplus.office.services.impl.ContinuityServiceImpl [main] Classroom with given id does not exists [classRoomId: 12312312]
+2021-09-10 16:39:05,098 INFO com.schoolplus.office.services.impl.ClassroomServiceImpl [main] Classroom has been updated deleted [classRoomId: 372, performedBy: username]
+2021-09-10 16:39:05,143 WARN com.schoolplus.office.services.impl.ClassroomServiceImpl [main] Classroom with given id does not exists [classRoomId: 12312312]
+2021-09-10 16:39:05,179 WARN com.schoolplus.office.services.impl.ClassroomServiceImpl [main] Classroom with given id does not exists [classRoomId:12312312]
+2021-09-10 16:39:05,265 WARN com.schoolplus.office.services.impl.ClassroomServiceImpl [main] Classroom with given id does not exists [classRoomId:12341210]
+2021-09-10 16:39:05,308 WARN com.schoolplus.office.services.impl.ClassroomServiceImpl [main] Student with given id does not exists [studentId: 55ee8729-4a90-4486-abab-f6cba36fb93f]
+2021-09-10 16:39:05,344 WARN com.schoolplus.office.services.impl.ClassroomServiceImpl [main] Teacher with given id does not exists [teacherId: a34c9722-ac57-416c-a56c-b16d4309f185]
+2021-09-10 16:39:05,383 INFO com.schoolplus.office.services.impl.ClassroomServiceImpl [main] Classroom has been updated successfully [classRoomId: 408, performedBy: username]
+2021-09-10 16:39:05,422 WARN com.schoolplus.office.services.impl.ClassroomServiceImpl [main] Organization with given id does not exists [organizationId: 12312312]
+2021-09-10 16:39:05,464 INFO com.schoolplus.office.services.impl.ClassroomServiceImpl [main] Classroom has been created successfully [classRoomId: 417, performedBy: username]
+2021-09-10 16:39:05,490 WARN com.schoolplus.office.services.impl.ClassroomServiceImpl [main] Grade with given id does not exists [gradeId: 123123123]
+2021-09-10 16:39:05,525 WARN com.schoolplus.office.services.impl.ClassroomServiceImpl [main] Teacher with given id does not exists [teacherId: 9a10ed67-e1ad-440f-8cd9-dc7745e7c228]
+2021-09-10 16:39:05,551 WARN com.schoolplus.office.services.impl.ClassroomServiceImpl [main] Organization with given id does not exists [organizationId: 123123123]
+2021-09-10 16:39:05,575 WARN com.schoolplus.office.services.impl.ClassroomServiceImpl [main] Student with given id does not exists [studentId: b842cdf0-8e90-41c6-9977-6e05dfaaefed]
+2021-09-10 16:39:05,694 WARN com.schoolplus.office.services.impl.AppointmentServiceImpl [main] The Teacher is not available between the start and end date of the taken appointment [teacherId: 86e862db-591d-4023-80c9-645bddb10159, startDate: 2021-08-28T15:00, endDate: 2021-08-28T15:30]
+2021-09-10 16:39:05,737 WARN com.schoolplus.office.services.impl.AppointmentServiceImpl [main] The Teacher is not available between the start and end date of the taken appointment [teacherId: cad7aebc-305c-480f-a42c-b79a2433d014, startDate: 2021-08-28T15:00, endDate: 2021-08-28T15:30]
+2021-09-10 16:39:05,777 WARN com.schoolplus.office.services.impl.AppointmentServiceImpl [main] Appointment with given id does not exists [appointmentId: 68869b57-87ea-4a01-a1d0-8f1e512bcaba]
+2021-09-10 16:39:05,804 WARN com.schoolplus.office.services.impl.AppointmentServiceImpl [main] Organization with given id does not exists [organizationId: 12312312312]
+2021-09-10 16:39:05,860 WARN com.schoolplus.office.services.impl.AppointmentServiceImpl [main] The Student is not available between the start and end date of the taken appointment [teacherId: 60e296be-8ff1-4232-b407-ef300a019eff, startDate: 2021-08-28T15:00, endDate: 2021-08-28T15:30]
+2021-09-10 16:39:05,914 WARN com.schoolplus.office.services.impl.AppointmentServiceImpl [main] The Student is not available between the start and end date of the taken appointment [teacherId: c3ad4434-0cd6-412c-9aec-f43b53c40c1c, startDate: 2021-08-28T15:00, endDate: 2021-08-28T15:30]
+2021-09-10 16:39:05,967 INFO com.schoolplus.office.services.impl.AppointmentServiceImpl [main] The Appointment has been edited successfully [appointmentId: cde5a498-fe1f-4937-9166-7a5f0a6d8a92, performedBy: username]
+2021-09-10 16:39:06,008 WARN com.schoolplus.office.services.impl.AppointmentServiceImpl [main] Teacher with given id does not exists [teachetId: 599c1410-66c6-435d-a6f9-9966f60e1616]
+2021-09-10 16:39:06,052 WARN com.schoolplus.office.services.impl.AppointmentServiceImpl [main] Student with given id does not exists [studentId: 923908bf-fb8b-45d8-83a9-2842490a7360]
+2021-09-10 16:39:06,099 WARN com.schoolplus.office.services.impl.AppointmentServiceImpl [main] Appointment with given id does not exists [appointmentId: a03cab06-dd22-4426-8251-193e88a91a55]
+2021-09-10 16:39:06,257 WARN com.schoolplus.office.services.impl.AppointmentServiceImpl [main] Appointment with given id does not exists [appointmentId: 98635529-0015-4549-b2d5-2fd242c212d3]
+2021-09-10 16:39:06,380 WARN com.schoolplus.office.services.impl.AppointmentServiceImpl [main] Teacher with given id does not exists [teacherId: 55915b96-fdda-4e79-980b-b6c25860e6f0]
+2021-09-10 16:39:06,420 WARN com.schoolplus.office.services.impl.AppointmentServiceImpl [main] Organization with given id does not exists [organizationId: 12312312312]
+2021-09-10 16:39:06,456 WARN com.schoolplus.office.services.impl.AppointmentServiceImpl [main] Student with given id does not exists [studentId: fde3ba1b-668f-4898-a587-2b4e8b468fca]
+2021-09-10 16:39:06,525 INFO com.schoolplus.office.services.impl.AppointmentServiceImpl [main] The Appointment has been created successfully [appointmentId: f51cbec6-90ab-4ccc-bf89-94157648ce15, performedBy: username]
+2021-09-10 16:39:06,584 WARN com.schoolplus.office.services.impl.AppointmentServiceImpl [main] The Student is not available between the start and end date of the taken appointment [teacherId: 0dd65a18-c311-4e72-9ca2-829a5c93e29b, startDate: 2021-08-28T16:00, endDate: 2021-08-28T16:30]
+2021-09-10 16:39:06,636 WARN com.schoolplus.office.services.impl.AppointmentServiceImpl [main] The Teacher is not available between the start and end date of the taken appointment [teacherId: cc77b3f7-2fa3-46e2-8bf2-3f57630595d3, startDate: 2021-08-28T16:00, endDate: 2021-08-28T16:30]
+2021-09-10 16:39:06,706 INFO com.schoolplus.office.services.impl.HomeworkServiceImpl [main] The Homework has been deleted successfully [homeworkId: 503, performedBy: username]
+2021-09-10 16:39:06,746 WARN com.schoolplus.office.services.impl.HomeworkServiceImpl [main] Homework with given id does not exists [homeworkId: 12312321]
+2021-09-10 16:39:06,835 WARN com.schoolplus.office.services.impl.HomeworkServiceImpl [main] Syllabus with given id does not exists [syllabusId: 123123123]
+2021-09-10 16:39:06,887 WARN com.schoolplus.office.services.impl.HomeworkServiceImpl [main] Classroom with given id does not exists [classroomId: 112312312]
+2021-09-10 16:39:06,957 WARN com.schoolplus.office.services.impl.HomeworkServiceImpl [main] Teacher with given id does not exists [teacherId: 0da22e8a-d845-4dcb-9e73-ae89e223356c]
+2021-09-10 16:39:07,006 WARN com.schoolplus.office.services.impl.HomeworkServiceImpl [main] Homework with given id does not exists [homeworkId: 12312]
+2021-09-10 16:39:07,087 INFO com.schoolplus.office.services.impl.HomeworkServiceImpl [main] The Homework has been updated successfully [homeworkId: 545, performedBy: username]
+2021-09-10 16:39:07,251 WARN com.schoolplus.office.services.impl.HomeworkServiceImpl [main] Homework with given id does not exists [homeworkId: 123123123]
+2021-09-10 16:39:07,367 WARN com.schoolplus.office.services.impl.HomeworkServiceImpl [main] Teacher with given id does not exists [teacher: 781d739f-fd12-46f2-b2ea-930fb04d4a08]
+2021-09-10 16:39:07,405 WARN com.schoolplus.office.services.impl.HomeworkServiceImpl [main] Classroom with given id does not exists [classroomId: 123123123]
+2021-09-10 16:39:07,443 WARN com.schoolplus.office.services.impl.HomeworkServiceImpl [main] Syllabus with given id does not exists [syllabusId: 12312312312]
+2021-09-10 16:39:07,689 INFO com.schoolplus.office.services.impl.HomeworkServiceImpl [main] The Homework has been created successfully [homeworkId: 599, performedBy: username]
+2021-09-10 16:39:07,740 WARN com.schoolplus.office.services.impl.HomeworkServiceImpl [main] Teacher with given id does not exists [teacherId: 17f25bf6-a03c-4369-be0e-6f35e1092e95]
+2021-09-10 16:39:07,798 WARN com.schoolplus.office.services.impl.HomeworkServiceImpl [main] Syllabus with given id does not exists [syllabusId: 123123123]
+2021-09-10 16:39:07,839 WARN com.schoolplus.office.services.impl.HomeworkServiceImpl [main] Classroom with given id does not exists [classroomId: 112312312]
+2021-09-10 16:39:07,890 WARN com.schoolplus.office.services.impl.ParentServiceImpl [main] Student with given id does not exists [studentId: 4f6392ce-001d-480d-84db-87a63250db25]
+2021-09-10 16:39:07,909 WARN com.schoolplus.office.services.impl.ParentServiceImpl [main] Parent with given id does not exists [parentId: 7a4da96a-f9f4-4b89-8cfc-5f1bfb822569]
+2021-09-10 16:39:07,929 INFO com.schoolplus.office.services.impl.ParentServiceImpl [main] Parent has been edited [parentId: dceb6211-df80-4708-a9c7-56dd5983195e, performedBy: username]
+2021-09-10 16:39:07,977 WARN com.schoolplus.office.services.impl.ParentServiceImpl [main] Parent with given id does not exists [parentId: 2b18c481-5bda-40fe-899d-bf46c8c78436]
+2021-09-10 16:39:08,136 WARN com.schoolplus.office.services.impl.ParentServiceImpl [main] Student with given id does not exists [studentId: 837d5e83-cb80-4b04-80ea-5810c6b21237]
+2021-09-10 16:39:08,248 INFO com.schoolplus.office.services.impl.ParentServiceImpl [main] Parent has been created [parentId: e3d0055b-bf4a-49c8-a1a0-00908dae7434, performedBy: username]
+2021-09-10 16:39:08,380 WARN com.schoolplus.office.services.impl.AccessTokenServiceImpl [main] The requested authority is not available for the User [userId: 0693b9ee-182e-4594-a466-4b183b558a1e, authority: INVALID_SCOPE]
+2021-09-10 16:39:08,481 WARN com.schoolplus.office.security.UserAuthenticationProvider [main] Passwords are not matching [username: username]
+2021-09-10 16:39:08,492 WARN com.schoolplus.office.security.SecurityUserDetailsService [main] User not found by given username [username: invalid_username]
+2021-09-10 16:39:08,525 WARN com.schoolplus.office.web.exceptions.RestExceptionHandler [main] MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<com.schoolplus.office.web.models.TokenResponseDto> com.schoolplus.office.web.controllers.authentication.LoginController.handleLogin(com.schoolplus.office.web.models.LoginRequestDto) with 3 errors: [Field error in object 'loginRequestDto' on field 'scopes': rejected value [[]]; codes [Size.loginRequestDto.scopes,Size.scopes,Size.java.util.List,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [loginRequestDto.scopes,scopes]; arguments []; default message [scopes],99,1]; default message [size must be between 1 and 99]] [Field error in object 'loginRequestDto' on field 'scopes': rejected value [[]]; codes [NotEmpty.loginRequestDto.scopes,NotEmpty.scopes,NotEmpty.java.util.List,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [loginRequestDto.scopes,scopes]; arguments []; default message [scopes]]; default message [must not be empty]] [Field error in object 'loginRequestDto' on field 'password': rejected value [null]; codes [NotEmpty.loginRequestDto.password,NotEmpty.password,NotEmpty.java.lang.String,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [loginRequestDto.password,password]; arguments []; default message [password]]; default message [must not be empty]] 
+2021-09-10 16:39:08,625 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [main] Access token has been created for the User in JWT format [userId: 0693b9ee-182e-4594-a466-4b183b558a1e]
+2021-09-10 16:39:08,626 INFO com.schoolplus.office.services.impl.JwtServiceImpl [main] Access token is generated for the User [userId: 0693b9ee-182e-4594-a466-4b183b558a1e]
+2021-09-10 16:39:08,639 INFO com.schoolplus.office.services.impl.LoginServiceImpl [main] The User has been logged successfully [userId: 0693b9ee-182e-4594-a466-4b183b558a1e]
+2021-09-10 16:39:08,668 INFO com.schoolplus.office.services.impl.UserServiceImpl [main] User has been deleted successfully [userId: 0693b9ee-182e-4594-a466-4b183b558a1e, performedBy: username]
+2021-09-10 16:39:08,732 INFO com.schoolplus.office.services.impl.UserServiceImpl [main] User has been edited successfully [userId: 0693b9ee-182e-4594-a466-4b183b558a1e, performedBy: username]
+2021-09-10 16:39:08,761 WARN com.schoolplus.office.services.impl.UserServiceImpl [main] Organization with given id does not exists
+2021-09-10 16:39:08,788 WARN com.schoolplus.office.services.impl.UserServiceImpl [main] Authority with given id does not exists [authorityId: 1234]
+2021-09-10 16:39:08,821 WARN com.schoolplus.office.services.impl.UserServiceImpl [main] Role with given id does not exists [roleId: 12312321]
+2021-09-10 16:39:08,850 WARN com.schoolplus.office.services.impl.UserServiceImpl [main] Role with given id does not exists [roleId: 1123321]
+2021-09-10 16:39:08,875 WARN com.schoolplus.office.services.impl.UserServiceImpl [main] User with given id does not exists given [userId: 6a04a9d2-061a-498b-b1a7-774f2966d0fe]
+2021-09-10 16:39:08,901 WARN com.schoolplus.office.services.impl.UserServiceImpl [main] Authority with given id does not exists [authorityId: 112345]
+2021-09-10 16:39:08,918 WARN com.schoolplus.office.services.impl.UserServiceImpl [main] User with given id does not exists given [userId: f4288b30-f7bf-4c13-9293-e5d379c28daf]
+2021-09-10 16:39:12,890 WARN com.schoolplus.office.services.impl.StudentServiceImpl [main] Student with given id does not exists [studentId: 0fae4a15-1a27-4839-bfee-51f39c31b9d8]
+2021-09-10 16:39:12,976 INFO com.schoolplus.office.services.impl.StudentServiceImpl [main] User has been edited [userId: e5e7dbb4-caef-474a-9db3-bf6f18f59b24, performedBy: username]
+2021-09-10 16:39:13,038 WARN com.schoolplus.office.services.impl.StudentServiceImpl [main] Parent with given id does not exists [parentId: 19fdcb21-e6e4-4b32-9765-219833d76a94]
+2021-09-10 16:39:13,074 WARN com.schoolplus.office.services.impl.StudentServiceImpl [main] Student with given id does not exists [studentId: 933e322c-6793-46a1-b04d-2b8f0ae7755e]
+2021-09-10 16:39:13,126 WARN com.schoolplus.office.services.impl.StudentServiceImpl [main] Grade with given id does not exists [gradeId: 12312312312]
+2021-09-10 16:39:13,269 WARN com.schoolplus.office.services.impl.StudentServiceImpl [main] Authority with given id does not exists [authorityId: 31513]
+2021-09-10 16:39:13,396 WARN com.schoolplus.office.services.impl.StudentServiceImpl [main] Role with given id does not exists [roleId: 1231232]
+2021-09-10 16:39:13,523 INFO com.schoolplus.office.services.impl.StudentServiceImpl [main] User has been created [userId: b72357ad-2534-4c51-a7b8-6fe724931118, performedBy: username]
+2021-09-10 16:39:13,650 WARN com.schoolplus.office.services.impl.StudentServiceImpl [main] Parent with given id does not exists [parentId: 74c259ba-1d07-46c7-85ed-3f036b3ed91e]
+2021-09-10 16:39:13,764 WARN com.schoolplus.office.services.impl.StudentServiceImpl [main] Grade with given id does not exists [gradeId: 31513]
+2021-09-10 16:39:13,886 WARN com.schoolplus.office.services.impl.OrganizationServiceImpl [main] Organization with given id does not exists [organizationId: 123123]
+2021-09-10 16:39:13,939 WARN com.schoolplus.office.services.impl.OrganizationServiceImpl [main] Organization with given id does not exists [organizationId: 123123]
+2021-09-10 16:39:13,964 INFO com.schoolplus.office.services.impl.OrganizationServiceImpl [main] The organization has been created successfully [organizationId: 647, performedBy: username]
+2021-09-10 16:39:14,005 WARN com.schoolplus.office.services.impl.OrganizationServiceImpl [main] Organization with given id does not exists [organizationId: 12312312]
+2021-09-10 16:39:14,088 INFO com.schoolplus.office.services.impl.OrganizationServiceImpl [main] The organization has been created successfully [organizationId: null, performedBy: username]
+2021-09-10 16:39:14,139 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [main] Access token has been created for the User in JWT format [userId: 84a5ecaf-b3f4-4f60-8068-0ddcf6cae73d]
+2021-09-10 16:39:14,140 INFO com.schoolplus.office.services.impl.JwtServiceImpl [main] Access token is generated for the User [userId: 84a5ecaf-b3f4-4f60-8068-0ddcf6cae73d]
+2021-09-10 16:39:14,159 WARN com.schoolplus.office.services.impl.AccessTokenServiceImpl [main] Token is empty
+2021-09-10 16:39:14,186 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [main] Access token has been created for the User in JWT format [userId: b21ec8e8-0ffc-4673-a5e6-4ffc2d9239ba]
+2021-09-10 16:39:14,186 INFO com.schoolplus.office.services.impl.JwtServiceImpl [main] Access token is generated for the User [userId: b21ec8e8-0ffc-4673-a5e6-4ffc2d9239ba]
+2021-09-10 16:39:14,216 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [main] Access token has been created for the User in JWT format [userId: 79c2ded8-5540-4dec-a5f6-db4026eb6881]
+2021-09-10 16:39:14,217 INFO com.schoolplus.office.services.impl.JwtServiceImpl [main] Access token is generated for the User [userId: 79c2ded8-5540-4dec-a5f6-db4026eb6881]
+2021-09-10 16:39:14,223 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [main] Access token has been created for the User in JWT format [userId: 79c2ded8-5540-4dec-a5f6-db4026eb6881]
+2021-09-10 16:39:14,224 INFO com.schoolplus.office.services.impl.JwtServiceImpl [main] Access token is generated for the User [userId: 79c2ded8-5540-4dec-a5f6-db4026eb6881]
+2021-09-10 16:39:14,231 WARN com.schoolplus.office.services.impl.AccessTokenServiceImpl [main] The given token is expired [token: eyJraWQiOiIxIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiI3OWMyZGVkOC01NTQwLTRkZWMtYTVmNi1kYjQwMjZlYjY4ODEiLCJhdWQiOiJ1cmwiLCJuYmYiOjE2MzEyODExNTQsInJvbGVzIjpbXSwiaXNzIjoidXJsIiwic2NvcGVzIjoiR1RNS1NITUNUWiIsImV4cCI6MTYzMTI4MTE1NCwiaWF0IjoxNjMxMjgxMTU0LCJqdGkiOiJjNmI5YTJmNy1iNzE2LTQ1NzYtOWUyYS0wMzQzNGJiMjU0ODkifQ.Un4iQc8lsg9_L4LZCW0hbokKD5VPrT1aCu6HlJ6Rkg6ujREO1FnqwCJ3YGg9BZ5v0Sk1AGLMRa7GEpYLfoGCIK5t7Y42mjGof41S7aVgdLbv6M9qZ-stQ9HwLiEAyTYjOhyc9v4EAl1rTqTD7aNxHT54JerzvxXDdqV2H2XlldlqY9pQvTHUtk9sPGsTU_lrwv6PRdMpnXT1Wbi4qKjHJ1TvDzEeBnpyeC86pfZDfmOsXfR0qtFtMgjmQS3N3XiyqEuwjObt5lNEITUZu-vuf353nx0VhHSzR-Yg-uF8uPoibDm9x4p93JtuyIkLA0VB_sZKU3ekw_HeVqVv3a14Zg]
+2021-09-10 16:39:14,260 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [main] Access token has been created for the User in JWT format [userId: c695c74e-8650-4f61-90c8-82e44d49902b]
+2021-09-10 16:39:14,261 INFO com.schoolplus.office.services.impl.JwtServiceImpl [main] Access token is generated for the User [userId: c695c74e-8650-4f61-90c8-82e44d49902b]
+2021-09-10 16:39:14,268 WARN com.schoolplus.office.services.impl.JwtServiceImpl [main] Error while parsing jwt [message: Invalid serialized unsecured/JWS/JWE object: Missing part delimiters]
+2021-09-10 16:39:14,317 WARN com.schoolplus.office.services.impl.RefreshTokenServiceImpl [main] Refresh token is empty or it was not inside request [refreshToken: D4WgvwPeIxbzRYg83AxcEeXLgRvivzvLYbhQ1f86otJjzcPy]
+2021-09-10 16:39:14,354 WARN com.schoolplus.office.services.impl.RefreshTokenServiceImpl [main] Refresh token is empty or it was not inside request [refreshToken: null]
+2021-09-10 16:39:14,571 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [main] Access token has been created for the User in JWT format [userId: 6954c16e-b314-47dc-a912-a39cc6e32e23]
+2021-09-10 16:39:14,572 INFO com.schoolplus.office.services.impl.JwtServiceImpl [main] Access token is generated for the User [userId: 6954c16e-b314-47dc-a912-a39cc6e32e23]
+2021-09-10 16:39:14,651 WARN com.schoolplus.office.services.impl.RefreshTokenServiceImpl [main] Refresh token with given id does not exists [refreshToken: YBVCGW52SljVCMOcF3uIDxyZozwXtKzL6fh9QxqTKS5S4QbR]
+2021-09-10 16:39:14,711 WARN com.schoolplus.office.services.impl.RefreshTokenServiceImpl [main] Refresh token with given id does not exists [refreshToken: JGkcbpfajMNb2APc3eN7tYeLn0aMAkUkZqUs6ZVOeCQEegZW]
+2021-09-10 16:39:14,749 WARN com.schoolplus.office.services.impl.AccessTokenServiceImpl [main] The requested authority is not available for the User [userId: c286f999-3ce7-4eb3-9a05-9a2437d822ae, authority: EYVBX]
+2021-09-10 16:39:14,783 WARN com.schoolplus.office.services.impl.RefreshTokenServiceImpl [main] Refresh token is empty or it was not inside request [refreshToken: null]
+2021-09-10 16:39:14,828 INFO org.springframework.boot.StartupInfoLogger [main] Starting SchoolManagementApplicationTests using Java 11.0.11 on Berk-MacBook-Pro.local with PID 36000 (started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-09-10 16:39:14,828 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-09-10 16:39:14,828 INFO org.springframework.boot.SpringApplication [main] The following profiles are active: local
+2021-09-10 16:39:15,362 WARN com.zaxxer.hikari.util.DriverDataSource [main] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-09-10 16:39:18,323 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-10 16:39:19,325 INFO org.springframework.boot.StartupInfoLogger [main] Started SchoolManagementApplicationTests in 4.519 seconds (JVM running for 32.891)
+2021-09-10 16:39:19,454 INFO com.schoolplus.office.bootstrap.DataLoader [main] Initial User has been created
+2021-09-10 16:39:19,517 WARN com.schoolplus.office.services.impl.TeacherServiceImpl [main] Teaching Subject with given id does not exists [teachingSubjectId: 123123]
+2021-09-10 16:39:19,559 WARN com.schoolplus.office.services.impl.TeacherServiceImpl [main] Teacher with given id does not exists [teacherId: 3950296b-3a90-4a8c-958e-6cc4baa2a3fa]
+2021-09-10 16:39:19,596 INFO com.schoolplus.office.services.impl.TeacherServiceImpl [main] Teacher has been updated [teacherId: 8139cd39-d10c-42e1-9e22-1e8c1f380910, performedBy: username]
+2021-09-10 16:39:19,648 WARN com.schoolplus.office.services.impl.TeacherServiceImpl [main] Teacher with given id does not exists [teacherId: faa8e270-5d54-48f1-8cf7-45d5dc1969c0]
+2021-09-10 16:39:19,804 WARN com.schoolplus.office.services.impl.TeacherServiceImpl [main] Teaching Subject with given id does not exists [teachingSubjectId: 12312]
+2021-09-10 16:39:19,916 INFO com.schoolplus.office.services.impl.TeacherServiceImpl [main] Teacher has been created [teacherId: e67bd497-eb62-457d-bcb2-0c27c3357552, performedBy: username]
+2021-09-10 16:39:19,960 WARN com.schoolplus.office.services.impl.AnnouncementServiceImpl [main] Announcement with given id does not exists [announcementId: 123123123]
+2021-09-10 16:39:19,993 INFO com.schoolplus.office.services.impl.AnnouncementServiceImpl [main] The announcement has been deleted successfully [announcementId: 24, performedBy: username]
+2021-09-10 16:39:20,035 WARN com.schoolplus.office.services.impl.AnnouncementServiceImpl [main] Organization with given id does not exists [organizationId: 12312321]
+2021-09-10 16:39:20,083 INFO com.schoolplus.office.services.impl.AnnouncementServiceImpl [main] The announcement has been updated successfully [announcementId: 31, performedBy: username]
+2021-09-10 16:39:20,130 WARN com.schoolplus.office.services.impl.AnnouncementServiceImpl [main] Announcement with given id does not exists [announcementId: 123]
+2021-09-10 16:39:20,175 INFO com.schoolplus.office.services.impl.AnnouncementServiceImpl [main] The announcement images has been deleted [announcementId: 38, performedBy: username]
+2021-09-10 16:39:20,201 WARN com.schoolplus.office.services.impl.AnnouncementServiceImpl [main] Announcement with given id does not exists [announcementId: 1231231231]
+2021-09-10 16:39:20,254 INFO com.schoolplus.office.services.impl.AnnouncementServiceImpl [main] The announcement images has been added [announcementId: 44, performedBy: username]
+2021-09-10 16:39:20,288 WARN com.schoolplus.office.services.impl.AnnouncementServiceImpl [main] Announcement with given id does not exists [announcementId: 123123123]
+2021-09-10 16:39:20,339 INFO com.schoolplus.office.services.impl.AnnouncementServiceImpl [main] The announcement has been created successfully [announcementId: 53, performedBy: username]
+2021-09-10 16:39:20,511 WARN com.schoolplus.office.services.impl.AnnouncementServiceImpl [main] Announcement with given id does not exists [announcementId: 123123123]
+2021-09-10 16:39:20,905 WARN com.schoolplus.office.services.impl.TeachingSubjectServiceImpl [main] Teaching Subject with given id does not exists [teachingSubjectId: 12312312]
+2021-09-10 16:39:20,941 INFO com.schoolplus.office.services.impl.TeachingSubjectServiceImpl [main] The Teaching Subject has been deleted successfully [teachingSubjectId: 191, performedBy: username]
+2021-09-10 16:39:21,019 INFO com.schoolplus.office.services.impl.TeachingSubjectServiceImpl [main] The Teaching Subject has been updated successfully [teachingSubjectId: 194, performedBy: username]
+2021-09-10 16:39:21,082 WARN com.schoolplus.office.services.impl.TeachingSubjectServiceImpl [main] Teacher with given id does not exists [teacherId: 41925ac6-3a2a-4907-8ec8-2244b72eb6f1]
+2021-09-10 16:39:21,116 WARN com.schoolplus.office.services.impl.TeachingSubjectServiceImpl [main] Teaching Subject with given id does not exists [teachingSubjectId: 12312312]
+2021-09-10 16:39:21,148 WARN com.schoolplus.office.services.impl.TeachingSubjectServiceImpl [main] Organization with given id does not exists [organizationId: 123123123]
+2021-09-10 16:39:21,189 WARN com.schoolplus.office.services.impl.TeachingSubjectServiceImpl [main] Teaching Subject with given id does not exists [teachingSubjectId: 12312312]
+2021-09-10 16:39:21,335 WARN com.schoolplus.office.services.impl.TeachingSubjectServiceImpl [main] Teacher with given id does not exists [teacherId: 0dc30fdb-0b94-434f-b6b9-8d0c3f5f7c72]
+2021-09-10 16:39:21,360 INFO com.schoolplus.office.services.impl.TeachingSubjectServiceImpl [main] The Teaching Subject has been created successfully [teachingSubjectId: null, performedBy: username]
+2021-09-10 16:39:21,399 WARN com.schoolplus.office.services.impl.TeachingSubjectServiceImpl [main] Organization with given id does not exists [organizationId: 123123123]
+2021-09-10 16:39:21,454 INFO com.schoolplus.office.services.impl.GradeServiceImpl [main] Grade has been deleted successfully [gradeId: 218, performedBy: username]
+2021-09-10 16:39:21,484 WARN com.schoolplus.office.services.impl.GradeServiceImpl [main] Grade with given id does not exists [gradeId: 123123123]
+2021-09-10 16:39:21,535 WARN com.schoolplus.office.services.impl.GradeServiceImpl [main] Organization with given id does not exists [organizationId: 123123123]
+2021-09-10 16:39:21,585 INFO com.schoolplus.office.services.impl.GradeServiceImpl [main] Grade has been edited successfully [gradeId: 229, performedBy: username]
+2021-09-10 16:39:21,647 WARN com.schoolplus.office.services.impl.GradeServiceImpl [main] Classroom with given id does not exists [classRoomId: 123123]
+2021-09-10 16:39:21,694 WARN com.schoolplus.office.services.impl.GradeServiceImpl [main] Organization with given id does not exists [organizationId: 123123123]
+2021-09-10 16:39:21,741 INFO com.schoolplus.office.services.impl.GradeServiceImpl [main] Grade has been created successfully [gradeId: 248, performedBy: username]
+2021-09-10 16:39:21,771 WARN com.schoolplus.office.services.impl.GradeServiceImpl [main] Classroom with given id does not exists [classRoomId: 123123]
+2021-09-10 16:39:21,873 WARN com.schoolplus.office.services.impl.GradeServiceImpl [main] Grade with given id does not exists [gradeId: 123123123]

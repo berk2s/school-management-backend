@@ -1,10 +1,10 @@
 package com.schoolplus.office.web.controllers.backoffice;
 
-import com.schoolplus.office.services.HomeworkService;
-import com.schoolplus.office.web.models.CreatingHomeworkDto;
-import com.schoolplus.office.web.models.EditingHomeworkDto;
+import com.schoolplus.office.services.PersonalHomeworkService;
+import com.schoolplus.office.web.models.CreatingPersonalHomeworkDto;
+import com.schoolplus.office.web.models.EditingPersonalHomeworkDto;
 import com.schoolplus.office.web.models.ErrorResponseDto;
-import com.schoolplus.office.web.models.HomeworkDto;
+import com.schoolplus.office.web.models.PersonalHomeworkDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,36 +20,20 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
-@RequestMapping(HomeworkManagementController.ENDPOINT)
+@RequestMapping(PersonalHomeworkManagementController.ENDPOINT)
 @RestController
-public class HomeworkManagementController {
+public class PersonalHomeworkManagementController {
 
-    public static final String ENDPOINT = "/management/homeworks";
+    public static final String ENDPOINT = "/management/personal/homeworks";
 
-    private final HomeworkService homeworkService;
+    private final PersonalHomeworkService personalHomeworkService;
 
-    @Operation(summary = "Get Homeworks")
+    @Operation(summary = "Get Personal Homework")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Homeworks are listed"),
-            @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
-                    content = {
-                            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
-                    }),
-            @ApiResponse(responseCode = "403", description = "Don't have permission", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
-            })
-    })
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<HomeworkDto>> getHomeworks(@RequestParam(defaultValue = "0") Integer page,
-                                                          @RequestParam(defaultValue = "10") Integer size) {
-        return new ResponseEntity<>(homeworkService.getHomeworks(PageRequest.of(page, size)), HttpStatus.OK);
-    }
-
-    @Operation(summary = "Get Homework")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Homework info is listed"),
+            @ApiResponse(responseCode = "201", description = "Personal Homework info is listed"),
             @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
                     content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
@@ -57,18 +41,19 @@ public class HomeworkManagementController {
             @ApiResponse(responseCode = "403", description = "Don't have permission", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Homework was not found", content = {
+            @ApiResponse(responseCode = "404", description = "Personal Homework was not found", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
     })
-    @GetMapping(value = "/{homeworkId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HomeworkDto> getHomework(@Valid @PathVariable Long homeworkId) {
-        return new ResponseEntity<>(homeworkService.getHomework(homeworkId), HttpStatus.OK);
+    @GetMapping(value = "/{personalHomeworkId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PersonalHomeworkDto> getPersonalHomework(@Valid @PathVariable Long personalHomeworkId) {
+        return new ResponseEntity<>(personalHomeworkService.getPersonalHomework(personalHomeworkId),
+                HttpStatus.OK);
     }
 
-    @Operation(summary = "Get Homeworks By Classroom")
+    @Operation(summary = "Get Personal Homeworks By Student")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Homeworks are listed"),
+            @ApiResponse(responseCode = "201", description = "Personal Homeworks are listed"),
             @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
                     content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
@@ -76,20 +61,21 @@ public class HomeworkManagementController {
             @ApiResponse(responseCode = "403", description = "Don't have permission", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Classroom was not found", content = {
+            @ApiResponse(responseCode = "404", description = "Student was not found", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
     })
-    @GetMapping(value = "/classroom/{classRoomId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<HomeworkDto>> getHomeworksByClassroom(@RequestParam(defaultValue = "0") Integer page,
-                                                                     @RequestParam(defaultValue = "10") Integer size,
-                                                                     @Valid @PathVariable Long classRoomId) {
-        return new ResponseEntity<>(homeworkService.getHomeworksByClassroom(classRoomId, PageRequest.of(page, size)), HttpStatus.OK);
+    @GetMapping(value = "/student/{studentId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<PersonalHomeworkDto>> getPersonalHomeworkByStudent(@RequestParam(defaultValue = "0") Integer page,
+                                                                                  @RequestParam(defaultValue = "10") Integer size,
+                                                                                  @Valid @PathVariable UUID studentId) {
+        return new ResponseEntity<>(personalHomeworkService.getPersonalHomeworkByStudent(studentId, PageRequest.of(page, size)),
+                HttpStatus.OK);
     }
 
-    @Operation(summary = "Get Homeworks By Teacher")
+    @Operation(summary = "Get Personal Homeworks By Teacher")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Homeworks are listed"),
+            @ApiResponse(responseCode = "201", description = "Personal Homeworks are listed"),
             @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
                     content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
@@ -102,15 +88,16 @@ public class HomeworkManagementController {
             }),
     })
     @GetMapping(value = "/teacher/{teacherId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<HomeworkDto>> getHomeworksByTeacher(@RequestParam(defaultValue = "0") Integer page,
-                                                                   @RequestParam(defaultValue = "10") Integer size,
-                                                                   @Valid @PathVariable String teacherId) {
-        return new ResponseEntity<>(homeworkService.getHomeworksByTeacher(teacherId, PageRequest.of(page, size)), HttpStatus.OK);
+    public ResponseEntity<List<PersonalHomeworkDto>> getPersonalHomeworkByTeacher(@RequestParam(defaultValue = "0") Integer page,
+                                                                                  @RequestParam(defaultValue = "10") Integer size,
+                                                                                  @Valid @PathVariable UUID teacherId) {
+        return new ResponseEntity<>(personalHomeworkService.getPersonalHomeworkByTeacher(teacherId, PageRequest.of(page, size)),
+                HttpStatus.OK);
     }
 
-    @Operation(summary = "Get Homeworks By Syllabus")
+    @Operation(summary = "Get Personal Homeworks By Lesson")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Homeworks are listed"),
+            @ApiResponse(responseCode = "201", description = "Personal Homeworks are listed"),
             @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
                     content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
@@ -118,20 +105,21 @@ public class HomeworkManagementController {
             @ApiResponse(responseCode = "403", description = "Don't have permission", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Syllabus was not found", content = {
+            @ApiResponse(responseCode = "404", description = "Lesson was not found", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
     })
-    @GetMapping(value = "/syllabus/{syllabusId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<HomeworkDto>> getHomeworksBySyllabus(@RequestParam(defaultValue = "0") Integer page,
-                                                                    @RequestParam(defaultValue = "10") Integer size,
-                                                                    @Valid @PathVariable Long syllabusId) {
-        return new ResponseEntity<>(homeworkService.getHomeworksBySyllabus(syllabusId, PageRequest.of(page, size)), HttpStatus.OK);
+    @GetMapping(value = "/lesson/{lessonId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<PersonalHomeworkDto>> getPersonalHomeworkByLesson(@RequestParam(defaultValue = "0") Integer page,
+                                                                                 @RequestParam(defaultValue = "10") Integer size,
+                                                                                 @Valid @PathVariable Long lessonId) {
+        return new ResponseEntity<>(personalHomeworkService.getPersonalHomeworkByLesson(lessonId, PageRequest.of(page, size)),
+                HttpStatus.OK);
     }
 
-    @Operation(summary = "Create Homework")
+    @Operation(summary = "Create Personal Homework")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Homework is created"),
+            @ApiResponse(responseCode = "201", description = "Personal Homework is created"),
             @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
                     content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
@@ -139,18 +127,20 @@ public class HomeworkManagementController {
             @ApiResponse(responseCode = "403", description = "Don't have permission", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Classroom || Teacher was not found", content = {
+            @ApiResponse(responseCode = "404", description = "Student || Teacher || Lesson not found", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
     })
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HomeworkDto> createHomework(@Valid @RequestBody CreatingHomeworkDto creatingHomework) {
-        return new ResponseEntity<>(homeworkService.createHomework(creatingHomework), HttpStatus.CREATED);
+    public ResponseEntity<PersonalHomeworkDto> createPersonalHomework(@Valid @RequestBody CreatingPersonalHomeworkDto creatingPersonalHomework) {
+        return new ResponseEntity<>(personalHomeworkService.createPersonalHomework(creatingPersonalHomework),
+                HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Update Homework")
+
+    @Operation(summary = "Updated Personal Homework")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Homework is updated"),
+            @ApiResponse(responseCode = "201", description = "Personal Homework is updated"),
             @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
                     content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
@@ -158,24 +148,24 @@ public class HomeworkManagementController {
             @ApiResponse(responseCode = "403", description = "Don't have permission", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Homework was not found", content = {
+            @ApiResponse(responseCode = "404", description = "Personal Homework || Student || Teacher || Lesson not found", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
     })
-    @PutMapping(value = "/{homeworkId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HomeworkDto> updateHomework(@Valid @PathVariable Long homeworkId,
-                                                      @Valid @RequestBody EditingHomeworkDto editingHomework) {
-        homeworkService.updateHomework(homeworkId, editingHomework);
+    @PutMapping(value = "/{personalHomeworkId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PersonalHomeworkDto> updatedPersonalHomework(@Valid @PathVariable Long personalHomeworkId,
+                                                                       @Valid @RequestBody EditingPersonalHomeworkDto editingPersonalHomework) {
+        personalHomeworkService.updatePersonalHomework(personalHomeworkId, editingPersonalHomework);
 
         return ResponseEntity
                 .status(HttpStatus.PERMANENT_REDIRECT)
-                .header(HttpHeaders.LOCATION, ENDPOINT + "/" + homeworkId)
+                .header(HttpHeaders.LOCATION, ENDPOINT + "/" + personalHomeworkId)
                 .build();
     }
 
-    @Operation(summary = "Delete Homework")
+    @Operation(summary = "Create Personal Homework")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Homework is deleted"),
+            @ApiResponse(responseCode = "201", description = "Personal Homework is created"),
             @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
                     content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
@@ -183,14 +173,14 @@ public class HomeworkManagementController {
             @ApiResponse(responseCode = "403", description = "Don't have permission", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Homework was not found", content = {
+            @ApiResponse(responseCode = "404", description = "Personal Homework not found", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
     })
-    @DeleteMapping(value = "/{homeworkId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{personalHomeworkId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteHomework(@PathVariable Long homeworkId) {
-        homeworkService.deleteHomework(homeworkId);
+    public void deletePersonalHomework(@Valid @PathVariable Long personalHomeworkId) {
+        personalHomeworkService.deletePersonalHomework(personalHomeworkId);
     }
 
 
