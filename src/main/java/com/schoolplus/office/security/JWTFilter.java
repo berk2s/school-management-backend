@@ -3,6 +3,8 @@ package com.schoolplus.office.security;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.schoolplus.office.services.JwtService;
+import com.schoolplus.office.web.controllers.authentication.LoginController;
+import com.schoolplus.office.web.controllers.authentication.TokenController;
 import com.schoolplus.office.web.exceptions.JWTException;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +26,8 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @Component
@@ -32,6 +36,12 @@ public class JWTFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final SecurityUserDetailsService securityUserDetailsService;
 
+    private final List<String> skipUrls = List.of(LoginController.ENDPOINT,
+            TokenController.ENDPOINT,
+            "/swagger-ui.html",
+            "swagger-ui",
+            "/api-docs");
+
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest,
                                     HttpServletResponse httpServletResponse,
@@ -39,15 +49,20 @@ public class JWTFilter extends OncePerRequestFilter {
         try {
             final String headers = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
 
-            if(StringUtils.isEmpty(headers) || !headers.startsWith("Bearer ")) {
+            if (SecurityContextHolder.getContext().getAuthentication() != null) {
                 filterChain.doFilter(httpServletRequest, httpServletResponse);
+                return;
+            }
+
+            if(StringUtils.isEmpty(headers) || !headers.startsWith("Bearer ")) {
+                httpServletResponse.sendError(HttpStatus.UNAUTHORIZED.value());
                 return;
             }
 
             final String accessToken = headers.split(" ")[1].trim();
 
             if (!jwtService.validate(accessToken)) {
-                httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+                httpServletResponse.sendError(HttpStatus.UNAUTHORIZED.value());
                 return;
             }
 
@@ -57,7 +72,7 @@ public class JWTFilter extends OncePerRequestFilter {
             Instant now = Instant.now();
 
             if (date.toInstant().isBefore(now)) {
-                httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+                httpServletResponse.sendError(HttpStatus.UNAUTHORIZED.value());
                 return;
             }
 
@@ -74,11 +89,18 @@ public class JWTFilter extends OncePerRequestFilter {
             );
 
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
             filterChain.doFilter(httpServletRequest, httpServletResponse);
         } catch (UsernameNotFoundException | JWTException | ParseException e) {
+            httpServletResponse.sendError(HttpStatus.UNAUTHORIZED.value());
             filterChain.doFilter(httpServletRequest, httpServletResponse);
         }
 
         return;
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        return skipUrls.stream().anyMatch(skipUrl -> request.getRequestURI().startsWith(skipUrl));
     }
 }
