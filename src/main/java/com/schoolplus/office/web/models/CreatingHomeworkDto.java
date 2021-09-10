@@ -11,25 +11,21 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CreatingPersonalHomeworkDto {
-
-    @Size(max = 99)
-    private String personalHomeworkName;
-
-    @Size(max = 99999)
-    @NotNull
-    private String personalHomeworkDescription;
+public class CreatingHomeworkDto {
 
     @NotNull
-    private LocalDateTime dueDate;
+    private Long classroomId;
 
     @NotNull
     private String teacherId;
 
     @NotNull
-    private String studentId;
+    private Long syllabusId;
+
+    @Size(min = 10, max = 99999)
+    private String homeworkDescription;
 
     @NotNull
-    private Long lessonId;
+    private LocalDateTime dueDate;
 
 }

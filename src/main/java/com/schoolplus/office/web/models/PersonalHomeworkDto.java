@@ -4,32 +4,30 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CreatingPersonalHomeworkDto {
+public class PersonalHomeworkDto {
 
-    @Size(max = 99)
+    private Long personalHomeworkId;
+
     private String personalHomeworkName;
 
-    @Size(max = 99999)
-    @NotNull
     private String personalHomeworkDescription;
 
-    @NotNull
     private LocalDateTime dueDate;
 
-    @NotNull
-    private String teacherId;
+    private TeacherDto teacher;
 
-    @NotNull
-    private String studentId;
+    private StudentDto student;
 
-    @NotNull
-    private Long lessonId;
+    private LessonDto lesson;
+
+    private Timestamp createdAt;
+
+    private Timestamp lastModifiedAt;
 
 }
