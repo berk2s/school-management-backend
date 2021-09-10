@@ -7,6 +7,9 @@ import com.schoolplus.office.web.models.TokenResponseDto;
 public interface RefreshTokenService {
 
     String createToken(RefreshTokenCommand refreshTokenCommand);
+
     TokenResponseDto createToken(TokenRequestDto tokenRequest);
+
+    TokenResponseDto revokeToken(TokenRequestDto tokenRequest);
 
 }

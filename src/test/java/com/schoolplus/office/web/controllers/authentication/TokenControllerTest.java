@@ -129,7 +129,7 @@ public class TokenControllerTest {
                     .andExpect(jsonPath("$.expires_in", is((int) serverConfiguration.getAccessToken().getLifetime().toSeconds())));
         }
 
-        @DisplayName("Refresh EMpty Token Error")
+        @DisplayName("Refresh Empty Token Error")
         @Test
         void refreshEmptyTokenError() throws Exception {
             params.remove("refresh_token");
@@ -187,6 +187,79 @@ public class TokenControllerTest {
                     .andExpect(jsonPath("$.error_description", is(ErrorDesc.USER_HAS_NOT_SCOPE.getDesc())));
         }
 
+    }
+
+    @DisplayName("Revoking Token")
+    @Nested
+    class RevokingToken {
+
+        LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+
+        RefreshToken refreshToken;
+        String token;
+
+        @BeforeEach
+        void setUp() {
+            token = RandomStringUtils.random(48, true, true);
+
+            refreshToken = new RefreshToken();
+            refreshToken.setToken(token);
+            refreshToken.setUser(user);
+            refreshToken.setNotBefore(LocalDateTime.now());
+            refreshToken.setExpiryDateTime(LocalDateTime.now().plusMinutes(10));
+            refreshToken.setIssueTime(LocalDateTime.now());
+
+            refreshTokenRepository.save(refreshToken);
+        }
+
+        @DisplayName("Revoke Token Successfully")
+        @Test
+        void revokeTokenSuccessfully() throws Exception {
+
+            params.set("grant_type", "revoke");
+            params.set("refresh_token", refreshToken.getToken());
+
+            mockMvc.perform(post(TokenController.ENDPOINT)
+                            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                            .params(params))
+                    .andDo(print())
+                    .andExpect(status().isOk());
+
+        }
+
+        @DisplayName("Revoke Token Empty Error")
+        @Test
+        void revokeTokenEmptyError() throws Exception {
+
+            params.set("grant_type", "revoke");
+
+            mockMvc.perform(post(TokenController.ENDPOINT)
+                            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                            .params(params))
+                    .andDo(print())
+                    .andExpect(status().isUnauthorized())
+                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_GRANT.getError())))
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.INVALID_TOKEN.getDesc())));
+
+        }
+
+
+        @DisplayName("Revoke Token Not Found Error")
+        @Test
+        void revokeTokenNotFoundError() throws Exception {
+
+            params.set("grant_type", "revoke");
+            params.set("refresh_token", RandomStringUtils.random(48, true, true));
+
+            mockMvc.perform(post(TokenController.ENDPOINT)
+                            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                            .params(params))
+                    .andDo(print())
+                    .andExpect(status().isUnauthorized())
+                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_GRANT.getError())))
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.INVALID_TOKEN.getDesc())));
+
+        }
     }
 
     @DisplayName("Checking Access Token")
@@ -268,4 +341,5 @@ public class TokenControllerTest {
         }
 
     }
+
 }

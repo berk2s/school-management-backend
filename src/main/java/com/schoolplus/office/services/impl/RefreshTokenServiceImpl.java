@@ -20,6 +20,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -104,6 +105,24 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
                 .refreshToken(refreshToken.getToken())
                 .expiresIn(serverConfiguration.getAccessToken().getLifetime().getSeconds())
                 .build();
+    }
+
+    @Transactional
+    @Override
+    public TokenResponseDto revokeToken(TokenRequestDto tokenRequest) {
+        if (StringUtils.isEmpty(tokenRequest.getRefreshToken())) {
+            log.warn("Refresh token is empty or it was not inside request [refreshToken: {}]", tokenRequest.getRefreshToken());
+            throw new InvalidGrantException(ErrorDesc.INVALID_TOKEN.getDesc());
+        }
+
+        if (!refreshTokenRepository.existsByToken(tokenRequest.getRefreshToken())) {
+            log.warn("Refresh token is empty or it was not inside request [refreshToken: {}]", tokenRequest.getRefreshToken());
+            throw new InvalidGrantException(ErrorDesc.INVALID_TOKEN.getDesc());
+        }
+
+        refreshTokenRepository.deleteByToken(tokenRequest.getRefreshToken());
+
+        return TokenResponseDto.builder().build();
     }
 
 }
