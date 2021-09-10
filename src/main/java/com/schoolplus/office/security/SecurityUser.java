@@ -1,6 +1,7 @@
 package com.schoolplus.office.security;
 
 import com.schoolplus.office.domain.Authority;
+import com.schoolplus.office.domain.Organization;
 import com.schoolplus.office.domain.Role;
 import com.schoolplus.office.domain.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -41,6 +42,10 @@ public class SecurityUser implements UserDetails {
 
     public List<Authority> getPureAuthorities() {
         return new ArrayList<>(user.getAuthorities());
+    }
+
+    public Organization getOrganization() {
+        return user.getOrganization();
     }
 
     @Override
