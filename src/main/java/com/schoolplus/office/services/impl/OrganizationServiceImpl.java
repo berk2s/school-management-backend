@@ -25,6 +25,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final OrganizationRepository organizationRepository;
     private final OrganizationMapper organizationMapper;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:organizations') || hasAuthority('read:organizations'))")
     @Override
     public List<OrganizationDto> getOrganizations() {
         List<Organization> organizations = organizationRepository.findAll();
@@ -79,6 +80,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                 SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:organizations') || hasAuthority('delete:organization'))")
     @Override
     public void deleteOrganization(Long organizationId) {
         if (!organizationRepository.existsById(organizationId)) {
