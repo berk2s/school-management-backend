@@ -28,7 +28,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
-//ClassCastException
+    // TODO: ClassCastException
+    // TODO: MethodArgumentNotValidException
+
     // TODO
     @Override
     protected ResponseEntity handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -207,6 +209,46 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(PersonalHomeworkNotFoundException.class)
     public ResponseEntity<ErrorResponseDto> handlePersonalHomeworkNotFoundException(PersonalHomeworkNotFoundException ex) {
+        return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.NOT_FOUND));
+    }
+
+    @ExceptionHandler(ExamSkeletonNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleExamSkeletonNotFoundException(ExamSkeletonNotFoundException ex) {
+        return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.NOT_FOUND));
+    }
+
+    @ExceptionHandler(ExamTypeNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleExamTypeNotFoundException(ExamTypeNotFoundException ex) {
+        return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.NOT_FOUND));
+    }
+
+    @ExceptionHandler(ExamNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleExamNotFoundException(ExamNotFoundException ex) {
+        return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.NOT_FOUND));
+    }
+
+    @ExceptionHandler(ExamFieldNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleExamFieldNotFoundException(ExamFieldNotFoundException ex) {
+        return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.NOT_FOUND));
+    }
+
+    @ExceptionHandler(FileNotReadableException.class)
+    public ResponseEntity<ErrorResponseDto> handleFileNotReadableException(FileNotReadableException ex) {
+        return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.BAD_REQUEST));
+    }
+
+    @ExceptionHandler(CellNotDefinedException.class)
+    public ResponseEntity<ErrorResponseDto> handleCellNotDefinedException(CellNotDefinedException ex) {
+        return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.BAD_REQUEST));
+    }
+
+    @ExceptionHandler(ExamResultNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleExamResultNotFoundException(ExamResultNotFoundException ex) {
+        return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.NOT_FOUND));
+    }
+
+    @ExceptionHandler(ExamResultItemNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleExamResultItemNotFoundException(ExamResultItemNotFoundException ex) {
         return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.NOT_FOUND));
     }
 
