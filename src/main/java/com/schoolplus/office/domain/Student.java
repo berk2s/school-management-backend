@@ -25,6 +25,9 @@ public class Student extends User implements CanAppointment {
             inverseJoinColumns = @JoinColumn(name = "parent_id", referencedColumnName = "id"))
     private List<Parent> parents = new ArrayList<>();
 
+    @Column(name = "student_number", unique = true)
+    private Long studentNumber;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Classroom classRoom;
 

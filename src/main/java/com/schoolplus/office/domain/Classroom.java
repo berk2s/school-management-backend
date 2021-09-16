@@ -27,6 +27,9 @@ public class Classroom {
     @Column(name = "classroom_tag")
     private String classRoomTag;
 
+    @Column(name = "class_number", unique = true)
+    private Long classNumber;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private Teacher advisorTeacher;
 

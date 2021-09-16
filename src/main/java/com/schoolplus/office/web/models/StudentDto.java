@@ -17,4 +17,6 @@ public class StudentDto extends UserDto {
 
     private ClassroomDto classRoom;
 
+    private Long studentNumber;
+
 }

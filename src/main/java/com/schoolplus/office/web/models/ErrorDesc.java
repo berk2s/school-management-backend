@@ -30,10 +30,22 @@ public enum ErrorDesc {
     GRADE_NOT_FOUND("Grade not found", 20),
     LESSON_NOT_FOUND("Lesson not found", 21),
     SYLLABUS_NOT_FOUND("Syllabus not found", 22),
-    CONTINUITY_NOT_FOUND("Continuity not found", 22),
-    INVALID_GRANT_TYPE("Invalid grant type", 22),
-    HOMEWORK_NOT_FOUND("Homework not found", 23),
-    PERSONAL_HOMEWORK_NOT_FOUND("Personal Homework not found", 23);
+    CONTINUITY_NOT_FOUND("Continuity not found", 23),
+    INVALID_GRANT_TYPE("Invalid grant type", 24),
+    HOMEWORK_NOT_FOUND("Homework not found", 25),
+    PERSONAL_HOMEWORK_NOT_FOUND("Personal Homework not found", 26),
+    EXAM_TYPE_NOT_FOUND("Exam Type not found", 27),
+    EXAM_SKELETON_NOT_FOUND("Exam Skeleton not found", 28),
+    EXAM_NOT_FOUND("Exam not found", 29),
+    EXAM_FIELD_NOT_FOUND("Exam Field not found", 30),
+    FILE_NOT_READABLE("File not readable", 31),
+    STUDENT_CELL_NOT_DEFINED("Student cell not defined", 32),
+    CLASSROOM_CELL_NOT_DEFINED("Classroom cell not defined", 33),
+    GRADE_CELL_NOT_DEFINED("Grade cell not defined", 34),
+    EXAM_CELL_NOT_DEFINED("Exam cell not defined", 35),
+    SORTABLE_CELL_NOT_DEFINED("Sortable cell not defined", 36),
+    EXAM_RESULT_NOT_FOUND("Exam result not found", 37),
+    EXAM_RESULT_ITEM_NOT_FOUND("Exam result item not found", 38);
 
     private final String desc;
     private final Integer code;

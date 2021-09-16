@@ -5,27 +5,26 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Timestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ClassroomDto {
+public class ExamDto {
 
-    private Long classRoomId;
+    private Long examId;
 
-    private String classRoomTag;
+    private String examName;
 
-    private Long classNumber;
+    private ExamTypeDto examType;
 
-    private TeacherDto advisorTeacher;
-
-    private List<StudentDto> students = new ArrayList<>();
+    private ExamSkeletonDto examSkeleton;
 
     private OrganizationDto organization;
 
-    private GradeDto grade;
+    private Timestamp createdAt;
+
+    private Timestamp lastModifiedAt;
 
 }
