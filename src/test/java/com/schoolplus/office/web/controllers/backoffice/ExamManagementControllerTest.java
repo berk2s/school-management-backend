@@ -499,6 +499,20 @@ public class ExamManagementControllerTest {
                     .andExpect(jsonPath("$..exam.examSkeleton.examFields..referenceField", anyOf(hasItem(is(examField.getReferenceField().name())))));
         }
 
+        @DisplayName("Get Exam Result Item Successfully")
+        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:exams"})
+        @Test
+        void getExamResultItemSuccessfully() throws Exception {
+            ExamResultItemDto examResultItemDto = (ExamResultItemDto) examResultDto.getExamResultItems().toArray()[0];
+
+            mockMvc.perform(get(ExamManagementController.ENDPOINT + "/results/item/" + examResultItemDto.getExamResultItemId()))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.examResultItemId", is(examResultItemDto.getExamResultItemId().intValue())))
+                    .andExpect(jsonPath("$.createdAt").isNotEmpty())
+                    .andExpect(jsonPath("$.lastModifiedAt").isNotEmpty());
+        }
+
         @DisplayName("Get Exam Results By Organization Successfully")
         @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:exams"})
         @Test

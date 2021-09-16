@@ -45,7 +45,9 @@ public enum ErrorDesc {
     EXAM_CELL_NOT_DEFINED("Exam cell not defined", 35),
     SORTABLE_CELL_NOT_DEFINED("Sortable cell not defined", 36),
     EXAM_RESULT_NOT_FOUND("Exam result not found", 37),
-    EXAM_RESULT_ITEM_NOT_FOUND("Exam result item not found", 38);
+    EXAM_RESULT_ITEM_NOT_FOUND("Exam result item not found", 38),
+    SUPPORT_REQUEST_NOT_FOUND("Support request not found", 39),
+    SUPPORT_THREAD_NOT_FOUND("Support thread not found", 40);
 
     private final String desc;
     private final Integer code;
