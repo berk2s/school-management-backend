@@ -1,14 +1,14 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.CreatingEntity;
+import com.schoolplus.office.annotations.ReadingEntity;
+import com.schoolplus.office.annotations.UpdatingEntity;
 import com.schoolplus.office.domain.*;
 import com.schoolplus.office.repository.*;
 import com.schoolplus.office.services.StudentService;
 import com.schoolplus.office.web.exceptions.*;
 import com.schoolplus.office.web.mappers.StudentMapper;
-import com.schoolplus.office.web.models.CreatingStudentDto;
-import com.schoolplus.office.web.models.EditingStudentDto;
-import com.schoolplus.office.web.models.ErrorDesc;
-import com.schoolplus.office.web.models.StudentDto;
+import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,6 +31,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentMapper studentMapper;
     private final PasswordEncoder passwordEncoder;
 
+    @ReadingEntity(domain = TransactionDomain.STUDENT, action = DomainAction.READ_STUDENT)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:students') || hasAuthority('read:student'))")
     @Override
     public StudentDto getStudent(UUID studentId) {
@@ -43,6 +44,7 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.studentToStudentDto(student);
     }
 
+    @CreatingEntity(domain = TransactionDomain.STUDENT, action = DomainAction.CREATE_STUDENT)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:students') || hasAuthority('create:student'))")
     @Override
     public StudentDto createStudent(CreatingStudentDto creatingStudent) {
@@ -125,6 +127,7 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.studentToStudentDto(savedStudent);
     }
 
+    @UpdatingEntity(domain = TransactionDomain.STUDENT, action = DomainAction.UPDATE_STUDENT, idArg = "studentId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:students') || hasAuthority('edit:student'))")
     @Override
     public void editStudent(UUID studentId, EditingStudentDto editStudent) {

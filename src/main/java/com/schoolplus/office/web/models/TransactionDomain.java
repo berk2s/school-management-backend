@@ -1,0 +1,32 @@
+package com.schoolplus.office.web.models;
+
+public enum TransactionDomain {
+    ANNOUNCEMENT,
+    APPOINTMENT,
+    AUTHORITY,
+    CLASSROOM,
+    COUNTINUITY,
+    EXAM,
+    EXAM_FIELD,
+    EXAM_RESULT,
+    EXAM_RESULT_ITEM,
+    EXAM_SKELETON,
+    EXAM_TYPE,
+    GRADE,
+    HOMEWORK,
+    LESSON,
+    ORGANIZATION,
+    PARENT,
+    PERSONAL_HOMEWORK,
+    REFRESH_TOKEN,
+    ROLE,
+    STUDENT,
+    SUPPORT_REQUEST,
+    SUPPORT_THREAD,
+    SYLLABUS,
+    TEACHING_SUBJECT,
+    TEACHER,
+    USER,
+    LOGIN,
+    LOGOUT
+}

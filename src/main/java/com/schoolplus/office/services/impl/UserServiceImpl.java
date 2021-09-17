@@ -1,5 +1,8 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.DeletingEntity;
+import com.schoolplus.office.annotations.ReadingEntity;
+import com.schoolplus.office.annotations.UpdatingEntity;
 import com.schoolplus.office.domain.Authority;
 import com.schoolplus.office.domain.Organization;
 import com.schoolplus.office.domain.Role;
@@ -14,9 +17,7 @@ import com.schoolplus.office.web.exceptions.OrganizationNotFoundException;
 import com.schoolplus.office.web.exceptions.RoleNotFoundException;
 import com.schoolplus.office.web.exceptions.UserNotFoundException;
 import com.schoolplus.office.web.mappers.UserMapper;
-import com.schoolplus.office.web.models.EditingUserDto;
-import com.schoolplus.office.web.models.ErrorDesc;
-import com.schoolplus.office.web.models.UserDto;
+import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -42,6 +43,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
+    @ReadingEntity(domain = TransactionDomain.USER, action = DomainAction.READ_USER)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users') || hasAuthority('read:user'))")
     @Override
     public UserDto getUser(UUID userId) {
@@ -54,6 +56,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.userToUserDto(user);
     }
 
+    @ReadingEntity(domain = TransactionDomain.USER, action = DomainAction.READ_USERS, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users') || hasAuthority('list:users'))")
     @Override
     public List<UserDto> listUsers(Pageable pageable) {
@@ -61,6 +64,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.userToUserDto(users.getContent());
     }
 
+    @UpdatingEntity(domain = TransactionDomain.USER, action = DomainAction.UPDATE_ANNOUNCEMENT, idArg = "userId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users') || hasAuthority('edit:user'))")
     @Override
     public void editUser(UUID userId, EditingUserDto editUser) {
@@ -116,6 +120,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @DeletingEntity(domain = TransactionDomain.USER, action = DomainAction.DELETE_USER, idArg = "userId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users') || hasAuthority('delete:user'))")
     @Override
     public void deleteUser(UUID userId) {

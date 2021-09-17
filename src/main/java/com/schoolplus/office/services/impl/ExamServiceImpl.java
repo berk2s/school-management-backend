@@ -1,5 +1,9 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.CreatingEntity;
+import com.schoolplus.office.annotations.DeletingEntity;
+import com.schoolplus.office.annotations.ReadingEntity;
+import com.schoolplus.office.annotations.UpdatingEntity;
 import com.schoolplus.office.domain.*;
 import com.schoolplus.office.repository.*;
 import com.schoolplus.office.services.ExamService;
@@ -43,6 +47,7 @@ public class ExamServiceImpl implements ExamService {
     private final ExamResultMapper examResultMapper;
     private final ExamResultItemMapper examResultItemMapper;
 
+    @ReadingEntity(domain = TransactionDomain.EXAM, action = DomainAction.READ_EXAM, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('read:exams'))")
     @Override
     public List<ExamDto> getExams(Pageable pageable) {
@@ -51,6 +56,7 @@ public class ExamServiceImpl implements ExamService {
         return examMapper.examToExamDto(pages.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.EXAM, action = DomainAction.READ_EXAMS_BY_ORGANIZATION, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('read:exams'))")
     @Override
     public List<ExamDto> getExamsByOrganization(Long organizationId, Pageable pageable) {
@@ -65,6 +71,7 @@ public class ExamServiceImpl implements ExamService {
         return examMapper.examToExamDto(exams.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.EXAM_TYPE, action = DomainAction.READ_EXAM_TYPES, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('read:exams'))")
     @Override
     public List<ExamTypeDto> getExamTypes(Pageable pageable) {
@@ -73,6 +80,7 @@ public class ExamServiceImpl implements ExamService {
         return examTypeMapper.examTypeToExamTypeDto(examTypes.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.EXAM_TYPE, action = DomainAction.READ_EXAM_TYPES_BY_ORGANIZATION, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('read:exams'))")
     @Override
     public List<ExamTypeDto> getExamTypesByOrganization(Long organizationId, Pageable pageable) {
@@ -87,6 +95,7 @@ public class ExamServiceImpl implements ExamService {
         return examTypeMapper.examTypeToExamTypeDto(examTypes.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.EXAM_SKELETON, action = DomainAction.READ_EXAM_SKELETONS, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('read:exams'))")
     @Override
     public List<ExamSkeletonDto> getExamSkeletons(Pageable pageable) {
@@ -95,6 +104,7 @@ public class ExamServiceImpl implements ExamService {
         return examSkeletonMapper.examSkeletonDtoToExamSkeleton(examSkeletons.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.EXAM_SKELETON, action = DomainAction.READ_EXAM_SKELETONS_BY_ORGANIZATION, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('read:exams'))")
     @Override
     public List<ExamSkeletonDto> getExamSkeletonsByOrganization(Long organizationId, Pageable pageable) {
@@ -109,6 +119,7 @@ public class ExamServiceImpl implements ExamService {
         return examSkeletonMapper.examSkeletonDtoToExamSkeleton(examSkeletons.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.EXAM_RESULT, action = DomainAction.READ_EXAM_RESULTS, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('read:exams'))")
     @Override
     public List<ExamResultDto> getExamResults(Pageable pageable) {
@@ -117,6 +128,7 @@ public class ExamServiceImpl implements ExamService {
         return examResultMapper.examResultToExamResultDtoWithoutItemsList(examResults.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.EXAM_RESULT, action = DomainAction.READ_EXAM_RESULTS_BY_ORGANIZATION, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('read:exams'))")
     @Override
     public List<ExamResultDto> getExamResultsByOrganization(Long organizationId, Pageable pageable) {
@@ -131,6 +143,7 @@ public class ExamServiceImpl implements ExamService {
         return examResultMapper.examResultToExamResultDtoWithoutItemsList(examResults.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.EXAM_RESULT, action = DomainAction.READ_EXAM_RESULTS_BY_STUDENT, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('read:exams'))")
     @Override
     public List<ExamResultDto> getExamResultsByStudent(UUID studentId, Pageable pageable) {
@@ -145,6 +158,7 @@ public class ExamServiceImpl implements ExamService {
         return examResultMapper.examResultToExamResultDtoWithoutItemsList(examResults.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.EXAM_RESULT, action = DomainAction.READ_EXAM_RESULTS_BY_CLASSROOM, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('read:exams'))")
     @Override
     public List<ExamResultDto> getExamResultsByClassroom(Long classRoomId, Pageable pageable) {
@@ -159,6 +173,7 @@ public class ExamServiceImpl implements ExamService {
         return examResultMapper.examResultToExamResultDtoWithoutItemsList(examResults.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.EXAM_RESULT, action = DomainAction.READ_EXAM_RESULTS_BY_GRADE, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('read:exams'))")
     @Override
     public List<ExamResultDto> getExamResultsByGrade(Long gradeId, Pageable pageable) {
@@ -173,6 +188,7 @@ public class ExamServiceImpl implements ExamService {
         return examResultMapper.examResultToExamResultDtoWithoutItemsList(examResults.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.EXAM, action = DomainAction.READ_EXAM)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('read:exam'))")
     @Override
     public ExamDto getExam(Long examId) {
@@ -185,6 +201,7 @@ public class ExamServiceImpl implements ExamService {
         return examMapper.examToExamDto(exam);
     }
 
+    @ReadingEntity(domain = TransactionDomain.EXAM_TYPE, action = DomainAction.READ_EXAM_TYPE)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('read:exam'))")
     @Override
     public ExamTypeDto getExamType(Long examTypeId) {
@@ -197,6 +214,7 @@ public class ExamServiceImpl implements ExamService {
         return examTypeMapper.examTypeToExamTypeDto(examType);
     }
 
+    @ReadingEntity(domain = TransactionDomain.EXAM_SKELETON, action = DomainAction.READ_EXAM_SKELETON)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('read:exam'))")
     @Override
     public ExamSkeletonDto getExamSkeleton(Long examSkeletonId) {
@@ -209,6 +227,7 @@ public class ExamServiceImpl implements ExamService {
         return examSkeletonMapper.examSkeletonDtoToExamSkeleton(examSkeleton);
     }
 
+    @ReadingEntity(domain = TransactionDomain.EXAM_RESULT, action = DomainAction.READ_EXAM_RESULT)
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('read:exam'))")
     @Override
@@ -222,6 +241,7 @@ public class ExamServiceImpl implements ExamService {
         return examResultMapper.examResultToExamResultDto(examResult);
     }
 
+    @CreatingEntity(domain = TransactionDomain.EXAM, action = DomainAction.CREATE_EXAM)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('create:exam'))")
     @Override
     public ExamDto createExam(CreatingExamDto creatingExam) {
@@ -260,6 +280,7 @@ public class ExamServiceImpl implements ExamService {
         return examMapper.examToExamDto(exam);
     }
 
+    @CreatingEntity(domain = TransactionDomain.EXAM_SKELETON, action = DomainAction.CREATE_EXAM_SKELETON)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('create:exam'))")
     @Override
     public ExamSkeletonDto createExamSkeleton(CreatingExamSkeletonDto creatingExamSkeleton) {
@@ -292,6 +313,7 @@ public class ExamServiceImpl implements ExamService {
         return examSkeletonMapper.examSkeletonDtoToExamSkeleton(examSkeleton);
     }
 
+    @CreatingEntity(domain = TransactionDomain.EXAM_TYPE, action = DomainAction.CREATE_EXAM_TYPE)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('create:exam'))")
     @Override
     public ExamTypeDto createExamType(CreatingExamTypeDto creatingExamType) {
@@ -316,6 +338,7 @@ public class ExamServiceImpl implements ExamService {
         return examTypeMapper.examTypeToExamTypeDto(examType);
     }
 
+    @CreatingEntity(domain = TransactionDomain.EXAM_RESULT, action = DomainAction.CREATE_EXAM_RESULT)
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('create:exam'))")
     @Override
@@ -434,6 +457,7 @@ public class ExamServiceImpl implements ExamService {
         }
     }
 
+    @ReadingEntity(domain = TransactionDomain.EXAM_RESULT_ITEM, action = DomainAction.READ_EXAM_RESULT_ITEM)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('create:exam'))")
     @Override
     public ExamResultItemDto getExamResultItem(Long examResultItemId) {
@@ -446,6 +470,7 @@ public class ExamServiceImpl implements ExamService {
         return examResultItemMapper.examResultItemToExamResultItemDto(examResultItem);
     }
 
+    @UpdatingEntity(domain = TransactionDomain.EXAM, action = DomainAction.UPDATE_EXAM, idArg = "examId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('edit:exam'))")
     @Override
     public void updateExam(Long examId, EditingExamDto editingExam) {
@@ -495,6 +520,7 @@ public class ExamServiceImpl implements ExamService {
                 examId, SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @UpdatingEntity(domain = TransactionDomain.EXAM_TYPE, action = DomainAction.UPDATE_EXAM_TYPE, idArg = "examTypeId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('edit:exam'))")
     @Override
     public void updateExamType(Long examTypeId, EditingExamTypeDto editingExamType) {
@@ -532,6 +558,7 @@ public class ExamServiceImpl implements ExamService {
                 examTypeId, SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @UpdatingEntity(domain = TransactionDomain.EXAM_SKELETON, action = DomainAction.UPDATE_EXAM_SKELETON, idArg = "examSkeletonId")
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('edit:exam'))")
     @Override
@@ -587,6 +614,7 @@ public class ExamServiceImpl implements ExamService {
                 examSkeletonId, SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @UpdatingEntity(domain = TransactionDomain.EXAM_RESULT, action = DomainAction.UPDATE_EXAM_RESULT, idArg = "examResultId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('edit:exam'))")
     @Override
     public void updateExamResult(Long examResultId, EditingExamResultDto editingExamResult) {
@@ -650,6 +678,7 @@ public class ExamServiceImpl implements ExamService {
                 examResultId, SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @UpdatingEntity(domain = TransactionDomain.EXAM_RESULT_ITEM, action = DomainAction.UPDATE_EXAM_RESULT_ITEM, idArg = "examResultItemId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('edit:exam'))")
     @Override
     public void updateExamResultItem(Long examResultItemId, EditingExamResultItemDto editingExamResultItem) {
@@ -708,6 +737,7 @@ public class ExamServiceImpl implements ExamService {
                 examResultItemId, SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @DeletingEntity(domain = TransactionDomain.EXAM, action = DomainAction.DELETE_EXAM, idArg = "examId")
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('delete:exam'))")
     @Override
@@ -723,6 +753,7 @@ public class ExamServiceImpl implements ExamService {
                 examId, SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @DeletingEntity(domain = TransactionDomain.EXAM_TYPE, action = DomainAction.DELETE_EXAM_TYPE, idArg = "examTypeId")
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('delete:exam'))")
     @Override
@@ -741,6 +772,7 @@ public class ExamServiceImpl implements ExamService {
                 examTypeId, SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @DeletingEntity(domain = TransactionDomain.EXAM_SKELETON, action = DomainAction.DELETE_EXAM_SKELETON, idArg = "examSkeletonId")
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('delete:exam'))")
     @Override
@@ -759,6 +791,7 @@ public class ExamServiceImpl implements ExamService {
                 examSkeletonId, SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @DeletingEntity(domain = TransactionDomain.EXAM_RESULT, action = DomainAction.DELETE_EXAM_RESULT, idArg = "examResultId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:exams') || hasAuthority('edit:exam'))")
     @Override
     public void deleteExamResult(Long examResultId) {

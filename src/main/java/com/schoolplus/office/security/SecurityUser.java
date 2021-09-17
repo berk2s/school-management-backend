@@ -32,6 +32,10 @@ public class SecurityUser implements UserDetails {
         return grantedAuthorities;
     }
 
+    public User getUser() {
+        return this.user;
+    }
+
     public UUID getId() {
         return user.getId();
     }

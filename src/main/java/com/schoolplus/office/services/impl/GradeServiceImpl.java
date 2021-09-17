@@ -1,5 +1,9 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.CreatingEntity;
+import com.schoolplus.office.annotations.DeletingEntity;
+import com.schoolplus.office.annotations.ReadingEntity;
+import com.schoolplus.office.annotations.UpdatingEntity;
 import com.schoolplus.office.domain.Classroom;
 import com.schoolplus.office.domain.Grade;
 import com.schoolplus.office.domain.Organization;
@@ -11,10 +15,7 @@ import com.schoolplus.office.web.exceptions.ClassroomNotFoundException;
 import com.schoolplus.office.web.exceptions.GradeNotFoundException;
 import com.schoolplus.office.web.exceptions.OrganizationNotFoundException;
 import com.schoolplus.office.web.mappers.GradeMapper;
-import com.schoolplus.office.web.models.CreatingGradeDto;
-import com.schoolplus.office.web.models.EditingGradeDto;
-import com.schoolplus.office.web.models.ErrorDesc;
-import com.schoolplus.office.web.models.GradeDto;
+import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,7 @@ public class GradeServiceImpl implements GradeService {
     private final ClassroomRepository classroomRepository;
     private final GradeMapper gradeMapper;
 
+    @ReadingEntity(domain = TransactionDomain.GRADE, action = DomainAction.READ_GRADES, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:grades') || hasAuthority('read:grades'))")
     @Override
     public List<GradeDto> getGrades(Pageable pageable) {
@@ -43,6 +45,7 @@ public class GradeServiceImpl implements GradeService {
         return gradeMapper.gradeToGradeDto(grades.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.GRADE, action = DomainAction.READ_GRADE)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:grades') || hasAuthority('read:grade'))")
     @Override
     public GradeDto getGrade(Long gradeId) {
@@ -55,6 +58,7 @@ public class GradeServiceImpl implements GradeService {
         return gradeMapper.gradeToGradeDto(grade);
     }
 
+    @CreatingEntity(domain = TransactionDomain.GRADE, action = DomainAction.CREATE_GRADE)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:grades') || hasAuthority('write:grade'))")
     @Override
     public GradeDto createGrade(CreatingGradeDto creatingGrade) {
@@ -89,6 +93,7 @@ public class GradeServiceImpl implements GradeService {
         return gradeMapper.gradeToGradeDto(grade);
     }
 
+    @UpdatingEntity(domain = TransactionDomain.GRADE, action = DomainAction.UPDATE_GRADE, idArg = "gradeId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:grades') || hasAuthority('update:grade'))")
     @Override
     public void editGrade(Long gradeId, EditingGradeDto editingGrade) {
@@ -144,6 +149,7 @@ public class GradeServiceImpl implements GradeService {
                 SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @DeletingEntity(domain = TransactionDomain.GRADE, action = DomainAction.DELETE_GRADE, idArg = "gradeId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:grades') || hasAuthority('delete:grade'))")
     @Override
     public void deleteGrade(Long gradeId) {

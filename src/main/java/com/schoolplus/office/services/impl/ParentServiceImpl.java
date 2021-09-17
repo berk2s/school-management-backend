@@ -1,5 +1,8 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.CreatingEntity;
+import com.schoolplus.office.annotations.ReadingEntity;
+import com.schoolplus.office.annotations.UpdatingEntity;
 import com.schoolplus.office.domain.Organization;
 import com.schoolplus.office.domain.Parent;
 import com.schoolplus.office.domain.Student;
@@ -10,10 +13,7 @@ import com.schoolplus.office.web.exceptions.OrganizationNotFoundException;
 import com.schoolplus.office.web.exceptions.ParentNotFoundException;
 import com.schoolplus.office.web.exceptions.StudentNotFoundException;
 import com.schoolplus.office.web.mappers.ParentMapper;
-import com.schoolplus.office.web.models.CreatingParentDto;
-import com.schoolplus.office.web.models.EditingParentDto;
-import com.schoolplus.office.web.models.ErrorDesc;
-import com.schoolplus.office.web.models.ParentDto;
+import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,6 +33,7 @@ public class ParentServiceImpl implements ParentService {
     private final PasswordEncoder passwordEncoder;
     private final ParentMapper parentMapper;
 
+    @ReadingEntity(domain = TransactionDomain.PARENT, action = DomainAction.READ_PARENT)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:parents') || hasAuthority('read:parent'))")
     @Override
     public ParentDto getParent(UUID parentId) {
@@ -45,6 +46,7 @@ public class ParentServiceImpl implements ParentService {
         return parentMapper.parentToParentDto(parent);
     }
 
+    @CreatingEntity(domain = TransactionDomain.PARENT, action = DomainAction.CREATE_PARENT)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:parents') || hasAuthority('create:parent'))")
     @Override
     public ParentDto createParent(CreatingParentDto creatingParent) {
@@ -92,6 +94,7 @@ public class ParentServiceImpl implements ParentService {
         return parentMapper.parentToParentDto(savedParent);
     }
 
+    @UpdatingEntity(domain = TransactionDomain.PARENT, action = DomainAction.UPDATE_PARENT, idArg = "parentId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:parents') || hasAuthority('edit:parent'))")
     @Override
     public void updateParent(UUID parentId, EditingParentDto editingParent) {

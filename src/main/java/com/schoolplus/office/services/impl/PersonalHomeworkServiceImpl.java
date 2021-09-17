@@ -1,5 +1,9 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.CreatingEntity;
+import com.schoolplus.office.annotations.DeletingEntity;
+import com.schoolplus.office.annotations.ReadingEntity;
+import com.schoolplus.office.annotations.UpdatingEntity;
 import com.schoolplus.office.domain.Lesson;
 import com.schoolplus.office.domain.PersonalHomework;
 import com.schoolplus.office.domain.Student;
@@ -13,10 +17,7 @@ import com.schoolplus.office.web.exceptions.PersonalHomeworkNotFoundException;
 import com.schoolplus.office.web.exceptions.StudentNotFoundException;
 import com.schoolplus.office.web.exceptions.TeacherNotFoundException;
 import com.schoolplus.office.web.mappers.PersonalHomeworkMapper;
-import com.schoolplus.office.web.models.CreatingPersonalHomeworkDto;
-import com.schoolplus.office.web.models.EditingPersonalHomeworkDto;
-import com.schoolplus.office.web.models.ErrorDesc;
-import com.schoolplus.office.web.models.PersonalHomeworkDto;
+import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -39,6 +40,7 @@ public class PersonalHomeworkServiceImpl implements PersonalHomeworkService {
     private final LessonRepository lessonRepository;
     private final PersonalHomeworkMapper personalHomeworkMapper;
 
+    @ReadingEntity(domain = TransactionDomain.PERSONAL_HOMEWORK, action = DomainAction.READ_PERSONAL_HOMEWORK)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:personalhomeworks') || hasAuthority('read:personalhomework'))")
     @Override
     public PersonalHomeworkDto getPersonalHomework(Long personalHomeworkId) {
@@ -51,6 +53,7 @@ public class PersonalHomeworkServiceImpl implements PersonalHomeworkService {
         return personalHomeworkMapper.personalHomeworkToPersonalHomeworkDto(personalHomework);
     }
 
+    @ReadingEntity(domain = TransactionDomain.PERSONAL_HOMEWORK, action = DomainAction.READ_PERSONAL_HOMEWORK_BY_STUDENT, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:personalhomeworks') || hasAuthority('read:personalhomeworks'))")
     @Override
     public List<PersonalHomeworkDto> getPersonalHomeworkByStudent(UUID studentId, Pageable pageable) {
@@ -66,6 +69,7 @@ public class PersonalHomeworkServiceImpl implements PersonalHomeworkService {
         return personalHomeworkMapper.personalHomeworkToPersonalHomeworkDto(personalHomeworks.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.PERSONAL_HOMEWORK, action = DomainAction.READ_PERSONAL_HOMEWORK_BY_TEACHER, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:personalhomeworks') || hasAuthority('read:personalhomeworks'))")
     @Override
     public List<PersonalHomeworkDto> getPersonalHomeworkByTeacher(UUID teacherId, Pageable pageable) {
@@ -81,6 +85,7 @@ public class PersonalHomeworkServiceImpl implements PersonalHomeworkService {
         return personalHomeworkMapper.personalHomeworkToPersonalHomeworkDto(personalHomeworks.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.PERSONAL_HOMEWORK, action = DomainAction.READ_PERSONAL_HOMEWORK_BY_LESSON, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:personalhomeworks') || hasAuthority('read:personalhomeworks'))")
     @Override
     public List<PersonalHomeworkDto> getPersonalHomeworkByLesson(Long lessonId, Pageable pageable) {
@@ -96,6 +101,7 @@ public class PersonalHomeworkServiceImpl implements PersonalHomeworkService {
         return personalHomeworkMapper.personalHomeworkToPersonalHomeworkDto(personalHomeworks.getContent());
     }
 
+    @CreatingEntity(domain = TransactionDomain.PERSONAL_HOMEWORK, action = DomainAction.CREATE_PERSONAL_HOMEWORK)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:personalhomeworks') || hasAuthority('create:personalhomework'))")
     @Override
     public PersonalHomeworkDto createPersonalHomework(CreatingPersonalHomeworkDto creatingPersonalHomework) {
@@ -139,6 +145,7 @@ public class PersonalHomeworkServiceImpl implements PersonalHomeworkService {
         return personalHomeworkMapper.personalHomeworkToPersonalHomeworkDto(personalHomework);
     }
 
+    @UpdatingEntity(domain = TransactionDomain.PERSONAL_HOMEWORK, action = DomainAction.UPDATE_PERSONAL_HOMEWORK, idArg = "personalHomeworkId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:personalhomeworks') || hasAuthority('create:personalhomework'))")
     @Override
     public void updatePersonalHomework(Long personalHomeworkId, EditingPersonalHomeworkDto editingPersonalHomework) {
@@ -196,6 +203,7 @@ public class PersonalHomeworkServiceImpl implements PersonalHomeworkService {
                 SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @DeletingEntity(domain = TransactionDomain.PERSONAL_HOMEWORK, action = DomainAction.DELETE_PERSONAL_HOMEWORK, idArg = "personalHomeworkId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:personalhomeworks') || hasAuthority('create:personalhomework'))")
     @Override
     public void deletePersonalHomework(Long personalHomeworkId) {

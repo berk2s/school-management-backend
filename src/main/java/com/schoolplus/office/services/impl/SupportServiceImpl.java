@@ -1,5 +1,9 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.CreatingEntity;
+import com.schoolplus.office.annotations.DeletingEntity;
+import com.schoolplus.office.annotations.ReadingEntity;
+import com.schoolplus.office.annotations.UpdatingEntity;
 import com.schoolplus.office.domain.Organization;
 import com.schoolplus.office.domain.SupportRequest;
 import com.schoolplus.office.domain.SupportThread;
@@ -39,6 +43,7 @@ public class SupportServiceImpl implements SupportService {
     private final SupportRequestMapper supportRequestMapper;
     private final SupportThreadMapper supportThreadMapper;
 
+    @ReadingEntity(domain = TransactionDomain.SUPPORT_REQUEST, action = DomainAction.READ_SUPPORT_REQUEST)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:supports') || hasAuthority('read:support'))")
     @Override
     public SupportRequestDto getSupportRequest(Long supportRequestId) {
@@ -51,6 +56,9 @@ public class SupportServiceImpl implements SupportService {
         return supportRequestMapper.supportRequestToSupportRequestDto(supportRequest);
     }
 
+    @ReadingEntity(domain = TransactionDomain.SUPPORT_REQUEST,
+            action = DomainAction.READ_SUPPORT_REQUEST_BY_ORGANIZATION,
+            isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:supports') || hasAuthority('read:support'))")
     @Override
     public List<SupportRequestDto> getSupportRequestByOrganization(Long organizationId, Pageable pageable) {
@@ -66,6 +74,9 @@ public class SupportServiceImpl implements SupportService {
         return supportRequestMapper.supportRequestToSupportRequestDto(supportRequests.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.SUPPORT_REQUEST,
+            action = DomainAction.READ_SUPPORT_REQUEST_BY_ORGANIZATION_AND_UNANSWERED,
+            isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:supports') || hasAuthority('read:support'))")
     @Override
     public List<SupportRequestDto> getSupportRequestByOrganizationAndUnanswered(Long organizationId, Pageable pageable) {
@@ -81,6 +92,9 @@ public class SupportServiceImpl implements SupportService {
         return supportRequestMapper.supportRequestToSupportRequestDto(supportRequests.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.SUPPORT_REQUEST,
+            action = DomainAction.READ_SUPPORT_REQUEST_BY_ORGANIZATION_AND_ANSWERED,
+            isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:supports') || hasAuthority('read:support'))")
     @Override
     public List<SupportRequestDto> getSupportRequestByOrganizationAndAnswered(Long organizationId, Pageable pageable) {
@@ -96,6 +110,9 @@ public class SupportServiceImpl implements SupportService {
         return supportRequestMapper.supportRequestToSupportRequestDto(supportRequests.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.SUPPORT_REQUEST,
+            action = DomainAction.READ_SUPPORT_REQUEST_BY_ORGANIZATION_AND_ANONYMOUS,
+            isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:supports') || hasAuthority('read:support'))")
     @Override
     public List<SupportRequestDto> getSupportRequestByOrganizationAndAnonymous(Long organizationId, Pageable pageable) {
@@ -111,6 +128,9 @@ public class SupportServiceImpl implements SupportService {
         return supportRequestMapper.supportRequestToSupportRequestDto(supportRequests.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.SUPPORT_REQUEST,
+            action = DomainAction.READ_SUPPORT_REQUEST_BY_ORGANIZATION_AND_NAMED,
+            isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:supports') || hasAuthority('read:support'))")
     @Override
     public List<SupportRequestDto> getSupportRequestByOrganizationAndNamed(Long organizationId, Pageable pageable) {
@@ -126,6 +146,9 @@ public class SupportServiceImpl implements SupportService {
         return supportRequestMapper.supportRequestToSupportRequestDto(supportRequests.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.SUPPORT_REQUEST,
+            action = DomainAction.READ_SUPPORT_REQUEST_BY_ORGANIZATION_AND_USER,
+            isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:supports') || hasAuthority('write:support'))")
     @Override
     public List<SupportRequestDto> getSupportRequestByOrganizationAndUser(Long organizationId, UUID userId, Pageable pageable) {
@@ -147,6 +170,8 @@ public class SupportServiceImpl implements SupportService {
         return supportRequestMapper.supportRequestToSupportRequestDto(supportRequests.getContent());
     }
 
+    @CreatingEntity(domain = TransactionDomain.SUPPORT_THREAD,
+            action = DomainAction.CREATE_SUPPORT_THREAD)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:supports') || hasAuthority('write:support'))")
     @Override
     public SupportThreadDto createSupportResponse(CreatingSupportResponseDto creatingSupportResponse) {
@@ -179,6 +204,9 @@ public class SupportServiceImpl implements SupportService {
         return supportThreadMapper.supportThreadToSupportThreadDto(supportThread);
     }
 
+    @UpdatingEntity(domain = TransactionDomain.SUPPORT_REQUEST,
+            action = DomainAction.UPDATE_SUPPORT_REQUEST,
+            idArg = "supportRequestId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:supports') || hasAuthority('edit:support'))")
     @Override
     public void updateSupportRequest(Long supportRequestId, EditingSupportRequestDto editingSupportRequest) {
@@ -220,6 +248,9 @@ public class SupportServiceImpl implements SupportService {
                 supportRequestId, SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @DeletingEntity(domain = TransactionDomain.SUPPORT_REQUEST,
+            action = DomainAction.DELETE_SUPPORT_REQUEST,
+            idArg = "supportRequestId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:supports') || hasAuthority('delete:support'))")
     @Override
     public void deleteSupportRequest(Long supportRequestId) {
@@ -234,6 +265,9 @@ public class SupportServiceImpl implements SupportService {
                 SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @DeletingEntity(domain = TransactionDomain.SUPPORT_THREAD,
+            action = DomainAction.DELETE_SUPPORT_THREAD,
+            idArg = "supportThreadId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:supports') || hasAuthority('delete:support'))")
     @Override
     public void deleteSupportThread(Long supportThreadId) {
