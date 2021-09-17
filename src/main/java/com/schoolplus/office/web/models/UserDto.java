@@ -1,7 +1,9 @@
 package com.schoolplus.office.web.models;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.schoolplus.office.annotations.Logable;
 import lombok.*;
+import lombok.extern.java.Log;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
 
+    @Logable(type = LogableType.ID)
     private String userId;
 
     private String username;

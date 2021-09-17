@@ -1,5 +1,8 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.CreatingEntity;
+import com.schoolplus.office.annotations.ReadingEntity;
+import com.schoolplus.office.annotations.UpdatingEntity;
 import com.schoolplus.office.domain.Organization;
 import com.schoolplus.office.domain.Teacher;
 import com.schoolplus.office.domain.TeachingSubject;
@@ -11,10 +14,7 @@ import com.schoolplus.office.web.exceptions.OrganizationNotFoundException;
 import com.schoolplus.office.web.exceptions.TeacherNotFoundException;
 import com.schoolplus.office.web.exceptions.TeachingSubjectNotFoundException;
 import com.schoolplus.office.web.mappers.TeacherMapper;
-import com.schoolplus.office.web.models.CreatingTeacherDto;
-import com.schoolplus.office.web.models.EditingTeacherDto;
-import com.schoolplus.office.web.models.ErrorDesc;
-import com.schoolplus.office.web.models.TeacherDto;
+import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,6 +35,7 @@ public class TeacherServiceImpl implements TeacherService {
     private final PasswordEncoder passwordEncoder;
     private final TeacherMapper teacherMapper;
 
+    @ReadingEntity(domain = TransactionDomain.TEACHER, action = DomainAction.READ_TEACHER)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:teachers') || hasAuthority('read:teacher'))")
     @Override
     public TeacherDto getTeacher(UUID teacherId) {
@@ -47,6 +48,7 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherMapper.teacherToTeacherDto(teacher);
     }
 
+    @CreatingEntity(domain = TransactionDomain.TEACHER, action = DomainAction.CREATE_TEACHER)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:teachers') || hasAuthority('create:teacher'))")
     @Override
     public TeacherDto createTeacher(CreatingTeacherDto creatingTeacher) {
@@ -90,6 +92,7 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherMapper.teacherToTeacherDto(savedTeacher);
     }
 
+    @UpdatingEntity(domain = TransactionDomain.TEACHER, action = DomainAction.UPDATE_TEACHER, idArg = "teacherId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:teachers') || hasAuthority('create:teacher'))")
     @Override
     public void updateTeacher(UUID teacherId, EditingTeacherDto editTeacher) {

@@ -1,14 +1,15 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.CreatingEntity;
+import com.schoolplus.office.annotations.DeletingEntity;
+import com.schoolplus.office.annotations.ReadingEntity;
+import com.schoolplus.office.annotations.UpdatingEntity;
 import com.schoolplus.office.domain.Organization;
 import com.schoolplus.office.repository.OrganizationRepository;
 import com.schoolplus.office.services.OrganizationService;
 import com.schoolplus.office.web.exceptions.OrganizationNotFoundException;
 import com.schoolplus.office.web.mappers.OrganizationMapper;
-import com.schoolplus.office.web.models.CreatingOrganizationDto;
-import com.schoolplus.office.web.models.EditingOrganizationDto;
-import com.schoolplus.office.web.models.ErrorDesc;
-import com.schoolplus.office.web.models.OrganizationDto;
+import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +26,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final OrganizationRepository organizationRepository;
     private final OrganizationMapper organizationMapper;
 
+    @ReadingEntity(domain = TransactionDomain.ORGANIZATION, action = DomainAction.READ_ORGANIZATIONS, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:organizations') || hasAuthority('read:organizations'))")
     @Override
     public List<OrganizationDto> getOrganizations() {
@@ -33,6 +35,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         return organizationMapper.organizationToOrganizationDto(organizations);
     }
 
+    @ReadingEntity(domain = TransactionDomain.ORGANIZATION, action = DomainAction.READ_ORGANIZATION)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:organizations') || hasAuthority('view:organization'))")
     @Override
     public OrganizationDto getOrganization(Long organizationId) {
@@ -46,6 +49,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         return organizationMapper.organizationToOrganizationDto(organization);
     }
 
+    @CreatingEntity(domain = TransactionDomain.ORGANIZATION, action = DomainAction.CREATE_ORGANIZATION)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:organizations') || hasAuthority('create:organization'))")
     @Override
     public OrganizationDto createOrganization(CreatingOrganizationDto creatingOrganization) {
@@ -59,6 +63,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         return organizationMapper.organizationToOrganizationDto(organizationRepository.save(organization));
     }
 
+    @UpdatingEntity(domain = TransactionDomain.ORGANIZATION, action = DomainAction.UPDATE_ORGANIZATION, idArg = "organizationId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:organizations') || hasAuthority('update:organization'))")
     @Override
     public void updateOrganization(Long organizationId, EditingOrganizationDto editingOrganization) {
@@ -80,6 +85,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                 SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @DeletingEntity(domain = TransactionDomain.ORGANIZATION, action = DomainAction.DELETE_ORGANIZATION, idArg = "organizationId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:organizations') || hasAuthority('delete:organization'))")
     @Override
     public void deleteOrganization(Long organizationId) {

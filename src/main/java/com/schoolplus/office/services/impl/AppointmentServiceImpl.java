@@ -1,5 +1,9 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.CreatingEntity;
+import com.schoolplus.office.annotations.DeletingEntity;
+import com.schoolplus.office.annotations.ReadingEntity;
+import com.schoolplus.office.annotations.UpdatingEntity;
 import com.schoolplus.office.domain.*;
 import com.schoolplus.office.repository.AppointmentRepository;
 import com.schoolplus.office.repository.OrganizationRepository;
@@ -8,10 +12,7 @@ import com.schoolplus.office.services.AppointmentService;
 import com.schoolplus.office.utils.AppointmentUtils;
 import com.schoolplus.office.web.exceptions.*;
 import com.schoolplus.office.web.mappers.AppointmentMapper;
-import com.schoolplus.office.web.models.AppointmentDto;
-import com.schoolplus.office.web.models.CreatingAppointmentDto;
-import com.schoolplus.office.web.models.EditingAppointmentDto;
-import com.schoolplus.office.web.models.ErrorDesc;
+import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Example;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,6 +37,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final OrganizationRepository organizationRepository;
     private final AppointmentMapper appointmentMapper;
 
+    @ReadingEntity(domain = TransactionDomain.APPOINTMENT, action = DomainAction.READ_APPOINTMENT)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:appointments') || hasAuthority('read:appointments'))")
     @Override
     public AppointmentDto getAppointment(UUID appointmentId) {
@@ -47,6 +50,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentMapper.appointmentToAppointmentDto(appointment);
     }
 
+    @ReadingEntity(domain = TransactionDomain.APPOINTMENT, action = DomainAction.READ_APPOINTMENTS, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:appointments') || hasAuthority('read:appointment'))")
     @Override
     public List<AppointmentDto> getAppointments(Pageable pageable) {
@@ -54,6 +58,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentMapper.appointmentToAppointmentDto(appointments.getContent());
     }
 
+    @CreatingEntity(domain = TransactionDomain.APPOINTMENT, action = DomainAction.CREATE_APPOINTMENT)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:appointments') || hasAuthority('write:appointment'))")
     @Override
     public AppointmentDto createAppointment(CreatingAppointmentDto creatingAppointment) {
@@ -121,6 +126,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentMapper.appointmentToAppointmentDto(savedAppointment);
     }
 
+    @Transactional
+    @UpdatingEntity(domain = TransactionDomain.APPOINTMENT, action = DomainAction.UPDATE_APPOINTMENT, idArg = "appointmentId")
+    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:appointments') || hasAuthority('update:appointment'))")
     @Override
     public void updateAppointment(UUID appointmentId, EditingAppointmentDto editingAppointment) {
         Appointment appointment = appointmentRepository.findById(appointmentId)
@@ -211,6 +219,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @DeletingEntity(domain = TransactionDomain.APPOINTMENT, action = DomainAction.DELETE_APPOINTMENT, idArg = "appointmentId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:appointments') || hasAuthority('delete:appointment'))")
     @Override
     public void deleteAppointment(UUID appointmentId) {
@@ -222,6 +231,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointmentRepository.deleteById(appointmentId);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:appointments') || hasAuthority('read:appointment'))")
     @Override
     public boolean isAppointmentTaken(CanAppointment t, UUID appointmentId, LocalDateTime start, LocalDateTime end) {
         Appointment appointment = new Appointment();

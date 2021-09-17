@@ -1,5 +1,6 @@
 package com.schoolplus.office.web.models;
 
+import com.schoolplus.office.annotations.Logable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Data
 public class PersonalHomeworkDto {
 
+    @Logable(type = LogableType.ID)
     private Long personalHomeworkId;
 
     private String personalHomeworkName;

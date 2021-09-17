@@ -1,5 +1,6 @@
 package com.schoolplus.office.web.models;
 
+import com.schoolplus.office.annotations.Logable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.Map;
 @Data
 public class ExamResultItemDto {
 
+    @Logable(type = LogableType.ID)
     private Long examResultItemId;
 
     private StudentDto student;

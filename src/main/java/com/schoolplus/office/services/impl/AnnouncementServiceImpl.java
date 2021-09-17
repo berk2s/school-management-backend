@@ -1,5 +1,9 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.CreatingEntity;
+import com.schoolplus.office.annotations.DeletingEntity;
+import com.schoolplus.office.annotations.ReadingEntity;
+import com.schoolplus.office.annotations.UpdatingEntity;
 import com.schoolplus.office.domain.Announcement;
 import com.schoolplus.office.domain.Organization;
 import com.schoolplus.office.repository.AnnouncementRepository;
@@ -31,6 +35,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     private final OrganizationRepository organizationRepository;
     private final AnnouncementMapper announcementMapper;
 
+    @ReadingEntity(domain = TransactionDomain.ANNOUNCEMENT, action = DomainAction.READ_ANNOUNCEMENTS, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:announcements') || hasAuthority('view:announcements'))")
     @Override
     public List<AnnouncementDto> getAnnouncements(Pageable pageable) {
@@ -40,6 +45,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         return announcementMapper.announcementToAnnouncementDto(announcements.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.ANNOUNCEMENT, action = DomainAction.READ_ANNOUNCEMENT)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:announcements') || hasAuthority('view:announcement'))")
     @Override
     public AnnouncementDto getAnnouncement(Long announcementId) {
@@ -52,6 +58,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         return announcementMapper.announcementToAnnouncementDto(announcement);
     }
 
+    @CreatingEntity(domain = TransactionDomain.ANNOUNCEMENT, action = DomainAction.CREATE_ANNOUNCEMENT)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:announcements') || hasAuthority('write:announcement'))")
     @Override
     public AnnouncementDto createAnnouncement(CreatingAnnouncementDto creatingAnnouncement) {
@@ -81,6 +88,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         return announcementMapper.announcementToAnnouncementDto(savedAnnouncement);
     }
 
+    @UpdatingEntity(domain = TransactionDomain.ANNOUNCEMENT, action = DomainAction.UPDATE_ANNOUNCEMENT, idArg = "announcementId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:announcements') || hasAuthority('update:announcement'))")
     @Override
     public void updateAnnouncement(Long announcementId, EditingAnnouncementDto updatingAnnouncement) {
@@ -129,6 +137,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                 SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @UpdatingEntity(domain = TransactionDomain.ANNOUNCEMENT, action = DomainAction.UPLOAD_ANNOUNCEMENT_IMAGE, idArg = "announcementId", isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:announcements') || hasAuthority('update:announcement') || hasAuthority('write:announcement'))")
     @Override
     public List<AnnouncementImageDto> uploadImages(Long announcementId, MultipartFile[] images) {
@@ -160,6 +169,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         return announcementImages;
     }
 
+    @DeletingEntity(domain = TransactionDomain.ANNOUNCEMENT, action = DomainAction.DELETE_ANNOUNCEMENT_IMAGE, idArg = "announcementId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:announcements') || hasAuthority('update:announcement') || hasAuthority('write:announcement'))")
     @Override
     public void deleteImages(Long announcementId, DeletingAnnouncementImageDto deletingAnnouncementImage) {
@@ -178,6 +188,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                 SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @DeletingEntity(domain = TransactionDomain.ANNOUNCEMENT, action = DomainAction.DELETE_ANNOUNCEMENT, idArg = "announcementId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:announcements') || hasAuthority('delete:announcement'))")
     @Override
     public void deleteAnnouncement(Long announcementId) {

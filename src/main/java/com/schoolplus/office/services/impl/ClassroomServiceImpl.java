@@ -1,5 +1,9 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.CreatingEntity;
+import com.schoolplus.office.annotations.DeletingEntity;
+import com.schoolplus.office.annotations.ReadingEntity;
+import com.schoolplus.office.annotations.UpdatingEntity;
 import com.schoolplus.office.domain.*;
 import com.schoolplus.office.repository.ClassroomRepository;
 import com.schoolplus.office.repository.GradeRepository;
@@ -31,6 +35,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     private final GradeRepository gradeRepository;
     private final ClassroomMapper classroomMapper;
 
+    @ReadingEntity(domain = TransactionDomain.CLASSROOM, action = DomainAction.READ_CLASSROOMS, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:classrooms') || hasAuthority('read:classroom'))")
     @Override
     public List<ClassroomDto> getClassrooms(Pageable pageable) {
@@ -38,6 +43,7 @@ public class ClassroomServiceImpl implements ClassroomService {
         return classroomMapper.classRoomToClassRoomDto(classRooms.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.CLASSROOM, action = DomainAction.READ_CLASSROOM)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:classrooms') || hasAuthority('read:classroom'))")
     @Override
     public ClassroomDto getClassroom(Long classRoomId) {
@@ -50,6 +56,7 @@ public class ClassroomServiceImpl implements ClassroomService {
         return classroomMapper.classRoomToClassRoomDto(classRoom);
     }
 
+    @CreatingEntity(domain = TransactionDomain.CLASSROOM, action = DomainAction.CREATE_CLASSROOM)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:classrooms') || hasAuthority('create:classroom'))")
     @Override
     public ClassroomDto createClassroom(CreatingClassroomDto creatingClassroom) {
@@ -106,6 +113,7 @@ public class ClassroomServiceImpl implements ClassroomService {
         return classroomMapper.classRoomToClassRoomDto(savedClassroom);
     }
 
+    @UpdatingEntity(domain = TransactionDomain.CLASSROOM, action = DomainAction.UPDATE_CLASSROOM, idArg = "classRoomId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:classrooms') || hasAuthority('update:classroom'))")
     @Override
     public void updateClassroom(Long classRoomId, EditingClassroomDto editingClassroom) {
@@ -175,6 +183,7 @@ public class ClassroomServiceImpl implements ClassroomService {
                 SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @DeletingEntity(domain = TransactionDomain.CLASSROOM, action = DomainAction.DELETE_CLASSROOM, idArg = "classRoomId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:classrooms') || hasAuthority('delete:classroom'))")
     @Override
     public void deleteClassroom(Long classRoomId) {
@@ -188,6 +197,5 @@ public class ClassroomServiceImpl implements ClassroomService {
         log.info("Classroom has been updated deleted [classRoomId: {}, performedBy: {}]", classRoomId,
                 SecurityContextHolder.getContext().getAuthentication().getName());
     }
-
 
 }

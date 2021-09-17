@@ -1,14 +1,15 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.CreatingEntity;
+import com.schoolplus.office.annotations.DeletingEntity;
+import com.schoolplus.office.annotations.ReadingEntity;
+import com.schoolplus.office.annotations.UpdatingEntity;
 import com.schoolplus.office.domain.*;
 import com.schoolplus.office.repository.*;
 import com.schoolplus.office.services.ContinuityService;
 import com.schoolplus.office.web.exceptions.*;
 import com.schoolplus.office.web.mappers.ContinuityMapper;
-import com.schoolplus.office.web.models.ContinuityDto;
-import com.schoolplus.office.web.models.CreatingContinuityDto;
-import com.schoolplus.office.web.models.EditingContinuityDto;
-import com.schoolplus.office.web.models.ErrorDesc;
+import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,7 @@ public class ContinuityServiceImpl implements ContinuityService {
     private final OrganizationRepository organizationRepository;
     private final ContinuityMapper continuityMapper;
 
+    @ReadingEntity(domain = TransactionDomain.COUNTINUITY, action = DomainAction.READ_CONTINUITY)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:continuities') || hasAuthority('read:continuity'))")
     @Override
     public ContinuityDto getContinuity(UUID continuityId) {
@@ -45,6 +47,7 @@ public class ContinuityServiceImpl implements ContinuityService {
         return continuityMapper.continuityToContinuityDto(continuity);
     }
 
+    @ReadingEntity(domain = TransactionDomain.COUNTINUITY, action = DomainAction.READ_CONTINUITIES_BY_SYLLABUS, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:continuities') || hasAuthority('read:continuity'))")
     @Override
     public List<ContinuityDto> getContinuityBySyllabus(Long syllabusId, Pageable pageable) {
@@ -59,6 +62,7 @@ public class ContinuityServiceImpl implements ContinuityService {
         return continuityMapper.continuityToContinuityDto(continuities.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.COUNTINUITY, action = DomainAction.READ_CONTINUITIES_BY_CLASSROOM, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:continuities') || hasAuthority('read:continuity'))")
     @Override
     public List<ContinuityDto> getContinuityByClassroom(Long classroomId, Pageable pageable) {
@@ -73,6 +77,7 @@ public class ContinuityServiceImpl implements ContinuityService {
         return continuityMapper.continuityToContinuityDto(continuities.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.COUNTINUITY, action = DomainAction.READ_CONTINUITIES_BY_STUDENT, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:continuities') || hasAuthority('read:continuity'))")
     @Override
     public List<ContinuityDto> getContinuityByStudent(UUID studentId, Pageable pageable) {
@@ -87,6 +92,7 @@ public class ContinuityServiceImpl implements ContinuityService {
         return continuityMapper.continuityToContinuityDto(continuities.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.COUNTINUITY, action = DomainAction.READ_CONTINUITIES_BY_ORGANIZATION, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:continuities') || hasAuthority('create:continuity'))")
     @Override
     public List<ContinuityDto> getContinuityByOrganization(Long organizationId, Pageable pageable) {
@@ -101,6 +107,7 @@ public class ContinuityServiceImpl implements ContinuityService {
         return continuityMapper.continuityToContinuityDto(continuities.getContent());
     }
 
+    @CreatingEntity(domain = TransactionDomain.COUNTINUITY, action = DomainAction.CREATE_CONTINUITY)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:continuities') || hasAuthority('create:continuity'))")
     @Transactional
     @Override
@@ -148,6 +155,7 @@ public class ContinuityServiceImpl implements ContinuityService {
         return continuityMapper.continuityToContinuityDto(savedContinuity);
     }
 
+    @UpdatingEntity(domain = TransactionDomain.COUNTINUITY, action = DomainAction.UPDATE_CONTINUITY, idArg = "continuityId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:continuities') || hasAuthority('update:continuity'))")
     @Override
     public void editContinuity(UUID continuityId, EditingContinuityDto editingContinuity) {
@@ -207,6 +215,7 @@ public class ContinuityServiceImpl implements ContinuityService {
                 SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @DeletingEntity(domain = TransactionDomain.COUNTINUITY, action = DomainAction.DELETE_CONTINUITY, idArg = "continuityId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:continuities') || hasAuthority('delete:continuity'))")
     @Override
     public void deleteContinuity(UUID continuityId) {

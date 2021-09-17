@@ -1,5 +1,9 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.CreatingEntity;
+import com.schoolplus.office.annotations.DeletingEntity;
+import com.schoolplus.office.annotations.ReadingEntity;
+import com.schoolplus.office.annotations.UpdatingEntity;
 import com.schoolplus.office.domain.Organization;
 import com.schoolplus.office.domain.Teacher;
 import com.schoolplus.office.domain.TeachingSubject;
@@ -11,10 +15,7 @@ import com.schoolplus.office.web.exceptions.OrganizationNotFoundException;
 import com.schoolplus.office.web.exceptions.TeacherNotFoundException;
 import com.schoolplus.office.web.exceptions.TeachingSubjectNotFoundException;
 import com.schoolplus.office.web.mappers.TeachingSubjectMapper;
-import com.schoolplus.office.web.models.CreatingTeachingSubjectDto;
-import com.schoolplus.office.web.models.EditingTeachingSubjectDto;
-import com.schoolplus.office.web.models.ErrorDesc;
-import com.schoolplus.office.web.models.TeachingSubjectDto;
+import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -37,6 +38,7 @@ public class TeachingSubjectServiceImpl implements TeachingSubjectService {
     private final OrganizationRepository organizationRepository;
     private final TeachingSubjectMapper teachingSubjectMapper;
 
+    @ReadingEntity(domain = TransactionDomain.TEACHING_SUBJECT, action = DomainAction.READ_TEACHING_SUBJECTS, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:teachingsubjects') || hasAuthority('read:teachingsubject'))")
     @Override
     public List<TeachingSubjectDto> getTeachingSubjects(Pageable pageable) {
@@ -46,6 +48,7 @@ public class TeachingSubjectServiceImpl implements TeachingSubjectService {
         return teachingSubjectMapper.teachingSubjectToTeachingSubjectDto(teachingSubjects.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.TEACHING_SUBJECT, action = DomainAction.READ_TEACHING_SUBJECT)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:teachingsubjects') || hasAuthority('read:teachingsubject'))")
     @Override
     public TeachingSubjectDto getTeachingSubject(Long teachingSubjectId) {
@@ -58,6 +61,7 @@ public class TeachingSubjectServiceImpl implements TeachingSubjectService {
         return teachingSubjectMapper.teachingSubjectToTeachingSubjectDto(teachingSubject);
     }
 
+    @CreatingEntity(domain = TransactionDomain.TEACHING_SUBJECT, action = DomainAction.CREATE_TEACHING_SUBJECT)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:teachingsubjects') || hasAuthority('write:teachingsubject'))")
     @Override
     public TeachingSubjectDto createTeachingSubject(CreatingTeachingSubjectDto creatingTeachingSubject) {
@@ -92,6 +96,7 @@ public class TeachingSubjectServiceImpl implements TeachingSubjectService {
         return teachingSubjectMapper.teachingSubjectToTeachingSubjectDto(teachingSubjectRepository.save(teachingSubject));
     }
 
+    @UpdatingEntity(domain = TransactionDomain.TEACHING_SUBJECT, action = DomainAction.UPDATE_TEACHING_SUBJECT, idArg = "teachingSubjectId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:teachingsubjects') || hasAuthority('update:teachingsubject'))")
     @Override
     public void updateTeachingSubject(Long teachingSubjectId, EditingTeachingSubjectDto editingTeachingSubject) {
@@ -152,6 +157,7 @@ public class TeachingSubjectServiceImpl implements TeachingSubjectService {
                 teachingSubject.getId(), SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @DeletingEntity(domain = TransactionDomain.TEACHING_SUBJECT, action = DomainAction.DELETE_TEACHING_SUBJECT, idArg = "teachingSubjectId")
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:teachingsubjects') || hasAuthority('delete:teachingsubject'))")
     @Override
@@ -169,4 +175,5 @@ public class TeachingSubjectServiceImpl implements TeachingSubjectService {
         log.info("The Teaching Subject has been deleted successfully [teachingSubjectId: {}, performedBy: {}]",
                 teachingSubjectId, SecurityContextHolder.getContext().getAuthentication().getName());
     }
+
 }

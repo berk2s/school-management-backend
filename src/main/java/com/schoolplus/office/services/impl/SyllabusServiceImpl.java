@@ -1,14 +1,15 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.CreatingEntity;
+import com.schoolplus.office.annotations.DeletingEntity;
+import com.schoolplus.office.annotations.ReadingEntity;
+import com.schoolplus.office.annotations.UpdatingEntity;
 import com.schoolplus.office.domain.*;
 import com.schoolplus.office.repository.*;
 import com.schoolplus.office.services.SyllabusService;
 import com.schoolplus.office.web.exceptions.*;
 import com.schoolplus.office.web.mappers.SyllabusMapper;
-import com.schoolplus.office.web.models.CreatingSyllabusDto;
-import com.schoolplus.office.web.models.EditingSyllabusDto;
-import com.schoolplus.office.web.models.ErrorDesc;
-import com.schoolplus.office.web.models.SyllabusDto;
+import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,7 @@ public class SyllabusServiceImpl implements SyllabusService {
     private final UserRepository userRepository;
     private final SyllabusMapper syllabusMapper;
 
+    @ReadingEntity(domain = TransactionDomain.SYLLABUS, action = DomainAction.READ_SYLLABUSES, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:syllabuses') || hasAuthority('read:syllabuses'))")
     @Override
     public List<SyllabusDto> getSyllabuses(Pageable pageable) {
@@ -41,6 +43,7 @@ public class SyllabusServiceImpl implements SyllabusService {
         return syllabusMapper.syllabusToSyllabusDto(syllabuses.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.SYLLABUS, action = DomainAction.READ_SYLLABUS)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:syllabuses') || hasAuthority('read:syllabus'))")
     @Override
     public SyllabusDto getSyllabus(Long syllabusId) {
@@ -53,6 +56,7 @@ public class SyllabusServiceImpl implements SyllabusService {
         return syllabusMapper.syllabusToSyllabusDto(syllabus);
     }
 
+    @ReadingEntity(domain = TransactionDomain.SYLLABUS, action = DomainAction.READ_SYLLABUS_BY_CLASSROOM, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:syllabuses') || hasAuthority('read:syllabuses'))")
     @Override
     public List<SyllabusDto> getSyllabusByClassroom(Pageable pageable, Long classroomId, LocalDateTime startDate,
@@ -76,6 +80,7 @@ public class SyllabusServiceImpl implements SyllabusService {
         return syllabusMapper.syllabusToSyllabusDto(syllabuses.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.SYLLABUS, action = DomainAction.READ_SYLLABUS_BY_LESSON, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:syllabuses') || hasAuthority('read:syllabuses'))")
     @Override
     public List<SyllabusDto> getSyllabusByLesson(Pageable pageable, Long lessonId, LocalDateTime startDate,
@@ -99,6 +104,7 @@ public class SyllabusServiceImpl implements SyllabusService {
         return syllabusMapper.syllabusToSyllabusDto(syllabuses.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.SYLLABUS, action = DomainAction.READ_SYLLABUS_BY_TEACHER, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:syllabuses') || hasAuthority('read:syllabuses'))")
     @Override
     public List<SyllabusDto> getSyllabusByTeacher(Pageable pageable, UUID teacherId, LocalDateTime startDate, LocalDateTime endDate) {
@@ -121,6 +127,7 @@ public class SyllabusServiceImpl implements SyllabusService {
         return syllabusMapper.syllabusToSyllabusDto(syllabuses.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.SYLLABUS, action = DomainAction.READ_SYLLABUS_BY_ORGANIZATION, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:syllabuses') || hasAuthority('read:syllabuses'))")
     @Override
     public List<SyllabusDto> getSyllabusByOrganization(Pageable pageable, Long organizationId, LocalDateTime startDate, LocalDateTime endDate) {
@@ -143,6 +150,7 @@ public class SyllabusServiceImpl implements SyllabusService {
         return syllabusMapper.syllabusToSyllabusDto(syllabuses.getContent());
     }
 
+    @CreatingEntity(domain = TransactionDomain.SYLLABUS, action = DomainAction.CREATE_SYLLABUS)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:syllabuses') || hasAuthority('write:syllabus'))")
     @Override
     public SyllabusDto createSyllabus(CreatingSyllabusDto creatingSyllabus) {
@@ -191,6 +199,7 @@ public class SyllabusServiceImpl implements SyllabusService {
         return syllabusMapper.syllabusToSyllabusDto(syllabus);
     }
 
+    @UpdatingEntity(domain = TransactionDomain.SYLLABUS, action = DomainAction.UPDATE_SYLLABUS, idArg = "syllabusId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:syllabuses') || hasAuthority('edit:syllabus'))")
     @Override
     public void editSyllabus(Long syllabusId, EditingSyllabusDto editingSyllabus) {
@@ -264,6 +273,7 @@ public class SyllabusServiceImpl implements SyllabusService {
                 SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @DeletingEntity(domain = TransactionDomain.SYLLABUS, action = DomainAction.DELETE_SYLLABUS, idArg = "syllabusId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:syllabuses') || hasAuthority('delete:syllabus'))")
     @Override
     public void deleteSyllabus(Long syllabusId) {
@@ -277,4 +287,5 @@ public class SyllabusServiceImpl implements SyllabusService {
         log.info("The Syllabus has been deleted successfully [syllabusId: {}, performedBy: {}]", syllabusId,
                 SecurityContextHolder.getContext().getAuthentication().getName());
     }
+
 }

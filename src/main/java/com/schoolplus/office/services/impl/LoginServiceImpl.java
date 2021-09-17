@@ -1,5 +1,6 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.AuthenticationProcess;
 import com.schoolplus.office.config.ServerConfiguration;
 import com.schoolplus.office.security.SecurityUser;
 import com.schoolplus.office.security.SecurityUserDetailsService;
@@ -7,10 +8,7 @@ import com.schoolplus.office.security.UserAuthenticationProvider;
 import com.schoolplus.office.services.AccessTokenService;
 import com.schoolplus.office.services.LoginService;
 import com.schoolplus.office.services.RefreshTokenService;
-import com.schoolplus.office.web.models.AccessTokenCommand;
-import com.schoolplus.office.web.models.LoginRequestDto;
-import com.schoolplus.office.web.models.TokenResponseDto;
-import com.schoolplus.office.web.models.RefreshTokenCommand;
+import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,6 +25,7 @@ public class LoginServiceImpl implements LoginService {
     private final AccessTokenService accessTokenService;
     private final RefreshTokenService refreshTokenService;
 
+    @AuthenticationProcess(domain = TransactionDomain.LOGIN, action = DomainAction.LOGIN_SUCCESSFULLY)
     @Override
     public TokenResponseDto authenticate(LoginRequestDto loginRequest) {
         String username = loginRequest.getUsername();

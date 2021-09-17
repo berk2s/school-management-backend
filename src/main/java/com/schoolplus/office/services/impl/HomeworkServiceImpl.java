@@ -1,5 +1,9 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.CreatingEntity;
+import com.schoolplus.office.annotations.DeletingEntity;
+import com.schoolplus.office.annotations.ReadingEntity;
+import com.schoolplus.office.annotations.UpdatingEntity;
 import com.schoolplus.office.domain.Classroom;
 import com.schoolplus.office.domain.Homework;
 import com.schoolplus.office.domain.Syllabus;
@@ -14,10 +18,7 @@ import com.schoolplus.office.web.exceptions.HomeworkNotFoundException;
 import com.schoolplus.office.web.exceptions.SyllabusNotFoundException;
 import com.schoolplus.office.web.exceptions.TeacherNotFoundException;
 import com.schoolplus.office.web.mappers.HomeworkMapper;
-import com.schoolplus.office.web.models.CreatingHomeworkDto;
-import com.schoolplus.office.web.models.EditingHomeworkDto;
-import com.schoolplus.office.web.models.ErrorDesc;
-import com.schoolplus.office.web.models.HomeworkDto;
+import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -40,6 +41,7 @@ public class HomeworkServiceImpl implements HomeworkService {
     private final SyllabusRepository syllabusRepository;
     private final HomeworkMapper homeworkMapper;
 
+    @ReadingEntity(domain = TransactionDomain.HOMEWORK, action = DomainAction.READ_HOMEWORKS, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:homeworks') || hasAuthority('read:homeworks'))")
     @Override
     public List<HomeworkDto> getHomeworks(Pageable pageable) {
@@ -48,6 +50,7 @@ public class HomeworkServiceImpl implements HomeworkService {
         return homeworkMapper.homeworkToHomeworkDto(homeworks.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.HOMEWORK, action = DomainAction.READ_HOMEWORKS_BY_CLASSROOM, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:homeworks') || hasAuthority('read:homeworks'))")
     @Override
     public List<HomeworkDto> getHomeworksByClassroom(Long classroomId, Pageable pageable) {
@@ -62,6 +65,7 @@ public class HomeworkServiceImpl implements HomeworkService {
         return homeworkMapper.homeworkToHomeworkDto(homeworks.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.HOMEWORK, action = DomainAction.READ_HOMEWORKS_BY_TEAHCER, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:homeworks') || hasAuthority('read:homeworks'))")
     @Override
     public List<HomeworkDto> getHomeworksByTeacher(String teacherId, Pageable pageable) {
@@ -76,6 +80,7 @@ public class HomeworkServiceImpl implements HomeworkService {
         return homeworkMapper.homeworkToHomeworkDto(homeworks.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.HOMEWORK, action = DomainAction.READ_HOMEWORKS_BY_SYLLABUS, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:homeworks') || hasAuthority('read:homeworks'))")
     @Override
     public List<HomeworkDto> getHomeworksBySyllabus(Long syllabusId, Pageable pageable) {
@@ -90,6 +95,7 @@ public class HomeworkServiceImpl implements HomeworkService {
         return homeworkMapper.homeworkToHomeworkDto(homeworks.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.HOMEWORK, action = DomainAction.READ_HOMEWORK)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:homeworks') || hasAuthority('read:homework'))")
     @Override
     public HomeworkDto getHomework(Long homeworkId) {
@@ -102,6 +108,7 @@ public class HomeworkServiceImpl implements HomeworkService {
         return homeworkMapper.homeworkToHomeworkDto(homework);
     }
 
+    @CreatingEntity(domain = TransactionDomain.HOMEWORK, action = DomainAction.CREATE_HOMEWORK)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:homeworks') || hasAuthority('create:homework'))")
     @Override
     public HomeworkDto createHomework(CreatingHomeworkDto creatingHomework) {
@@ -141,6 +148,7 @@ public class HomeworkServiceImpl implements HomeworkService {
         return homeworkMapper.homeworkToHomeworkDto(homework);
     }
 
+    @UpdatingEntity(domain = TransactionDomain.HOMEWORK, action = DomainAction.UPDATE_HOMEWORK, idArg = "homeworkId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:homeworks') || hasAuthority('edit:homework'))")
     @Override
     public void updateHomework(Long homeworkId, EditingHomeworkDto editingHomework) {
@@ -194,6 +202,7 @@ public class HomeworkServiceImpl implements HomeworkService {
                 SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
+    @DeletingEntity(domain = TransactionDomain.HOMEWORK, action = DomainAction.DELETE_HOMEWORK, idArg = "homeworkId")
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:homeworks') || hasAuthority('delete:homework'))")
     @Override
     public void deleteHomework(Long homeworkId) {
@@ -207,4 +216,5 @@ public class HomeworkServiceImpl implements HomeworkService {
         log.info("The Homework has been deleted successfully [homeworkId: {}, performedBy: {}]", homeworkId,
                 SecurityContextHolder.getContext().getAuthentication().getName());
     }
+
 }
