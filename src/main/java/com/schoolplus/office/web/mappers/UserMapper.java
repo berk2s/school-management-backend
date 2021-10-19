@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Mapper(imports = {UUID.class})
+@Mapper(imports = {UUID.class}, uses = {OrganizationMapper.class})
 public interface UserMapper {
 
     @Mappings({

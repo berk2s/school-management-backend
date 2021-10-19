@@ -28,5 +28,6 @@ public enum TransactionDomain {
     TEACHER,
     USER,
     LOGIN,
-    LOGOUT
+    LOGOUT,
+    USERINFO
 }

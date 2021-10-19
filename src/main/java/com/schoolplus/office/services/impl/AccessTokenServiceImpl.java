@@ -40,7 +40,7 @@ public class AccessTokenServiceImpl implements AccessTokenService {
         List<String> roles = securityUser.getAuthorities().stream().map(GrantedAuthority::getAuthority).filter(authority -> authority.startsWith("ROLE_")).map(authority -> authority.toUpperCase(Locale.ROOT)).collect(Collectors.toList());
 
         for (String _claimedAuthority : accessTokenCommand.getScopes()) {
-            String claimedAuthority = _claimedAuthority.toUpperCase(Locale.ROOT);
+            String claimedAuthority = _claimedAuthority.toUpperCase(Locale.ROOT).trim();
 
             if(!authorities.contains(claimedAuthority)) {
                 log.warn("The requested authority is not available for the User [userId: {}, authority: {}]", securityUser.getId().toString(), claimedAuthority);

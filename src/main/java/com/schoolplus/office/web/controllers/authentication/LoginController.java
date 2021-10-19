@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Tag(name = "Login Controller", description = "Exposes login endpoint")
@@ -42,6 +43,7 @@ public class LoginController {
     })
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TokenResponseDto> handleLogin(@Valid @RequestBody LoginRequestDto loginRequest) {
+
         return new ResponseEntity<>(loginService.authenticate(loginRequest), HttpStatus.OK);
     }
 

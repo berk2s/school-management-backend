@@ -34,6 +34,8 @@ public class UserDto {
 
     private List<String> roles;
 
+    private UserType userType;
+
     private Boolean isEnabled;
 
     private Boolean isAccountNonExpired;

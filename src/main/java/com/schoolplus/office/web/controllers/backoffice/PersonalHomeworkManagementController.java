@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +23,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+@Tag(name = "Personal Homework Management Controller", description = "Exposes personal homework management endpoints")
 @RequiredArgsConstructor
 @RequestMapping(PersonalHomeworkManagementController.ENDPOINT)
 @RestController

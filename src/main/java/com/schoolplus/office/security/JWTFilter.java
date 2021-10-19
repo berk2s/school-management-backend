@@ -39,7 +39,7 @@ public class JWTFilter extends OncePerRequestFilter {
     private final List<String> skipUrls = List.of(LoginController.ENDPOINT,
             TokenController.ENDPOINT,
             "/swagger-ui.html",
-            "swagger-ui",
+            "/swagger-ui",
             "/api-docs");
 
     @Override
@@ -48,6 +48,15 @@ public class JWTFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         try {
             final String headers = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+
+            if ("OPTIONS".equalsIgnoreCase(httpServletRequest.getMethod())) {
+                httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+                httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+                httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
+                httpServletResponse.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN");
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                return;
+            }
 
             if (SecurityContextHolder.getContext().getAuthentication() != null) {
                 filterChain.doFilter(httpServletRequest, httpServletResponse);

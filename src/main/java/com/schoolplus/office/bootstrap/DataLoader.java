@@ -64,11 +64,13 @@ public class DataLoader implements CommandLineRunner {
         Authority authority2 = new Authority();
         authority2.setAuthorityName("list:users");
 
+        Authority authority3 = new Authority();
+        authority3.setAuthorityName("manage:announcements");
+
         roleRepository.saveAll(List.of(role, role1, role2));
-        authorityRepository.saveAll(List.of(authority, authority1, authority2));
+        authorityRepository.saveAll(List.of(authority, authority1, authority2, authority3));
 
-
-        User user = new User();
+        Student user = new Student();
         user.setUsername("username");
         user.setPassword(passwordEncoder.encode("password"));
         user.setIsAccountNonLocked(true);
@@ -77,8 +79,10 @@ public class DataLoader implements CommandLineRunner {
         user.setIsEnabled(true);
         user.addRole(role);
         user.addRole(role1);
+        user.addRole(role2);
         user.addAuthority(authority);
         user.addAuthority(authority1);
+        user.addAuthority(authority3);
         user.setFirstName("firstName");
         user.setLastName("lastName");
         user.setEmail("email@email.com");

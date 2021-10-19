@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @Slf4j
@@ -86,11 +87,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return errorResponse(new ErrorResponseDto(ErrorType.INVALID_REQUEST, ex.getMessage(), HttpStatus.BAD_REQUEST));
     }
 
-    @ExceptionHandler(NullPointerException.class)
-    protected ResponseEntity<ErrorResponseDto> handleNullPointerException(NullPointerException ex) {
-        log.warn("NullPointerException: {} {}", ex.getLocalizedMessage(), ex.getMessage());
-        return errorResponse(new ErrorResponseDto(ErrorType.SERVER_ERROR, ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
-    }
+//    @ExceptionHandler(NullPointerException.class)
+//    protected ResponseEntity<ErrorResponseDto> handleNullPointerException(NullPointerException ex) {
+//        log.warn("NullPointerException: {} {}", ex.getLocalizedMessage(), ex.getMessage());
+//        return errorResponse(new ErrorResponseDto(ErrorType.SERVER_ERROR, ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
+//    }
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ErrorResponseDto> handleBadCredentialsException(BadCredentialsException ex) {

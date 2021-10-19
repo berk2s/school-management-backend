@@ -1,5 +1,6 @@
 package com.schoolplus.office.domain;
 
+import com.schoolplus.office.web.models.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "USER_TYPE")
+@DiscriminatorValue("USER")
 @Entity
 public class User extends BaseEntity {
 
@@ -36,6 +38,10 @@ public class User extends BaseEntity {
 
     @Column(name = "email", unique = true)
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "USER_TYPE", insertable = false, updatable = false)
+    private UserType userType;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, optional = false)
     private Organization organization;
