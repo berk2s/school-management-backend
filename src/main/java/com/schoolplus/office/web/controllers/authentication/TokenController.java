@@ -4,25 +4,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.schoolplus.office.services.AccessTokenService;
 import com.schoolplus.office.services.RefreshTokenService;
 import com.schoolplus.office.web.exceptions.InvalidRequestException;
-import com.schoolplus.office.web.models.ErrorDesc;
-import com.schoolplus.office.web.models.GrantType;
-import com.schoolplus.office.web.models.TokenRequestDto;
-import com.schoolplus.office.web.models.TokenResponseDto;
+import com.schoolplus.office.web.models.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+@Tag(name = "Token Controller", description = "Exposes token endpoints")
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping(TokenController.ENDPOINT)
+@CrossOrigin(originPatterns = "*", allowCredentials = "true", allowedHeaders = "*")
 @RestController
 public class TokenController {
 
@@ -32,6 +34,17 @@ public class TokenController {
     private final RefreshTokenService refreshTokenService;
     private final AccessTokenService accessTokenService;
 
+    @Operation(summary = "Get Access Token")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Access Token is generated"),
+            @ApiResponse(responseCode = "400", description = "Invalid input or malformed data", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+            }),
+            @ApiResponse(responseCode = "500",
+                    description = "Server Error while generating Access Token", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+            })
+    })
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<TokenResponseDto> getToken(@RequestParam Map<String, String> params) {
 

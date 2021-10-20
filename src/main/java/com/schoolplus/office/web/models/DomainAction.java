@@ -218,4 +218,10 @@ public enum DomainAction {
      * Authentication
      */
     LOGIN_SUCCESSFULLY,
+    LOGOUT_SUCCESSFULLY,
+
+    /*
+     * User Info
+     */
+    READ_USERINFO,
 }

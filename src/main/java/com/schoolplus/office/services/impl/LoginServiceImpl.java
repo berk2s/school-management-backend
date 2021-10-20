@@ -14,6 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -40,7 +43,7 @@ public class LoginServiceImpl implements LoginService {
 
         AccessTokenCommand accessTokenCommand = new AccessTokenCommand();
         accessTokenCommand.setSecurityUser(securityUser);
-        accessTokenCommand.setScopes(loginRequest.getScopes());
+        accessTokenCommand.setScopes(Arrays.stream(loginRequest.getScopes().split(" ")).collect(Collectors.toList()));
 
         RefreshTokenCommand refreshTokenCommand = new RefreshTokenCommand();
         refreshTokenCommand.setSecurityUser(securityUser);

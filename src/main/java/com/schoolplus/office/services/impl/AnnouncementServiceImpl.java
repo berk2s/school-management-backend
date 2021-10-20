@@ -36,7 +36,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     private final AnnouncementMapper announcementMapper;
 
     @ReadingEntity(domain = TransactionDomain.ANNOUNCEMENT, action = DomainAction.READ_ANNOUNCEMENTS, isList = true)
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:announcements') || hasAuthority('view:announcements'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasAuthority('manage:announcements') || hasAuthority('view:announcements')")
     @Override
     public List<AnnouncementDto> getAnnouncements(Pageable pageable) {
         Page<Announcement> announcements = announcementRepository

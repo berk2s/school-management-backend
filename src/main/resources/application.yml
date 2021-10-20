@@ -1,1 +1,35 @@
+server:
+  port: 8080
 
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size:threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sp_db
+    username: root
+    password:
+  jpa:
+    hibernate.ddl-auto: create
+    generate-ddl: true
+    show-sql: true
+
+springdoc:
+  version: v1
+  api-docs:
+    path: /api-docs
+
+
+school-plus:
+  appName: School+ Management
+  url: http://localhost:8080
+  auth-config:
+    access-token:
+      lifetime: 5m
+    refresh-token:
+      lifetime: 8h
+    purging-refresh-tokens-cron: "* * 0/6 * * *"

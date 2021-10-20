@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.util.List;
 
-
+@CrossOrigin(originPatterns = "*", allowCredentials = "true", allowedHeaders = "*")
 @Tag(name = "Announcements Management Controller", description = "Exposes announcements management endpoints")
 @RequiredArgsConstructor
 @RequestMapping(AnnouncementManagementController.ENDPOINT)

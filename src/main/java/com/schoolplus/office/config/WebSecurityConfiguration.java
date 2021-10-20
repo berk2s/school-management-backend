@@ -32,8 +32,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(userAuthenticationProvider);
     }
 
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().disable().csrf().disable();

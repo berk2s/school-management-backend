@@ -28,7 +28,7 @@ public class LoginRequestDto {
     private String password;
 
     @NotEmpty
-    @Size(min = 1, max = 99)
-    private List<String> scopes = new ArrayList<>();
+    @Size(min = 1, max = 999)
+    private String scopes;
 
 }

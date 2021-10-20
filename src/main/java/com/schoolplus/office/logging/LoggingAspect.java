@@ -7,7 +7,6 @@ import com.schoolplus.office.web.models.LogableType;
 import com.schoolplus.office.components.ColumnExtractor;
 import com.schoolplus.office.domain.TransactionLog;
 import com.schoolplus.office.repository.TransactionLogRepository;
-import com.schoolplus.office.web.models.LoginRequestDto;
 import com.schoolplus.office.web.models.TransactionType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

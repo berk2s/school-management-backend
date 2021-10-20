@@ -18,8 +18,10 @@ public class RefreshTokensPurgeTask {
 
     @Scheduled(cron = "${school-plus.auth-config.purging-refresh-tokens-cron}", zone="Europe/Istanbul")
     public void purgeExpiredRefreshTokens() {
-        refreshTokenRepository.deleteAllExpiredSince();
-        log.info("Expired tokens have been purged");
+        if(refreshTokenRepository.findAll().size() > 0) {
+            refreshTokenRepository.deleteAllExpiredSince();
+            log.info("Expired tokens have been purged");
+        }
     }
 
 }

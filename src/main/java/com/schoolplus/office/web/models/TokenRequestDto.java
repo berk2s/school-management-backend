@@ -1,6 +1,7 @@
 package com.schoolplus.office.web.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.schoolplus.office.annotations.Logable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,5 +31,9 @@ public class TokenRequestDto {
 
     @JsonProperty("scopes")
     private String scopes;
+
+    @Logable(type = LogableType.NAME)
+    @JsonProperty("username")
+    private String username;
 
 }

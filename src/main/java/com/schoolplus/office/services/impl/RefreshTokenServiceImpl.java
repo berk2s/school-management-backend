@@ -1,5 +1,6 @@
 package com.schoolplus.office.services.impl;
 
+import com.schoolplus.office.annotations.AuthenticationProcess;
 import com.schoolplus.office.config.ServerConfiguration;
 import com.schoolplus.office.domain.RefreshToken;
 import com.schoolplus.office.domain.User;
@@ -107,6 +108,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
                 .build();
     }
 
+    @AuthenticationProcess(domain = TransactionDomain.LOGOUT, action = DomainAction.LOGOUT_SUCCESSFULLY)
     @Transactional
     @Override
     public TokenResponseDto revokeToken(TokenRequestDto tokenRequest) {

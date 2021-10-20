@@ -42,7 +42,7 @@ public class LoginControllerTest {
         loginRequest = LoginRequestDto.builder()
                 .username("username")
                 .password("password")
-                .scopes(List.of("profile:manage"))
+                .scopes("profile:manage")
                 .build();
     }
 
@@ -100,7 +100,7 @@ public class LoginControllerTest {
     @Test
     void requestedScopesAreNotValidForUserFails() throws Exception {
 
-        loginRequest.setScopes(List.of("invalid_scope", "invalid_scope_two"));
+        loginRequest.setScopes("invalid_scope invalid_scope_two");
 
         mockMvc.perform(post(LoginController.ENDPOINT)
                         .content(objectMapper.writeValueAsString(loginRequest))
