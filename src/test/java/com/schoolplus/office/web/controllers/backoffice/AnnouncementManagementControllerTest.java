@@ -2,6 +2,7 @@ package com.schoolplus.office.web.controllers.backoffice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.schoolplus.office.domain.Announcement;
+import com.schoolplus.office.domain.AnnouncementImage;
 import com.schoolplus.office.domain.Organization;
 import com.schoolplus.office.repository.AnnouncementRepository;
 import com.schoolplus.office.repository.OrganizationRepository;
@@ -67,23 +68,30 @@ public class AnnouncementManagementControllerTest {
             organization.setOrganizationName(RandomStringUtils.random(10,true,false));
 
             organizationRepository.save(organization);
+            AnnouncementImage _announcementImage = new AnnouncementImage();
+            _announcementImage.setPath(RandomStringUtils.random(10, true, false));
+            _announcementImage.setFileName(RandomStringUtils.random(10, true, false));
 
             Announcement _announcement = new Announcement();
             _announcement.setAnnouncementTitle(RandomStringUtils.random(10, true, false));
             _announcement.setAnnouncementDescription(RandomStringUtils.random(10, true, false));
             _announcement.addChannel(AnnouncementChannel.STUDENTS);
-            _announcement.addImage("imageUrl");
+            _announcement.addImage(_announcementImage);
             _announcement.setOrganization(organization);
 
             announcement = announcementRepository.save(_announcement);
 
             for (int i = 0; i < 20; i++) {
+                AnnouncementImage announcementImage = new AnnouncementImage();
+                announcementImage.setPath(RandomStringUtils.random(10, true, false));
+                announcementImage.setFileName(RandomStringUtils.random(10, true, false));
+
                 Announcement newAnnouncement = new Announcement();
                 newAnnouncement.setAnnouncementTitle(RandomStringUtils.random(10, true, false));
                 newAnnouncement.setAnnouncementDescription(RandomStringUtils.random(10, true, false));
                 newAnnouncement.addChannel(AnnouncementChannel.STUDENTS);
                 newAnnouncement.setOrganization(organization);
-                newAnnouncement.addImage("imageUrl");
+                newAnnouncement.addImage(announcementImage);
 
                 announcementRepository.save(newAnnouncement);
             }
@@ -100,12 +108,13 @@ public class AnnouncementManagementControllerTest {
                     .andExpect(jsonPath("$.announcementTitle", is(announcement.getAnnouncementTitle())))
                     .andExpect(jsonPath("$.announcementDescription", is(announcement.getAnnouncementDescription())))
                     .andExpect(jsonPath("$..announcementChannels[*]", anyOf(hasItem(is(announcement.getAnnouncementChannels().get(0).name())))))
-                    .andExpect(jsonPath("$..announcementImages[*]", anyOf(hasItem(is(announcement.getAnnouncementImages().get(0))))))
+                    .andExpect(jsonPath("$..announcementImages[*].fileName", anyOf(hasItem(is(announcement.getAnnouncementImages().get(0).getFileName())))))
                     .andExpect(jsonPath("$.organization.organizationName", is(organization.getOrganizationName())))
                     .andExpect(jsonPath("$.createdAt").isNotEmpty())
                     .andExpect(jsonPath("$.lastModifiedAt").isNotEmpty());
 
         }
+
 
         @DisplayName("Get Announcement Not Found Error")
         @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:announcements"})
@@ -135,6 +144,39 @@ public class AnnouncementManagementControllerTest {
                     .andExpect(jsonPath("$..organization.organizationName").isNotEmpty())
                     .andExpect(jsonPath("$..createdAt").isNotEmpty())
                     .andExpect(jsonPath("$..lastModifiedAt").isNotEmpty());
+
+        }
+
+        @DisplayName("Get Announcements By Organization Successfully")
+        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:announcements"})
+        @Test
+        void getAnnouncementsByOrganizationSuccessfully() throws Exception {
+
+            mockMvc.perform(get(AnnouncementManagementController.ENDPOINT + "/organization/"+ organization.getId().toString() +"?page=0&size=5"))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.content.length()", is(5)))
+                    .andExpect(jsonPath("$.content..announcementId").isNotEmpty())
+                    .andExpect(jsonPath("$.content..announcementTitle").isNotEmpty())
+                    .andExpect(jsonPath("$.content..announcementDescription").isNotEmpty())
+                    .andExpect(jsonPath("$.content..announcementChannels[*]").isNotEmpty())
+                    .andExpect(jsonPath("$.content..announcementImages[*]").isNotEmpty())
+                    .andExpect(jsonPath("$.content..organization.organizationName").isNotEmpty())
+                    .andExpect(jsonPath("$.content..createdAt").isNotEmpty())
+                    .andExpect(jsonPath("$.content..lastModifiedAt").isNotEmpty());
+
+        }
+
+        @DisplayName("Get Announcements By Organization Not Found Error")
+        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:announcements"})
+        @Test
+        void getAnnouncementsByOrganizationNotFoundError() throws Exception {
+
+            mockMvc.perform(get(AnnouncementManagementController.ENDPOINT + "/organization/123123213?page=0&size=5"))
+                    .andDo(print())
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc())));
 
         }
     }
@@ -194,10 +236,14 @@ public class AnnouncementManagementControllerTest {
 
         @BeforeEach
         void setUp() {
+            AnnouncementImage announcementImage = new AnnouncementImage();
+            announcementImage.setPath(RandomStringUtils.random(10, true, false));
+            announcementImage.setFileName(RandomStringUtils.random(10, true, false));
+
             Announcement _announcement = new Announcement();
             _announcement.setAnnouncementTitle(RandomStringUtils.random(10, true, false));
             _announcement.setAnnouncementDescription(RandomStringUtils.random(10, true, false));
-            _announcement.addImage("imageUrl");
+            _announcement.addImage(announcementImage);
             _announcement.setOrganization(organization);
 
             announcement = announcementRepository.save(_announcement);
@@ -247,10 +293,14 @@ public class AnnouncementManagementControllerTest {
 
         @BeforeEach
         void setUp() {
+            AnnouncementImage announcementImage = new AnnouncementImage();
+            announcementImage.setPath(RandomStringUtils.random(10, true, false));
+            announcementImage.setFileName(RandomStringUtils.random(10, true, false));
+
             Announcement _announcement = new Announcement();
             _announcement.setAnnouncementTitle(RandomStringUtils.random(10, true, false));
             _announcement.setAnnouncementDescription(RandomStringUtils.random(10, true, false));
-            _announcement.addImage("imageUrl");
+            _announcement.addImage(announcementImage);
             _announcement.setOrganization(organization);
 
             announcement = announcementRepository.save(_announcement);
@@ -307,10 +357,14 @@ public class AnnouncementManagementControllerTest {
 
             organizationRepository.saveAll(List.of(organization, newOrganization));
 
+            AnnouncementImage announcementImage = new AnnouncementImage();
+            announcementImage.setPath(RandomStringUtils.random(10, true, false));
+            announcementImage.setFileName(RandomStringUtils.random(10, true, false));
+
             Announcement _announcement = new Announcement();
             _announcement.setAnnouncementTitle(RandomStringUtils.random(10, true, false));
             _announcement.setAnnouncementDescription(RandomStringUtils.random(10, true, false));
-            _announcement.addImage("imageUrl");
+            _announcement.addImage(announcementImage);
             _announcement.addChannel(AnnouncementChannel.STUDENTS);
             _announcement.setOrganization(organization);
             announcement = announcementRepository.save(_announcement);

@@ -15,7 +15,7 @@ spring:
     username: root
     password:
   jpa:
-    hibernate.ddl-auto: create
+    hibernate.ddl-auto: update
     generate-ddl: true
     show-sql: true
 
@@ -24,10 +24,12 @@ springdoc:
   api-docs:
     path: /api-docs
 
-
 school-plus:
   appName: School+ Management
-  url: http://localhost:8080
+  url: http://192.168.0.33:8080
+  aws:
+    access-key: ${AWS_ACCESS_KEY}
+    secret-key: ${AWS_SECRET_KEY}
   auth-config:
     access-token:
       lifetime: 1m

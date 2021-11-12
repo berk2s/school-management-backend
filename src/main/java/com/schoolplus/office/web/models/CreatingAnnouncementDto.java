@@ -25,6 +25,9 @@ public class CreatingAnnouncementDto {
     private List<String> announcementChannels;
 
     @NotNull
+    private Boolean announcementStatus;
+
+    @NotNull
     private Long organizationId;
 
 }

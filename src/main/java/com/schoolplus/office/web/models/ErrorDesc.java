@@ -47,7 +47,9 @@ public enum ErrorDesc {
     EXAM_RESULT_NOT_FOUND("Exam result not found", 37),
     EXAM_RESULT_ITEM_NOT_FOUND("Exam result item not found", 38),
     SUPPORT_REQUEST_NOT_FOUND("Support request not found", 39),
-    SUPPORT_THREAD_NOT_FOUND("Support thread not found", 40);
+    SUPPORT_THREAD_NOT_FOUND("Support thread not found", 40),
+    FAILED_IMAGE_UPLOAD("Failed to upload image", 41),
+    INVALID_CONTENT_TYPE("Invalid content type", 42);
 
     private final String desc;
     private final Integer code;

@@ -32,22 +32,25 @@ public class Announcement {
     @Column(name = "announcement_description", length = 5000)
     private String announcementDescription;
 
+    @Column(name = "announcement_status")
+    private Boolean announcementStatus;
+
     @ElementCollection
-    @CollectionTable(name = "announcement_channel", joinColumns = @JoinColumn(name = "announcement_id"))
+    @CollectionTable(name = "announcement_channels", joinColumns = @JoinColumn(name = "announcement_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "channel_name")
     private List<AnnouncementChannel> announcementChannels = new ArrayList<>();
 
     @ElementCollection
     @CollectionTable(
-            name = "image",
+            name = "announcement_images",
             joinColumns = @JoinColumn(name = "announcement_id"))
     @CollectionId(
             columns = @Column(name = "image_id"),
             type = @Type(type = "long"),
             generator = "sequence")
     @Column(name = "imageUrl")
-    private List<String> announcementImages = new ArrayList<>();
+    private List<AnnouncementImage> announcementImages = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, optional = false)
     private Organization organization;
@@ -58,15 +61,15 @@ public class Announcement {
     @UpdateTimestamp
     private Timestamp lastModifiedAt;
 
-    public void addImage(String imageUrl) {
-        if (!announcementImages.contains(imageUrl)) {
-            this.announcementImages.add(imageUrl);
+    public void addImage(AnnouncementImage announcementImage) {
+        if (!announcementImages.contains(announcementImage)) {
+            this.announcementImages.add(announcementImage);
         }
     }
 
-    public void removeImage(String imageUrl) {
-        if (announcementImages.contains(imageUrl)) {
-            this.announcementImages.remove(imageUrl);
+    public void removeImage(AnnouncementImage announcementImage) {
+        if (announcementImages.contains(announcementImage)) {
+            this.announcementImages.remove(announcementImage);
         }
     }
 

@@ -35,63 +35,69 @@ public class DataLoader implements CommandLineRunner {
 
     @Transactional
     private void loadUsers() {
-        Organization organization = new Organization();
-        organization.setOrganizationName("Test Organization");
+        if(userRepository.findByUsername("username").isEmpty()) {
+            Organization organization = new Organization();
+            organization.setOrganizationName("Test Organization");
 
-        organizationRepository.save(organization);
+            organizationRepository.save(organization);
 
-        TeachingSubject teachingSubject = new TeachingSubject();
-        teachingSubject.setSubjectName("Matematik");
-        teachingSubject.setOrganization(organization);
+            TeachingSubject teachingSubject = new TeachingSubject();
+            teachingSubject.setSubjectName("Matematik");
+            teachingSubject.setOrganization(organization);
 
-        teachingSubjectRepository.save(teachingSubject);
+            teachingSubjectRepository.save(teachingSubject);
 
-        Role role = new Role();
-        role.setRoleName("STUDENT");
+            Role role = new Role();
+            role.setRoleName("STUDENT");
 
-        Role role1 = new Role();
-        role1.setRoleName("ADMIN");
+            Role role1 = new Role();
+            role1.setRoleName("ADMIN");
 
-        Role role2 = new Role();
-        role2.setRoleName("USER");
+            Role role2 = new Role();
+            role2.setRoleName("USER");
 
-        Authority authority = new Authority();
-        authority.setAuthorityName("profile:manage");
+            Authority authority = new Authority();
+            authority.setAuthorityName("profile:manage");
 
-        Authority authority1 = new Authority();
-        authority1.setAuthorityName("profile:edit");
+            Authority authority1 = new Authority();
+            authority1.setAuthorityName("profile:edit");
 
-        Authority authority2 = new Authority();
-        authority2.setAuthorityName("list:users");
+            Authority authority2 = new Authority();
+            authority2.setAuthorityName("list:users");
 
-        Authority authority3 = new Authority();
-        authority3.setAuthorityName("manage:announcements");
+            Authority authority3 = new Authority();
+            authority3.setAuthorityName("manage:announcements");
 
-        roleRepository.saveAll(List.of(role, role1, role2));
-        authorityRepository.saveAll(List.of(authority, authority1, authority2, authority3));
+            Authority authority4 = new Authority();
+            authority4.setAuthorityName("view:announcements");
 
-        Student user = new Student();
-        user.setUsername("username");
-        user.setPassword(passwordEncoder.encode("password"));
-        user.setIsAccountNonLocked(true);
-        user.setIsAccountNonExpired(true);
-        user.setIsCredentialsNonExpired(true);
-        user.setIsEnabled(true);
-        user.addRole(role);
-        user.addRole(role1);
-        user.addRole(role2);
-        user.addAuthority(authority);
-        user.addAuthority(authority1);
-        user.addAuthority(authority3);
-        user.setFirstName("firstName");
-        user.setLastName("lastName");
-        user.setEmail("email@email.com");
-        user.setPhoneNumber("05553332211");
-        user.setOrganization(organization);
+            roleRepository.saveAll(List.of(role, role1, role2));
+            authorityRepository.saveAll(List.of(authority, authority1, authority2, authority3, authority4));
 
-        userRepository.save(user);
+            Student user = new Student();
+            user.setUsername("username");
+            user.setPassword(passwordEncoder.encode("password"));
+            user.setIsAccountNonLocked(true);
+            user.setIsAccountNonExpired(true);
+            user.setIsCredentialsNonExpired(true);
+            user.setIsEnabled(true);
+            user.addRole(role);
+            user.addRole(role1);
+            user.addRole(role2);
+            user.addAuthority(authority);
+            user.addAuthority(authority1);
+            user.addAuthority(authority3);
+            user.addAuthority(authority4);
+            user.setFirstName("firstName");
+            user.setLastName("lastName");
+            user.setEmail("email@email.com");
+            user.setPhoneNumber("05553332211");
+            user.setOrganization(organization);
 
-        log.info("Initial User has been created");
+            userRepository.save(user);
+
+            log.info("Initial User has been created");
+        }
     }
 
 }
