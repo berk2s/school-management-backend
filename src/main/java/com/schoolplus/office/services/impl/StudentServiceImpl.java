@@ -11,6 +11,10 @@ import com.schoolplus.office.web.mappers.StudentMapper;
 import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,6 +34,36 @@ public class StudentServiceImpl implements StudentService {
     private final ClassroomRepository classroomRepository;
     private final StudentMapper studentMapper;
     private final PasswordEncoder passwordEncoder;
+
+    @ReadingEntity(domain = TransactionDomain.ANNOUNCEMENT, action = DomainAction.READ_ANNOUNCEMENTS, isList = true)
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasAuthority('manage:users:students') || hasAuthority('read:students')")
+    @Override
+    public Page<StudentDto> getStudentsByOrganization(Long organizationId,
+                                                      Pageable pageable,
+                                                      String search) {
+        Organization organization = organizationRepository.findById(organizationId)
+                .orElseThrow(() -> {
+                    log.warn("Organization with given id does not exists [organizationId: {}]", organizationId);
+                    throw new OrganizationNotFoundException(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc());
+                });
+
+        Page<Student> students;
+
+        if (StringUtils.isEmpty(search) || search.trim().equals("")) {
+            students = userRepository.findAllStudentsByOrganization(organization, pageable);
+        } else {
+            students = userRepository
+                    .findALlStudentsByOrganizationAndSearchKey(
+                            organization,
+                            search.trim( ),
+                            pageable);
+        }
+
+        return new PageImpl<>(
+                studentMapper.studentToStudentDto(students.getContent()),
+                pageable,
+                students.getTotalElements());
+    }
 
     @ReadingEntity(domain = TransactionDomain.STUDENT, action = DomainAction.READ_STUDENT)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:students') || hasAuthority('read:student'))")
@@ -72,14 +106,14 @@ public class StudentServiceImpl implements StudentService {
             Long gradeId = creatingStudent.getClassRoomId();
             Classroom classRoom = classroomRepository.findById(gradeId)
                     .orElseThrow(() -> {
-                       log.warn("Grade with given id does not exists [gradeId: {}]", gradeId);
-                       throw new ClassroomNotFoundException(ErrorDesc.CLASSROOM_NOT_FOUND.getDesc());
+                        log.warn("Grade with given id does not exists [gradeId: {}]", gradeId);
+                        throw new ClassroomNotFoundException(ErrorDesc.CLASSROOM_NOT_FOUND.getDesc());
                     });
 
             classRoom.addStudent(student);
         }
 
-        if(creatingStudent.getParents() != null && creatingStudent.getParents().size() > 0) {
+        if (creatingStudent.getParents() != null && creatingStudent.getParents().size() > 0) {
             creatingStudent.getParents().forEach(_parentId -> {
                 UUID parentId = UUID.fromString(_parentId);
 
@@ -132,10 +166,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void editStudent(UUID studentId, EditingStudentDto editStudent) {
         Student student = (Student) userRepository.findById(studentId)
-                        .orElseThrow(() -> {
-                            log.warn("Student with given id does not exists [studentId: {}]", studentId.toString());
-                            throw new StudentNotFoundException(ErrorDesc.STUDENT_NOT_FOUND.getDesc());
-                        });
+                .orElseThrow(() -> {
+                    log.warn("Student with given id does not exists [studentId: {}]", studentId.toString());
+                    throw new StudentNotFoundException(ErrorDesc.STUDENT_NOT_FOUND.getDesc());
+                });
 
         if (editStudent.getAddedParents() != null && editStudent.getAddedParents().size() != 0) {
             editStudent.getAddedParents().forEach(_parentId -> {

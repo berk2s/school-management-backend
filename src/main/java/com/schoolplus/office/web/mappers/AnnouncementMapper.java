@@ -20,7 +20,7 @@ public interface AnnouncementMapper {
 
     @Mappings({
             @Mapping(target = "announcementId", source = "id"),
-            @Mapping(target = "organiaztion", source = "organization"),
+            @Mapping(target = "organization", source = "organization"),
             @Mapping(target = "announcementImages", source = "announcementImages")
     })
     List<AnnouncementDto> announcementToAnnouncementDto(List<Announcement> announcement);

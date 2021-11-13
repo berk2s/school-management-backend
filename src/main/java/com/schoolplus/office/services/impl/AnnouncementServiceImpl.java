@@ -72,7 +72,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
         Page<Announcement> announcements;
 
-        if(StringUtils.isEmpty(search)) {
+        if(StringUtils.isEmpty(search) || search.trim().equals("")) {
             announcements = announcementRepository.findAllByOrganization(organization, pageable);
         } else {
             announcements = announcementRepository

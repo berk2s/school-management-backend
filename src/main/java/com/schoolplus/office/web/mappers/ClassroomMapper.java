@@ -15,7 +15,7 @@ public interface ClassroomMapper {
     @Mappings({
             @Mapping(source = "id", target = "classRoomId"),
             @Mapping(source = "classRoomTag", target = "classRoomTag"),
-            @Mapping(source = "advisorTeacher", target = "advisorTeacher"),
+            @Mapping(source = "advisorTeacher", target = "advisorTeacher", qualifiedByName = "WithoutDetails"),
             @Mapping(source = "organization", target = "organization"),
             @Mapping(source = "grade", target = "grade", qualifiedByName = "WithoutDetails"),
             @Mapping(target = "students", qualifiedByName="WithoutParents"),
@@ -25,7 +25,7 @@ public interface ClassroomMapper {
     @Mappings({
             @Mapping(source = "id", target = "classRoomId"),
             @Mapping(source = "classRoomTag", target = "classRoomTag"),
-            @Mapping(target = "advisorTeacher", source = "advisorTeacher"),
+            @Mapping(target = "advisorTeacher", source = "advisorTeacher", qualifiedByName = "WithoutDetails"),
             @Mapping(source = "organization", target = "organization"),
             @Mapping(source = "grade", target = "grade", qualifiedByName = "WithoutDetails"),
             @Mapping(target = "students", source="WithoutParents"),
@@ -36,10 +36,10 @@ public interface ClassroomMapper {
     @Mappings({
             @Mapping(source = "id", target = "classRoomId"),
             @Mapping(source = "classRoomTag", target = "classRoomTag"),
-            @Mapping(source = "advisorTeacher", target = "advisorTeacher"),
-            @Mapping(source = "organization", target = "organization"),
-            @Mapping(source = "grade", target = "grade"),
+            @Mapping(source = "advisorTeacher", target = "advisorTeacher", qualifiedByName = "WithoutDetails"),
+            @Mapping(source = "grade", target = "grade", qualifiedByName = "WithoutDetails"),
             @Mapping(source = "students", target = "students", ignore = true),
+            @Mapping(source = "organization", target = "organization", ignore = true),
     })
     ClassroomDto classRoomToClassRoomDtoWithoutStudents(Classroom classRoom);
 
@@ -47,9 +47,9 @@ public interface ClassroomMapper {
     @Mappings({
             @Mapping(source = "id", target = "classRoomId"),
             @Mapping(source = "classRoomTag", target = "classRoomTag"),
-            @Mapping(source = "advisorTeacher", target = "advisorTeacher"),
+            @Mapping(source = "advisorTeacher", target = "advisorTeacher", qualifiedByName = "WithoutDetails"),
             @Mapping(source = "organization", target = "organization"),
-            @Mapping(source = "grade", target = "grade"),
+            @Mapping(source = "grade", target = "grade", qualifiedByName = "WithoutDetailsList"),
             @Mapping(source = "students", target = "students", ignore = true),
     })
     List<ClassroomDto> classRoomToClassRoomDtoWithoutStudents(List<Classroom> classRoom);

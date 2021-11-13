@@ -5,6 +5,7 @@ import com.schoolplus.office.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -93,6 +94,7 @@ public class DataLoader implements CommandLineRunner {
             user.setEmail("email@email.com");
             user.setPhoneNumber("05553332211");
             user.setOrganization(organization);
+            user.setStudentNumber(RandomUtils.nextLong());
 
             userRepository.save(user);
 

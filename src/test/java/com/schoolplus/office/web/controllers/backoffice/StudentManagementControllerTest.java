@@ -5,6 +5,7 @@ import com.schoolplus.office.domain.*;
 import com.schoolplus.office.repository.*;
 import com.schoolplus.office.web.models.*;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -309,22 +310,145 @@ public class StudentManagementControllerTest {
     @Nested
     class GettingStudent {
 
-        @DisplayName("Get Student Successfully")
-        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
-        @Test
-        void getStudentSuccessfully() throws Exception {
+        Parent parent;
+        Student student;
+        Authority authority;
+        Role role;
+        Classroom classroom;
+        Grade grade;
+        Teacher teacher;
 
-            Parent parent = new Parent();
+        @Autowired
+        AuthorityRepository authorityRepository;
+
+        @Autowired
+        RoleRepository roleRepository;
+
+        @Autowired
+        ClassroomRepository classroomRepository;
+
+        @Autowired
+        GradeRepository gradeRepository;
+
+        @BeforeEach
+        void setUp() {
+
+            parent = new Parent();
             parent.setUsername(RandomStringUtils.random(10, true, false));
             parent.setOrganization(organization);
 
             userRepository.save(parent);
 
-            Student student = new Student();
-            student.addParent(parent);
-            student.setOrganization(organization);
+            authority = new Authority();
+            authority.setAuthorityName(RandomStringUtils.random(10, true, false));
 
-            student = userRepository.save(student);
+            authorityRepository.save(authority);
+
+            role = new Role();
+            role.setRoleName(RandomStringUtils.random(10, true, false));
+
+            roleRepository.save(role);
+
+            grade = new Grade();
+            grade.setOrganization(organization);
+            grade.setGradeName(RandomStringUtils.random(10, true, false));
+
+            gradeRepository.save(grade);
+
+            teacher = new Teacher();
+            teacher.setOrganization(organization);
+            teacher.setUsername(RandomStringUtils.random(10, true, false));
+            teacher.setFirstName(RandomStringUtils.random(10, true, false));
+            teacher.setLastName(RandomStringUtils.random(10, true, false));
+
+            userRepository.save(teacher);
+
+            classroom = new Classroom();
+            classroom.setOrganization(organization);
+            classroom.setClassRoomTag(RandomStringUtils.random(10, true, false));
+            classroom.setClassNumber(RandomUtils.nextLong());
+            classroom.setGrade(grade);
+            classroom.setAdvisorTeacher(teacher);
+
+            classroomRepository.save(classroom);
+
+            student = new Student();
+            student.setUsername(RandomStringUtils.random(10, true, false));
+            student.setFirstName(RandomStringUtils.random(10, true, false));
+            student.setLastName(RandomStringUtils.random(10, true, false));
+            student.setPhoneNumber(RandomStringUtils.random(10, true, false));
+            student.setEmail(RandomStringUtils.random(10, true, false));
+            student.addParent(parent);
+            student.setStudentNumber(RandomUtils.nextLong());
+            student.setClassRoom(classroom);
+            student.setOrganization(organization);
+            student.setIsEnabled(true);
+            student.setIsAccountNonLocked(true);
+            student.setIsAccountNonExpired(true);
+            student.setIsCredentialsNonExpired(true);
+            student.setUserType(UserType.STUDENT);
+            student.addAuthority(authority);
+            student.addRole(role);
+
+            userRepository.save(student);
+        }
+
+        @DisplayName("Get Students By Organization")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
+        @Test
+        void getStudentsByOrganization() throws Exception {
+
+            mockMvc.perform(get(StudentManagementController.ENDPOINT + "/organization/" + organization.getId()))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.content..userId").isNotEmpty())
+                    .andExpect(jsonPath("$.content..username", anyOf(hasItem(is(student.getUsername())))))
+                    .andExpect(jsonPath("$.content..firstName", anyOf(hasItem(is(student.getFirstName())))))
+                    .andExpect(jsonPath("$.content..lastName", anyOf(hasItem(is(student.getLastName())))))
+                    .andExpect(jsonPath("$.content..phoneNumber",anyOf(hasItem( is(student.getPhoneNumber())))))
+                    .andExpect(jsonPath("$.content..email", anyOf(hasItem(is(student.getEmail())))))
+                    .andExpect(jsonPath("$.content..studentNumber", anyOf(hasItem(is(student.getStudentNumber())))))
+                    .andExpect(jsonPath("$.content..classRoom.classRoomId", anyOf(hasItem(is(classroom.getId().intValue())))))
+                    .andExpect(jsonPath("$.content..classRoom.classRoomTag", anyOf(hasItem(is(classroom.getClassRoomTag())))))
+                    .andExpect(jsonPath("$.content..classRoom.classNumber", anyOf(hasItem(is(classroom.getClassNumber())))))
+                    .andExpect(jsonPath("$.content..classRoom.grade.gradeId", anyOf(hasItem(is(grade.getId().intValue())))))
+                    .andExpect(jsonPath("$.content..classRoom.grade.gradeName", anyOf(hasItem(is(grade.getGradeName())))))
+                    .andExpect(jsonPath("$.content..classRoom.advisorTeacher.userId", anyOf(hasItem(is(teacher.getId().toString())))))
+                    .andExpect(jsonPath("$.content..classRoom.advisorTeacher.firstName", anyOf(hasItem(is(teacher.getFirstName())))))
+                    .andExpect(jsonPath("$.content..classRoom.advisorTeacher.lastName", anyOf(hasItem(is(teacher.getLastName())))))
+                    .andExpect(jsonPath("$.content..classRoom.organization").isEmpty())
+                    .andExpect(jsonPath("$.content..classRoom.grade.organization").isEmpty())
+                    .andExpect(jsonPath("$.content..classRoom.advisorTeacher.organization").isEmpty())
+                    .andExpect(jsonPath("$.content..authorities[*]", anyOf(hasItem(is(authority.getAuthorityName())))))
+                    .andExpect(jsonPath("$.content..roles[*]", anyOf(hasItem(is(role.getRoleName())))))
+                    .andExpect(jsonPath("$.content..userType", anyOf(hasItem(is(student.getUserType().name())))))
+                    .andExpect(jsonPath("$.content..isEnabled", anyOf(hasItem(is(student.getIsEnabled())))))
+                    .andExpect(jsonPath("$.content..isAccountNonExpired", anyOf(hasItem(is(student.getIsAccountNonExpired())))))
+                    .andExpect(jsonPath("$.content..isAccountNonLocked", anyOf(hasItem(is(student.getIsAccountNonLocked())))))
+                    .andExpect(jsonPath("$.content..isCredentialsNonExpired", anyOf(hasItem(is(student.getIsCredentialsNonExpired())))))
+                    .andExpect(jsonPath("$.content..parents..userId", anyOf(hasItem(is(parent.getId().toString())))))
+                    .andExpect(jsonPath("$.content..parents..authorities").isEmpty())
+                    .andExpect(jsonPath("$.content..parents..roles").isEmpty())
+                    .andExpect(jsonPath("$.content..parents..students.length()", anyOf(hasItem(is(0)))))
+                    .andExpect(jsonPath("$.content..parents..organization").isEmpty());
+
+        }
+
+        @DisplayName("Get Students By Organization Not Found Error")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
+        @Test
+        void getStudentsByOrganizationNotFoundError() throws Exception {
+            mockMvc.perform(get(StudentManagementController.ENDPOINT + "/organization/123123123123"))
+                    .andDo(print())
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc())));
+        }
+
+        @DisplayName("Get Student Successfully")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:students"})
+        @Test
+        void getStudentSuccessfully() throws Exception {
 
             mockMvc.perform(get(StudentManagementController.ENDPOINT + "/" + student.getId().toString()))
                     .andDo(print())

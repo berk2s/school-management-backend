@@ -28,7 +28,7 @@ public interface TeacherMapper {
     })
     TeacherDto teacherToTeacherDto(Teacher teacher);
 
-    @Named("ForAppointment")
+    @Named("WithoutDetails")
     @Mappings({
             @Mapping(target = "userId", expression = "java( teacher.getId().toString() )"),
             @Mapping(target = "firstName", expression = "java( teacher.getFirstName() )"),
@@ -45,6 +45,7 @@ public interface TeacherMapper {
             @Mapping(target = "isCredentialsNonExpired", source = "isCredentialsNonExpired", ignore = true),
             @Mapping(target = "createdAt", source = "createdAt", ignore = true),
             @Mapping(target = "lastModifiedAt", source = "lastModifiedAt", ignore = true),
+            @Mapping(target = "organization", source = "organization", ignore = true),
     })
     TeacherDto teacherToTeacherDtoForAppointment(Teacher teacher);
 
