@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ServerConfiguration {
 
-    @Value("url")
+    @Value("${school-plus.url}")
     private String serverUrl;
 
     private TokenConfiguration accessToken;

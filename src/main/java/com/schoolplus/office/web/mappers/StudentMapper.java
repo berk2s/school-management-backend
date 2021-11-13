@@ -9,9 +9,10 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 
+import java.util.List;
 import java.util.UUID;
 
-@Mapper(imports = {UUID.class}, uses = {ParentMapper.class, ClassroomMapper.class})
+@Mapper(imports = {UUID.class}, uses = {ParentMapper.class, ClassroomMapper.class, OrganizationMapper.class})
 public interface StudentMapper {
 
     @Mappings({
@@ -24,10 +25,28 @@ public interface StudentMapper {
             @Mapping(target = "isAccountNonLocked", expression = "java( student.getIsAccountNonLocked() )"),
             @Mapping(target = "isCredentialsNonExpired", expression = "java( student.getIsCredentialsNonExpired() )"),
             @Mapping(target = "isEnabled", expression = "java( student.getIsEnabled() )"),
-            @Mapping(target = "parents", source = "parents"),
+            @Mapping(target = "organization", source = "organization"),
+            @Mapping(target = "parents", source = "parents", qualifiedByName = "WithoutDetails"),
             @Mapping(target = "classRoom", qualifiedByName = "WithoutStudents"),
     })
     StudentDto studentToStudentDto(Student student);
+
+    @Mappings({
+            @Mapping(target = "userId", expression = "java( student.getId().toString() )"),
+            @Mapping(target = "firstName", expression = "java( student.getFirstName() )"),
+            @Mapping(target = "lastName", expression = "java( student.getLastName() )"),
+            @Mapping(target = "phoneNumber", expression = "java( student.getPhoneNumber() )"),
+            @Mapping(target = "email", expression = "java( student.getEmail() )"),
+            @Mapping(target = "isAccountNonExpired", expression = "java( student.getIsAccountNonExpired() )"),
+            @Mapping(target = "isAccountNonLocked", expression = "java( student.getIsAccountNonLocked() )"),
+            @Mapping(target = "isCredentialsNonExpired", expression = "java( student.getIsCredentialsNonExpired() )"),
+            @Mapping(target = "isEnabled", expression = "java( student.getIsEnabled() )"),
+            @Mapping(target = "organization", source = "organization"),
+            @Mapping(target = "parents", source = "parents", qualifiedByName = "WithoutDetails"),
+            @Mapping(target = "classRoom", source = "classRoom", qualifiedByName = "WithoutStudents"),
+    })
+    List<StudentDto> studentToStudentDto(List<Student> students);
+
 
     @Named("WithoutParents")
     @Mappings({
@@ -40,6 +59,7 @@ public interface StudentMapper {
             @Mapping(target = "isAccountNonLocked", expression = "java( student.getIsAccountNonLocked() )"),
             @Mapping(target = "isCredentialsNonExpired", expression = "java( student.getIsCredentialsNonExpired() )"),
             @Mapping(target = "isEnabled", expression = "java( student.getIsEnabled() )"),
+            @Mapping(target = "organization", source = "organization"),
             @Mapping(target = "parents", source = "parents", ignore = true),
             @Mapping(target = "classRoom", qualifiedByName = "WithoutStudents"),
     })
@@ -63,6 +83,7 @@ public interface StudentMapper {
             @Mapping(target = "isCredentialsNonExpired", source = "isCredentialsNonExpired", ignore = true),
             @Mapping(target = "createdAt", source = "createdAt", ignore = true),
             @Mapping(target = "lastModifiedAt", source = "lastModifiedAt", ignore = true),
+            @Mapping(target = "organization", source = "organization", ignore = true),
     })
     StudentDto studentToStudentDtoForAppointment(Student student);
 

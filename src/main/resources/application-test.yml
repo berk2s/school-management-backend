@@ -1,5 +1,7 @@
 server:
+  address: 192.168.0.33
   port: 8080
+
 spring:
   servlet:
     multipart:
@@ -13,15 +15,24 @@ spring:
     username: root
     password:
   jpa:
-    hibernate.ddl-auto: create
+    hibernate.ddl-auto: update
     generate-ddl: true
     show-sql: true
 
+springdoc:
+  version: v1
+  api-docs:
+    path: /api-docs
+
 school-plus:
-  url: http://localhost:8080
+  appName: School+ Management
+  url: http://192.168.0.33:8080
+  aws:
+    access-key: aws
+    secret-key: aws
   auth-config:
     access-token:
-      lifetime: 5m
+      lifetime: 1m
     refresh-token:
       lifetime: 8h
     purging-refresh-tokens-cron: "* * 0/6 * * *"

@@ -13,8 +13,7 @@ import java.util.List;
 @Data
 public class EditingAnnouncementDto {
 
-    @Size(min = 2, max = 299)
-    @NotNull
+    @Size(min = 2, max = 300)
     private String announcementTitle;
 
     @Size(max = 99999)
@@ -25,6 +24,8 @@ public class EditingAnnouncementDto {
 
     @Size(max = 99)
     private List<String> addedChannels;
+
+    private Boolean announcementStatus;
 
     private Long organizationId;
 

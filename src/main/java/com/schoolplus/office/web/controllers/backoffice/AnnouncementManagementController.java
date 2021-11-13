@@ -9,8 +9,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpHeaders;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin(originPatterns = "*", allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin("*")
 @Tag(name = "Announcements Management Controller", description = "Exposes announcements management endpoints")
 @RequiredArgsConstructor
 @RequestMapping(AnnouncementManagementController.ENDPOINT)
@@ -46,6 +47,38 @@ public class AnnouncementManagementController {
     public ResponseEntity<List<AnnouncementDto>> getAnnouncements(@RequestParam(defaultValue = "0") Integer page,
                                                                   @RequestParam(defaultValue = "5") Integer size) {
         return new ResponseEntity<>(announcementService.getAnnouncements(PageRequest.of(page, size)), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get Announcements By Organization")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Announcements are listed"),
+            @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+                    }),
+            @ApiResponse(responseCode = "403", description = "Don't have permission", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Organization was not found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+            }),
+    })
+    @GetMapping(value = "/organization/{organizationId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Page<AnnouncementDto>> getAnnouncementsByOrganization(@PathVariable Long organizationId,
+                                                                                @RequestParam(defaultValue = "0") Integer page,
+                                                                                @RequestParam(defaultValue = "5") Integer size,
+                                                                                @RequestParam(defaultValue = "createdAt") String sort,
+                                                                                @RequestParam(defaultValue = "asc") String order,
+                                                                                @RequestParam(defaultValue = "") String search) {
+        Sort sorting = Sort.by(sort);
+
+        if (order.equals("desc"))
+            sorting = sorting.descending();
+        else
+            sorting = sorting.ascending();
+
+        return new ResponseEntity<>(announcementService.getAnnouncementsByOrganization(organizationId, PageRequest.of(page,
+                size, sorting), search), HttpStatus.OK);
     }
 
     @Operation(summary = "Get Announcement")
@@ -116,14 +149,9 @@ public class AnnouncementManagementController {
             @ApiResponse(responseCode = "403", description = "Don't have permission"),
     })
     @PutMapping(value = "/{announcementId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity updateAnnouncement(@Valid @PathVariable Long announcementId,
-                                                                         @Valid @RequestBody EditingAnnouncementDto updatingAnnouncement) {
+    public void updateAnnouncement(@Valid @PathVariable Long announcementId,
+                                             @Valid @RequestBody EditingAnnouncementDto updatingAnnouncement) {
         announcementService.updateAnnouncement(announcementId, updatingAnnouncement);
-
-        return ResponseEntity
-                .status(HttpStatus.PERMANENT_REDIRECT)
-                .header(HttpHeaders.LOCATION, ENDPOINT + "/" + announcementId)
-                .build();
     }
 
     @Operation(summary = "Delete Announcement Images")

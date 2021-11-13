@@ -15,6 +15,6 @@ public class AnnouncementImageDto {
 
     private String imageUrl;
 
-    private Integer imageSize;
+    private Long imageSize;
 
 }
