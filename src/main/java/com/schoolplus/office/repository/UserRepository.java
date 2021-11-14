@@ -21,7 +21,7 @@ public interface UserRepository extends PagingAndSortingRepository<User, UUID> {
     Page<Student> findAllStudentsByOrganization(Organization organization, Pageable pageable);
 
     @Query("select s from Student s where s.organization = :organization and ( lower(s.firstName) like :searchKey% or lower(s.lastName) like :searchKey% or lower(s.username) like :searchKey% or cast(s.studentNumber as string) like :searchKey%)")
-    Page<Student> findALlStudentsByOrganizationAndSearchKey(
+    Page<Student> findAllStudentsByOrganizationAndSearchKey(
             @Param("organization") Organization organization,
             @Param("searchKey") String searchKey,
             Pageable pageable

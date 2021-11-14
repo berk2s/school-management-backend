@@ -74,6 +74,7 @@ public class AppointmentManagementControllerTest {
             organizationRepository.save(organization);
 
             student = new Student();
+            student.setUsername(RandomStringUtils.random(10,true,false));
             student.setOrganization(organization);
 
             classRoom = new Classroom();
@@ -278,6 +279,7 @@ public class AppointmentManagementControllerTest {
             appointment.setOrganization(organization);
 
             student = new Student();
+            student.setUsername(RandomStringUtils.random(10,true,false));
             student.addAppointment(appointment);
             student.setOrganization(organization);
 
@@ -395,6 +397,7 @@ public class AppointmentManagementControllerTest {
             appointment.setOrganization(organization);
 
             student = new Student();
+            student.setUsername(RandomStringUtils.random(10,true,false));
             student.addAppointment(appointment);
             student.setOrganization(organization);
 
@@ -489,6 +492,7 @@ public class AppointmentManagementControllerTest {
             appointment.setOrganization(organization);
 
             student = new Student();
+            student.setUsername(RandomStringUtils.random(10,true,false));
             student.addAppointment(appointment);
             student.setOrganization(organization);
 

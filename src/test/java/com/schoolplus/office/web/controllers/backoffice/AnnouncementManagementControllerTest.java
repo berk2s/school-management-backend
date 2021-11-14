@@ -108,7 +108,7 @@ public class AnnouncementManagementControllerTest {
                     .andExpect(jsonPath("$.announcementTitle", is(announcement.getAnnouncementTitle())))
                     .andExpect(jsonPath("$.announcementDescription", is(announcement.getAnnouncementDescription())))
                     .andExpect(jsonPath("$..announcementChannels[*]", anyOf(hasItem(is(announcement.getAnnouncementChannels().get(0).name())))))
-                    .andExpect(jsonPath("$..announcementImages[*].fileName", anyOf(hasItem(is(announcement.getAnnouncementImages().get(0).getFileName())))))
+                    .andExpect(jsonPath("$..announcementImages[*].imageUrl").isNotEmpty())
                     .andExpect(jsonPath("$.organization.organizationName", is(organization.getOrganizationName())))
                     .andExpect(jsonPath("$.createdAt").isNotEmpty())
                     .andExpect(jsonPath("$.lastModifiedAt").isNotEmpty());
@@ -206,6 +206,7 @@ public class AnnouncementManagementControllerTest {
             creatingAnnouncement.setAnnouncementDescription(announcementDescription.toString());
             creatingAnnouncement.setAnnouncementChannels(List.of(AnnouncementChannel.ALL.name()));
             creatingAnnouncement.setOrganizationId(organization.getId());
+            creatingAnnouncement.setAnnouncementStatus(true);
         }
 
         @DisplayName("Create Announcement Successfully")
@@ -386,8 +387,7 @@ public class AnnouncementManagementControllerTest {
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(updatingAnnouncement)))
                     .andDo(print())
-                    .andExpect(status().isPermanentRedirect())
-                    .andExpect(redirectedUrl(AnnouncementManagementController.ENDPOINT + "/" + announcement.getId()));
+                    .andExpect(status().isNoContent());
 
             mockMvc.perform(get(AnnouncementManagementController.ENDPOINT + "/" + announcement.getId()))
                     .andDo(print())

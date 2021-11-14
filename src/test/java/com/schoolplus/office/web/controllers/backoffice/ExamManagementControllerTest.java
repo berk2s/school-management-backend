@@ -190,7 +190,7 @@ public class ExamManagementControllerTest {
         @Test
         void getExamsSuccessfully() throws Exception {
 
-            mockMvc.perform(get(ExamManagementController.ENDPOINT + "?size=100"))
+            mockMvc.perform(get(ExamManagementController.ENDPOINT + "?size=1000000"))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$..examId").isNotEmpty())
@@ -286,7 +286,7 @@ public class ExamManagementControllerTest {
         @Test
         void getExamTypesSuccessfully() throws Exception {
 
-            mockMvc.perform(get(ExamManagementController.ENDPOINT + "/types?size=100"))
+            mockMvc.perform(get(ExamManagementController.ENDPOINT + "/types?size=100000"))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$..examTypeId").isNotEmpty())
@@ -367,7 +367,7 @@ public class ExamManagementControllerTest {
         @Test
         void getExamSkeletonFieldsSuccessfully() throws Exception {
 
-            mockMvc.perform(get(ExamManagementController.ENDPOINT + "/skeletons?size=100"))
+            mockMvc.perform(get(ExamManagementController.ENDPOINT + "/skeletons?size=1000000"))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$..examSkeletonId").isNotEmpty())
@@ -439,6 +439,7 @@ public class ExamManagementControllerTest {
 
             if (userRepository.findByStudentNumber(1076L).isEmpty()) {
                 student = new Student();
+                student.setUsername(RandomStringUtils.random(10,true,false));
                 student.setOrganization(organization);
                 student.setFirstName(RandomStringUtils.random(10, true, false));
                 student.setLastName(RandomStringUtils.random(10, true, false));
@@ -873,6 +874,7 @@ public class ExamManagementControllerTest {
 
             if (userRepository.findByStudentNumber(1076L).isEmpty()) {
                 student = new Student();
+                student.setUsername(RandomStringUtils.random(10,true,false));
                 student.setOrganization(organization);
                 student.setFirstName(RandomStringUtils.random(10, true, false));
                 student.setLastName(RandomStringUtils.random(10, true, false));
@@ -1265,6 +1267,7 @@ public class ExamManagementControllerTest {
 
             if (userRepository.findByStudentNumber(1076L).isEmpty()) {
                 student = new Student();
+                student.setUsername(RandomStringUtils.random(10,true,false));
                 student.setOrganization(organization);
                 student.setFirstName(RandomStringUtils.random(10, true, false));
                 student.setLastName(RandomStringUtils.random(10, true, false));
@@ -1292,6 +1295,7 @@ public class ExamManagementControllerTest {
             examRepository.save(newExam);
 
             newStudent = new Student();
+            newStudent.setUsername(RandomStringUtils.random(10, true,false));
             newStudent.setOrganization(organization);
 
             userRepository.save(newStudent);
@@ -1611,6 +1615,7 @@ public class ExamManagementControllerTest {
 
             if (userRepository.findByStudentNumber(1076L).isEmpty()) {
                 student = new Student();
+                student.setUsername(RandomStringUtils.random(10,true,false));
                 student.setOrganization(organization);
                 student.setFirstName(RandomStringUtils.random(10, true, false));
                 student.setLastName(RandomStringUtils.random(10, true, false));

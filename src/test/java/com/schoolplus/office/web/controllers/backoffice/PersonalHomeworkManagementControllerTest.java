@@ -68,6 +68,7 @@ public class PersonalHomeworkManagementControllerTest {
         organizationRepository.save(organization);
 
         student = new Student();
+        student.setUsername(RandomStringUtils.random(10,true,false));
         student.setFirstName(RandomStringUtils.random(10, true, false));
         student.setLastName(RandomStringUtils.random(10, true, false));
         student.setOrganization(organization);
@@ -75,6 +76,7 @@ public class PersonalHomeworkManagementControllerTest {
         userRepository.save(student);
 
         teacher = new Teacher();
+        teacher.setUsername(RandomStringUtils.random(10,true,false));
         teacher.setFirstName(RandomStringUtils.random(10, true, false));
         teacher.setLastName(RandomStringUtils.random(10, true, false));
         teacher.setOrganization(organization);
@@ -359,6 +361,7 @@ public class PersonalHomeworkManagementControllerTest {
         @BeforeEach
         void setUp() {
             newStudent = new Student();
+            newStudent.setUsername(RandomStringUtils.random(10, true, false));
             newStudent.setFirstName(RandomStringUtils.random(10, true, false));
             newStudent.setLastName(RandomStringUtils.random(10, true, false));
             newStudent.setOrganization(organization);
@@ -366,6 +369,7 @@ public class PersonalHomeworkManagementControllerTest {
             userRepository.save(newStudent);
 
             newTeacher = new Teacher();
+            newTeacher.setUsername(RandomStringUtils.random(10, true, false));
             newTeacher.setFirstName(RandomStringUtils.random(10, true, false));
             newTeacher.setLastName(RandomStringUtils.random(10, true, false));
             newTeacher.setOrganization(organization);

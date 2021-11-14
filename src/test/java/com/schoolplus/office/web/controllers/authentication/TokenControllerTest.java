@@ -82,6 +82,7 @@ public class TokenControllerTest {
         authorityRepository.save(authority);
 
         user = new User();
+        user.setUsername(RandomStringUtils.random(10, true, false));
         user.setOrganization(organization);
         user.addAuthority(authority);
 

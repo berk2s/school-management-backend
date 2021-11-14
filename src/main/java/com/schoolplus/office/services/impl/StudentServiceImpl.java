@@ -53,9 +53,9 @@ public class StudentServiceImpl implements StudentService {
             students = userRepository.findAllStudentsByOrganization(organization, pageable);
         } else {
             students = userRepository
-                    .findALlStudentsByOrganizationAndSearchKey(
+                    .findAllStudentsByOrganizationAndSearchKey(
                             organization,
-                            search.trim( ),
+                            search.trim(),
                             pageable);
         }
 

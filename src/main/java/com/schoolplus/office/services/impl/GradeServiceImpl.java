@@ -6,19 +6,24 @@ import com.schoolplus.office.annotations.ReadingEntity;
 import com.schoolplus.office.annotations.UpdatingEntity;
 import com.schoolplus.office.domain.Classroom;
 import com.schoolplus.office.domain.Grade;
+import com.schoolplus.office.domain.GradeCategory;
 import com.schoolplus.office.domain.Organization;
 import com.schoolplus.office.repository.ClassroomRepository;
+import com.schoolplus.office.repository.GradeCategoryRepository;
 import com.schoolplus.office.repository.GradeRepository;
 import com.schoolplus.office.repository.OrganizationRepository;
 import com.schoolplus.office.services.GradeService;
 import com.schoolplus.office.web.exceptions.ClassroomNotFoundException;
+import com.schoolplus.office.web.exceptions.GradeCategoryNotFoundException;
 import com.schoolplus.office.web.exceptions.GradeNotFoundException;
 import com.schoolplus.office.web.exceptions.OrganizationNotFoundException;
 import com.schoolplus.office.web.mappers.GradeMapper;
 import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,8 +38,34 @@ public class GradeServiceImpl implements GradeService {
 
     private final GradeRepository gradeRepository;
     private final OrganizationRepository organizationRepository;
+    private final GradeCategoryRepository gradeCategoryRepository;
     private final ClassroomRepository classroomRepository;
     private final GradeMapper gradeMapper;
+
+    @ReadingEntity(domain = TransactionDomain.GRADE, action = DomainAction.READ_GRADES, isList = true)
+    @PreAuthorize("hasRole('ADMIN') && (hasAuthority('manage:grades') || hasAuthority('read:grades'))")
+    @Override
+    public Page<GradeDto> getGradesByOrganization(Long organizationId, Pageable pageable, String search) {
+        Organization organization = organizationRepository.findById(organizationId)
+                .orElseThrow(() -> {
+                    log.warn("Organization with given id does not exists [organizationId: {}]", organizationId);
+                    throw new OrganizationNotFoundException(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc());
+                });
+
+        Page<Grade> grades;
+
+        if (StringUtils.isEmpty(search) || search.trim().equals("")) {
+            grades = gradeRepository.findAllByOrganization(organization, pageable);
+        } else {
+            grades = gradeRepository
+                    .findAllByOrganizationAndGradeNameStartsWith(organization, search.trim(), pageable);
+        }
+
+        return new PageImpl<>(
+                gradeMapper.gradeToGradeDtoWithoutDetailsList(grades.getContent()),
+                pageable,
+                grades.getTotalElements());
+    }
 
     @ReadingEntity(domain = TransactionDomain.GRADE, action = DomainAction.READ_GRADES, isList = true)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:grades') || hasAuthority('read:grades'))")
@@ -72,6 +103,14 @@ public class GradeServiceImpl implements GradeService {
                 });
 
         grade.setOrganization(organization);
+
+        GradeCategory gradeCategory = gradeCategoryRepository.findById(creatingGrade.getGradeCategoryId())
+                .orElseThrow(() -> {
+                    log.warn("Grade Category with given id does not exists [gradeCategoryId: {}]", creatingGrade.getGradeCategoryId());
+                    throw new GradeCategoryNotFoundException(ErrorDesc.GRADE_CATEGORY_NOT_FOUND.getDesc());
+                });
+
+        grade.setGradeCategory(gradeCategory);
 
         if (creatingGrade.getClassRooms() != null && creatingGrade.getClassRooms().size() > 0) {
             creatingGrade.getClassRooms().forEach(classRoomId -> {
@@ -115,6 +154,16 @@ public class GradeServiceImpl implements GradeService {
                     });
 
             grade.setOrganization(organization);
+        }
+
+        if (editingGrade.getNewGradeCategoryId() != null) {
+            GradeCategory gradeCategory = gradeCategoryRepository.findById(editingGrade.getNewGradeCategoryId())
+                    .orElseThrow(() -> {
+                        log.warn("Grade Category with given id does not exists [gradeCategoryId: {}]", editingGrade.getNewGradeCategoryId());
+                        throw new GradeCategoryNotFoundException(ErrorDesc.GRADE_CATEGORY_NOT_FOUND.getDesc());
+                    });
+
+            grade.setGradeCategory(gradeCategory);
         }
 
         if (editingGrade.getRemovedClassrooms() != null

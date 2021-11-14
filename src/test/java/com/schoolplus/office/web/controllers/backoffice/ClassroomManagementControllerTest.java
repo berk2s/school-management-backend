@@ -128,7 +128,6 @@ public class ClassroomManagementControllerTest {
                     .andExpect(jsonPath("$.grade.gradeId", is(grade.getId().intValue())))
                     .andExpect(jsonPath("$.organization.organizationName", is(organization.getOrganizationName())))
                     .andExpect(jsonPath("$.advisorTeacher.userId", is(teacher.getId().toString())))
-                    .andExpect(jsonPath("$.advisorTeacher.username", is(teacher.getUsername())))
                     .andExpect(jsonPath("$.students[*]..userId", anyOf(hasItem(is(student.getId().toString())))))
                     .andExpect(jsonPath("$.students[*]..username", anyOf(hasItem(is(student.getUsername())))));
 
@@ -240,7 +239,6 @@ public class ClassroomManagementControllerTest {
                     .andExpect(jsonPath("$.classRoomTag", is(editingClassroom.getClassRoomTag())))
                     .andExpect(jsonPath("$.organization.organizationName", is(newOrganization.getOrganizationName())))
                     .andExpect(jsonPath("$.advisorTeacher.userId", is(teacher.getId().toString())))
-                    .andExpect(jsonPath("$.advisorTeacher.username", is(teacher.getUsername())))
                     .andExpect(jsonPath("$.students.length()", is(0)));
 
         }
@@ -350,7 +348,6 @@ public class ClassroomManagementControllerTest {
                     .andExpect(jsonPath("$.organization.organizationName", is(organization.getOrganizationName())))
                     .andExpect(jsonPath("$.grade.gradeName", is(grade.getGradeName())))
                     .andExpect(jsonPath("$.advisorTeacher.userId", is(teacher.getId().toString())))
-                    .andExpect(jsonPath("$.advisorTeacher.username", is(teacher.getUsername())))
                     .andExpect(jsonPath("$.students.length()", is(1)));
         }
 
@@ -447,7 +444,6 @@ public class ClassroomManagementControllerTest {
                     .andExpect(jsonPath("$..classRoomId").isNotEmpty())
                     .andExpect(jsonPath("$..classRoomTag").isNotEmpty())
                     .andExpect(jsonPath("$..advisorTeacher.userId").isNotEmpty())
-                    .andExpect(jsonPath("$..advisorTeacher.username").isNotEmpty())
                     .andExpect(jsonPath("$..students..userId").isNotEmpty())
                     .andExpect(jsonPath("$..students..username").isNotEmpty());
         }

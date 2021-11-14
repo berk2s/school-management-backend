@@ -107,6 +107,10 @@ public class AnnouncementManagementController {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
                     }),
             @ApiResponse(responseCode = "403", description = "Don't have permission"),
+            @ApiResponse(responseCode = "404", description = "Organization was not found",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+                    }),
     })
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AnnouncementDto> createAnnouncement(@Valid @RequestBody CreatingAnnouncementDto creatingAnnouncementDto) {
@@ -149,8 +153,9 @@ public class AnnouncementManagementController {
             @ApiResponse(responseCode = "403", description = "Don't have permission"),
     })
     @PutMapping(value = "/{announcementId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateAnnouncement(@Valid @PathVariable Long announcementId,
-                                             @Valid @RequestBody EditingAnnouncementDto updatingAnnouncement) {
+                                   @Valid @RequestBody EditingAnnouncementDto updatingAnnouncement) {
         announcementService.updateAnnouncement(announcementId, updatingAnnouncement);
     }
 

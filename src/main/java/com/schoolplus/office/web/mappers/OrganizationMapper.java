@@ -5,6 +5,7 @@ import com.schoolplus.office.web.models.OrganizationDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.mapstruct.Named;
 
 import java.util.List;
 
@@ -15,6 +16,15 @@ public interface OrganizationMapper {
             @Mapping(target = "organizationId", source = "id")
     })
     OrganizationDto organizationToOrganizationDto(Organization organization);
+
+    @Named("WithoutDetails")
+    @Mappings({
+            @Mapping(target = "organizationId", source = "id"),
+            @Mapping(target = "createdAt", source = "createdAt", ignore = true),
+            @Mapping(target = "lastModifiedAt", source = "lastModifiedAt", ignore = true),
+    })
+    OrganizationDto organizationToOrganizationDtoWithoutDetails(Organization organization);
+
 
     @Mappings({
             @Mapping(target = "organizationId", source = "id")

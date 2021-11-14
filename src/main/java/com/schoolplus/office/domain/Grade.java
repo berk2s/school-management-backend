@@ -32,6 +32,9 @@ public class Grade {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, optional = false)
     private Organization organization;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    private GradeCategory gradeCategory;
+
     @CreationTimestamp
     private Timestamp createdAt;
 

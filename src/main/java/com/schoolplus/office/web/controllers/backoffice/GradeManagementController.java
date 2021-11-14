@@ -1,6 +1,7 @@
 package com.schoolplus.office.web.controllers.backoffice;
 
 import com.schoolplus.office.services.GradeService;
+import com.schoolplus.office.utils.SortingUtils;
 import com.schoolplus.office.web.models.CreatingGradeDto;
 import com.schoolplus.office.web.models.EditingGradeDto;
 import com.schoolplus.office.web.models.ErrorResponseDto;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -47,6 +49,33 @@ public class GradeManagementController {
                                              @RequestParam(defaultValue = "10") Integer size) {
         return new ResponseEntity(gradeService.getGrades(PageRequest.of(page, size)), HttpStatus.OK);
     }
+
+    @Operation(summary = "Get Grades By Organization")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Grades are listed"),
+            @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+                    }),
+            @ApiResponse(responseCode = "403", description = "Don't have permission", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Organization not found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+            }),
+    })
+    @GetMapping(value = "/organization/{organizationId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Page<GradeDto>> getGradesByOrganization(@Valid @PathVariable Long organizationId,
+                                                                  @RequestParam(defaultValue = "0") Integer page,
+                                                                  @RequestParam(defaultValue = "10") Integer size,
+                                                                  @RequestParam(defaultValue = "createdAt") String sort,
+                                                                  @RequestParam(defaultValue = "asc") String order,
+                                                                  @RequestParam(defaultValue = "") String search) {
+        return new ResponseEntity(gradeService.getGradesByOrganization(organizationId,
+                PageRequest.of(page, size, SortingUtils.generateSort(sort, order)),
+                        search), HttpStatus.OK);
+    }
+
 
     @Operation(summary = "Get Grade")
     @ApiResponses(value = {
@@ -101,14 +130,9 @@ public class GradeManagementController {
             }),
     })
     @PutMapping(value = "/{gradeId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity editGrade(@Valid @PathVariable Long gradeId,
+    public void editGrade(@Valid @PathVariable Long gradeId,
                                     @Valid @RequestBody EditingGradeDto editingGrade) {
         gradeService.editGrade(gradeId, editingGrade);
-
-        return ResponseEntity
-                .status(HttpStatus.PERMANENT_REDIRECT)
-                .header(HttpHeaders.LOCATION, ENDPOINT + "/" + gradeId)
-                .build();
     }
 
     @Operation(summary = "Delete Grade")

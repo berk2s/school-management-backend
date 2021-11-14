@@ -29,5 +29,6 @@ public enum TransactionDomain {
     USER,
     LOGIN,
     LOGOUT,
-    USERINFO
+    USERINFO,
+    GRADE_CATEGORY
 }

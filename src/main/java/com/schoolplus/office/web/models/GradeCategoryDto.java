@@ -2,28 +2,22 @@ package com.schoolplus.office.web.models;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.schoolplus.office.annotations.Logable;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class GradeDto {
+public class GradeCategoryDto {
 
     @Logable(type = LogableType.ID)
-    private Long gradeId;
+    private Long gradeCategoryId;
 
-    private String gradeName;
+    private String gradeCategoryName;
 
-    private List<ClassroomDto> classrooms = new ArrayList<>();
-
-    private GradeCategoryDto gradeCategory;
+    private List<GradeDto> grades = new ArrayList<>();
 
     private OrganizationDto organization;
 

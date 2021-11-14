@@ -64,6 +64,7 @@ public class SupportManagementControllerTest {
         organizationRepository.save(organization);
 
         user = new User();
+        user.setUsername(RandomStringUtils.random(10,true,false));
         user.setOrganization(organization);
         user.setFirstName(RandomStringUtils.random(10, true, false));
         user.setLastName(RandomStringUtils.random(10, true, false));

@@ -22,6 +22,8 @@ public class EditingGradeDto {
     @Size(max = 99)
     private List<Long> removedClassrooms = new ArrayList<>();
 
+    private Long newGradeCategoryId;
+
     private Long organizationId;
 
 }

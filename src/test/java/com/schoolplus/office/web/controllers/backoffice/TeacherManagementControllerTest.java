@@ -74,8 +74,16 @@ public class TeacherManagementControllerTest {
 
         @BeforeEach
         void setUp() {
-            role = roleRepository.findByRoleName("STUDENT").get();
-            authority = authorityRepository.findByAuthorityName("profile:manage").get();
+
+            role = new Role();
+            role.setRoleName(RandomStringUtils.random(10, true, false));
+
+            roleRepository.save(role);
+
+            authority = new Authority();
+            authority.setAuthorityName(RandomStringUtils.random(10, true, false));
+
+            authorityRepository.save(authority);
 
             teachingSubject = teachingSubjectRepository
                     .findBySubjectName("Matematik")
@@ -88,14 +96,14 @@ public class TeacherManagementControllerTest {
             creatingTeacher.setLastName(RandomStringUtils.random(10, true, false));
             creatingTeacher.setPhoneNumber(RandomStringUtils.random(11, true, false));
             creatingTeacher.setEmail(RandomStringUtils.random(10, true, false));
-            creatingTeacher.setRoles(List.of(role.getId()));
-            creatingTeacher.setAuthorities(List.of(authority.getId()));
             creatingTeacher.setIsAccountNonLocked(true);
             creatingTeacher.setIsAccountNonExpired(true);
             creatingTeacher.setIsCredentialsNonExpired(true);
             creatingTeacher.setIsEnabled(true);
             creatingTeacher.setTeachingSubjects(List.of(teachingSubject.getId()));
             creatingTeacher.setOrganizationId(organization.getId());
+            creatingTeacher.setRoles(List.of(role.getId()));
+            creatingTeacher.setAuthorities(List.of(authority.getId()));
         }
 
         @DisplayName("Create Teacher Successfully")

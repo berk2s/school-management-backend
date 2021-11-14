@@ -73,8 +73,15 @@ public class ParentManagementControllerTest {
         @BeforeEach
         void setUp() {
 
-            role = roleRepository.findByRoleName("STUDENT").get();
-            authority = authorityRepository.findByAuthorityName("profile:manage").get();
+            role = new Role();
+            role.setRoleName(RandomStringUtils.random(10, true, false));
+
+            roleRepository.save(role);
+
+            authority = new Authority();
+            authority.setAuthorityName(RandomStringUtils.random(10, true, false));
+
+            authorityRepository.save(authority);
 
             student = new Student();
             student.setUsername(RandomStringUtils.random(10, true, false));
@@ -83,8 +90,6 @@ public class ParentManagementControllerTest {
             student.setLastName(RandomStringUtils.random(10, true, false));
             student.setPhoneNumber(RandomStringUtils.random(11, true, false));
             student.setEmail(RandomStringUtils.random(10, true, false));
-            student.addRole(role);
-            student.addAuthority(authority);
             student.setIsAccountNonLocked(true);
             student.setIsAccountNonExpired(true);
             student.setIsCredentialsNonExpired(true);
@@ -100,13 +105,13 @@ public class ParentManagementControllerTest {
             creatingParent.setLastName(RandomStringUtils.random(10, true, false));
             creatingParent.setPhoneNumber(RandomStringUtils.random(11, true, false));
             creatingParent.setEmail(RandomStringUtils.random(10, true, false));
-            creatingParent.setRoles(List.of(role.getId()));
-            creatingParent.setAuthorities(List.of(authority.getId()));
             creatingParent.setIsAccountNonLocked(true);
             creatingParent.setIsAccountNonExpired(true);
             creatingParent.setIsCredentialsNonExpired(true);
             creatingParent.setIsEnabled(true);
             creatingParent.setStudents(List.of(student.getId().toString()));
+            creatingParent.setAuthorities(List.of(authority.getId()));
+            creatingParent.setRoles(List.of(role.getId()));
             creatingParent.setOrganizationId(organization.getId());
         }
 

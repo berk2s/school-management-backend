@@ -3,11 +3,14 @@ package com.schoolplus.office.services;
 import com.schoolplus.office.web.models.CreatingGradeDto;
 import com.schoolplus.office.web.models.EditingGradeDto;
 import com.schoolplus.office.web.models.GradeDto;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface GradeService {
+
+    Page<GradeDto> getGradesByOrganization(Long organizationId, Pageable pageable, String search);
 
     List<GradeDto> getGrades(Pageable pageable);
 

@@ -118,7 +118,7 @@ public class LessonManagementControllerTest {
         @Test
         void getLessonsSuccessfully() throws Exception {
 
-            mockMvc.perform(get(LessonManagementController.ENDPOINT + "?size=100"))
+            mockMvc.perform(get(LessonManagementController.ENDPOINT + "?size=100000"))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$..lessonId").isNotEmpty())

@@ -224,4 +224,13 @@ public enum DomainAction {
      * User Info
      */
     READ_USERINFO,
+
+    /*
+     * Grade Category
+     */
+    READ_GRADE_CATEGORY,
+    CREATE_GRADE_CATEGORY,
+    UPDATE_GRADE_CATEGORY,
+    DELETE_GRADE_CATEGORY,
+
 }

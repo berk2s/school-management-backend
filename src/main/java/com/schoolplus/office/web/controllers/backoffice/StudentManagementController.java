@@ -56,7 +56,6 @@ public class StudentManagementController {
                                                                       @RequestParam(defaultValue = "createdAt") String sort,
                                                                       @RequestParam(defaultValue = "asc") String order,
                                                                       @RequestParam(defaultValue = "") String search) {
-
         return new ResponseEntity<>(studentService.getStudentsByOrganization(
                 organizationId,
                 PageRequest.of(page, size, SortingUtils.generateSort(sort, order)),

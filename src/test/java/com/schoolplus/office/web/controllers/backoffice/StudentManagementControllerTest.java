@@ -75,8 +75,15 @@ public class StudentManagementControllerTest {
         @BeforeEach
         void setUp() {
 
-            role = roleRepository.findByRoleName("STUDENT").get();
-            authority = authorityRepository.findByAuthorityName("profile:manage").get();
+            role = new Role();
+            role.setRoleName(RandomStringUtils.random(10, true, false));
+
+            roleRepository.save(role);
+
+            authority = new Authority();
+            authority.setAuthorityName(RandomStringUtils.random(10, true, false));
+
+            authorityRepository.save(authority);
 
             parent = new Parent();
             parent.setUsername(RandomStringUtils.random(10, true, false));
@@ -97,8 +104,6 @@ public class StudentManagementControllerTest {
             creatingStudent.setLastName(RandomStringUtils.random(10, true, false));
             creatingStudent.setPhoneNumber(RandomStringUtils.random(11, true, false));
             creatingStudent.setEmail(RandomStringUtils.random(10, true, false));
-            creatingStudent.setRoles(List.of(role.getId()));
-            creatingStudent.setAuthorities(List.of(authority.getId()));
             creatingStudent.setIsAccountNonLocked(true);
             creatingStudent.setIsAccountNonExpired(true);
             creatingStudent.setIsCredentialsNonExpired(true);
@@ -106,6 +111,8 @@ public class StudentManagementControllerTest {
             creatingStudent.setParents(List.of(parent.getId().toString()));
             creatingStudent.setClassRoomId(classRoom.getId());
             creatingStudent.setOrganizationId(organization.getId());
+            creatingStudent.setRoles(List.of(role.getId()));
+            creatingStudent.setAuthorities(List.of(authority.getId()));
         }
 
         @DisplayName("Creating Student Successfully")
@@ -124,16 +131,13 @@ public class StudentManagementControllerTest {
                     .andExpect(jsonPath("$.lastName", is(creatingStudent.getLastName())))
                     .andExpect(jsonPath("$.phoneNumber", is(creatingStudent.getPhoneNumber())))
                     .andExpect(jsonPath("$.email", is(creatingStudent.getEmail())))
-                    .andExpect(jsonPath("$.authorities[*]", anyOf(hasItem(is(authority.getAuthorityName())))))
-                    .andExpect(jsonPath("$.roles", anyOf(hasItem(is(role.getRoleName().toUpperCase(Locale.ROOT))))))
                     .andExpect(jsonPath("$.isEnabled", is(creatingStudent.getIsEnabled())))
                     .andExpect(jsonPath("$.isAccountNonExpired", is(creatingStudent.getIsAccountNonExpired())))
                     .andExpect(jsonPath("$.isAccountNonLocked", is(creatingStudent.getIsAccountNonLocked())))
                     .andExpect(jsonPath("$.isCredentialsNonExpired", is(creatingStudent.getIsAccountNonExpired())))
                     .andExpect(jsonPath("$.createdAt").isNotEmpty())
                     .andExpect(jsonPath("$.lastModifiedAt").isNotEmpty())
-                    .andExpect(jsonPath("$.classRoom.classRoomId", is(classRoom.getId().intValue())))
-                    .andExpect(jsonPath("$.parents[*]..username", anyOf(hasItem(is(parent.getUsername())))));
+                    .andExpect(jsonPath("$.classRoom.classRoomId", is(classRoom.getId().intValue())));
         }
 
         @DisplayName("Creating Student Parent Not Found Error")
@@ -224,6 +228,7 @@ public class StudentManagementControllerTest {
             userRepository.save(parent);
 
             student = new Student();
+            student.setUsername(RandomStringUtils.random(10,true,false));
             student.addParent(parent);
             student.setOrganization(organization);
 
@@ -254,8 +259,7 @@ public class StudentManagementControllerTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.userId").isNotEmpty())
-                    .andExpect(jsonPath("$.classRoom.classRoomId", is(classRoom.getId().intValue())))
-                    .andExpect(jsonPath("$.parents[*]..username", anyOf(hasItem(is(parent.getUsername())))));
+                    .andExpect(jsonPath("$.classRoom.classRoomId", is(classRoom.getId().intValue())));
         }
 
         @DisplayName("Edit Student Not Found Error")

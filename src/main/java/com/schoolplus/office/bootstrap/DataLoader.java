@@ -29,12 +29,12 @@ public class DataLoader implements CommandLineRunner {
     private final OrganizationRepository organizationRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     @Override
     public void run(String... args) throws Exception {
         loadUsers();
     }
 
-    @Transactional
     private void loadUsers() {
         if(userRepository.findByUsername("username").isEmpty()) {
             Organization organization = new Organization();
@@ -72,8 +72,11 @@ public class DataLoader implements CommandLineRunner {
             Authority authority4 = new Authority();
             authority4.setAuthorityName("view:announcements");
 
+            Authority authority5 = new Authority();
+            authority5.setAuthorityName("manage:grades");
+
             roleRepository.saveAll(List.of(role, role1, role2));
-            authorityRepository.saveAll(List.of(authority, authority1, authority2, authority3, authority4));
+            authorityRepository.saveAll(List.of(authority, authority1, authority2, authority3, authority4, authority5));
 
             Student user = new Student();
             user.setUsername("username");
@@ -89,6 +92,7 @@ public class DataLoader implements CommandLineRunner {
             user.addAuthority(authority1);
             user.addAuthority(authority3);
             user.addAuthority(authority4);
+            user.addAuthority(authority5);
             user.setFirstName("firstName");
             user.setLastName("lastName");
             user.setEmail("email@email.com");

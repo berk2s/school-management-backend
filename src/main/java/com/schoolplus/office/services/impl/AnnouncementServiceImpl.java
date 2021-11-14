@@ -1,6 +1,5 @@
 package com.schoolplus.office.services.impl;
 
-import com.amazonaws.services.s3.AmazonS3;
 import com.schoolplus.office.annotations.CreatingEntity;
 import com.schoolplus.office.annotations.DeletingEntity;
 import com.schoolplus.office.annotations.ReadingEntity;
@@ -63,7 +62,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     public Page<AnnouncementDto> getAnnouncementsByOrganization(Long organizationId,
                                                                 Pageable pageable,
                                                                 String search) {
-
         Organization organization = organizationRepository.findById(organizationId)
                 .orElseThrow(() -> {
                     log.warn("Organization with given id does not exists [organizationId: {}]", organizationId);
@@ -76,11 +74,10 @@ public class AnnouncementServiceImpl implements AnnouncementService {
             announcements = announcementRepository.findAllByOrganization(organization, pageable);
         } else {
             announcements = announcementRepository
-                    .findAllByOrganizationAndAnnouncementTitleStartsWith(organization, search, pageable);
+                    .findAllByOrganizationAndAnnouncementTitleStartsWith(organization, search.trim(), pageable);
         }
 
-        return new PageImpl<>(
-                announcementMapper.announcementToAnnouncementDto(announcements.getContent()),
+        return new PageImpl<>(announcementMapper.announcementToAnnouncementDto(announcements.getContent()),
                 pageable,
                 announcements.getTotalElements());
     }

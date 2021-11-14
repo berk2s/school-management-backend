@@ -2,10 +2,7 @@ package com.schoolplus.office.web.mappers;
 
 import com.schoolplus.office.domain.Classroom;
 import com.schoolplus.office.web.models.ClassroomDto;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -71,10 +68,11 @@ public interface ClassroomMapper {
             @Mapping(source = "id", target = "classRoomId"),
             @Mapping(source = "classRoomTag", target = "classRoomTag"),
             @Mapping(source = "advisorTeacher", target = "advisorTeacher", ignore = true),
-            @Mapping(source = "organization", target = "organization"),
+            @Mapping(source = "organization", target = "organization", ignore = true),
             @Mapping(source = "grade", target = "grade", ignore = true),
             @Mapping(source = "students", target = "students", ignore = true),
     })
+    @IterableMapping(qualifiedByName = "WithoutStudentsAndParents")
     List<ClassroomDto> classRoomToClassRoomDtoWithoutStudentsAndParents(List<Classroom> classRoom);
 
 }

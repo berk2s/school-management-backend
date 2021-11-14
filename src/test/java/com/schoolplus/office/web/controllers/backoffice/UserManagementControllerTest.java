@@ -63,6 +63,8 @@ public class UserManagementControllerTest {
     ObjectMapper objectMapper;
 
     User user;
+    Role role;
+    Authority authority;
 
     @BeforeEach
     void setUp() {
@@ -77,9 +79,20 @@ public class UserManagementControllerTest {
         void setUp() {
 
             for (int i = 0; i < 20; i++) {
-                Role role = roleRepository.findByRoleName("STUDENT").get();
-                Authority authority = authorityRepository.findByAuthorityName("profile:manage").get();
-                Organization organization = organizationRepository.findByOrganizationName("Test Organization").get();
+                Role role = new Role();
+                role.setRoleName(RandomStringUtils.random(10, true, false));
+
+                roleRepository.save(role);
+
+                Authority authority = new Authority();
+                authority.setAuthorityName(RandomStringUtils.random(10, true, false));
+
+                authorityRepository.save(authority);
+
+                Organization organization = new Organization();
+                organization.setOrganizationName(RandomStringUtils.random(10, true, false));
+
+                organizationRepository.save(organization);
 
                 Hibernate.initialize(role.getUsers());
                 Hibernate.initialize(authority.getUsers());
@@ -165,145 +178,6 @@ public class UserManagementControllerTest {
 
         }
 
-        @DisplayName("User not found error when editing user info")
-        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "edit:user", "view:user"})
-        @Test
-        void userNotFoundErrorWhenEditingUserInfo() throws Exception {
-
-            Role role = roleRepository.findByRoleName("STUDENT").get();
-            Role role1 = roleRepository.findByRoleName("USER").get();
-            Authority authority = authorityRepository.findByAuthorityName("profile:manage").get();
-            Authority authority1 = authorityRepository.findByAuthorityName("list:users").get();
-
-            EditingUserDto editingUserDto = new EditingUserDto();
-            editingUserDto.setUsername("new_username");
-            editingUserDto.setNewRoles(List.of(role1.getId()));
-            editingUserDto.setNewAuthorities(List.of(authority1.getId()));
-
-            editingUserDto.setDeletedRoles(List.of(role.getId()));
-            editingUserDto.setDeletedAuthorities(List.of(authority.getId()));
-
-            mockMvc.perform(put(UserManagementController.ENDPOINT + "/" + UUID.randomUUID().toString())
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(editingUserDto)))
-                    .andDo(print())
-                    .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
-                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.USER_NOT_FOUND.getDesc())));
-
-        }
-
-        @DisplayName("Authority not found error when adding a new Authority")
-        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "edit:user", "view:user"})
-        @Test
-        void authorityNotFoundErrorWhenAddingAnewAuthority() throws Exception {
-
-            Role role = roleRepository.findByRoleName("STUDENT").get();
-            Role role1 = roleRepository.findByRoleName("USER").get();
-            Authority authority = authorityRepository.findByAuthorityName("profile:manage").get();
-//            Authority authority1 = authorityRepository.findByAuthorityName("list:users").get();
-
-            EditingUserDto editingUserDto = new EditingUserDto();
-            editingUserDto.setUsername("new_username");
-            editingUserDto.setNewRoles(List.of(role1.getId()));
-            editingUserDto.setNewAuthorities(List.of(1234L));
-
-            editingUserDto.setDeletedRoles(List.of(role.getId()));
-            editingUserDto.setDeletedAuthorities(List.of(authority.getId()));
-
-            mockMvc.perform(put(UserManagementController.ENDPOINT + "/" + user.getId().toString())
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(editingUserDto)))
-                    .andDo(print())
-                    .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
-                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.AUTHORITY_NOT_FOUND.getDesc())));
-
-        }
-
-        @DisplayName("Authority not found error when deleting the Authority")
-        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "edit:user", "view:user"})
-        @Test
-        void authorityNotFoundErrorWhenDeletingAnAuthority() throws Exception {
-
-            Role role = roleRepository.findByRoleName("STUDENT").get();
-            Role role1 = roleRepository.findByRoleName("USER").get();
-//            Authority authority = authorityRepository.findByAuthorityName("profile:manage").get();
-            Authority authority1 = authorityRepository.findByAuthorityName("list:users").get();
-
-            EditingUserDto editingUserDto = new EditingUserDto();
-            editingUserDto.setUsername("new_username");
-            editingUserDto.setNewRoles(List.of(role1.getId()));
-            editingUserDto.setNewAuthorities(List.of(authority1.getId()));
-
-            editingUserDto.setDeletedRoles(List.of(role.getId()));
-            editingUserDto.setDeletedAuthorities(List.of(112345L));
-
-            mockMvc.perform(put(UserManagementController.ENDPOINT + "/" + user.getId().toString())
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(editingUserDto)))
-                    .andDo(print())
-                    .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
-                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.AUTHORITY_NOT_FOUND.getDesc())));
-
-        }
-
-        @DisplayName("Role not found error when adding a new Role")
-        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "edit:user", "view:user"})
-        @Test
-        void roleNotFoundErrorWhenAddingAnewRole() throws Exception {
-
-            Role role = roleRepository.findByRoleName("STUDENT").get();
-//            Role role1 = roleRepository.findByRoleName("USER").get();
-            Authority authority = authorityRepository.findByAuthorityName("profile:manage").get();
-            Authority authority1 = authorityRepository.findByAuthorityName("list:users").get();
-
-            EditingUserDto editingUserDto = new EditingUserDto();
-            editingUserDto.setUsername("new_username");
-            editingUserDto.setNewRoles(List.of(1123321L));
-            editingUserDto.setNewAuthorities(List.of(authority1.getId()));
-
-            editingUserDto.setDeletedRoles(List.of(role.getId()));
-            editingUserDto.setDeletedAuthorities(List.of(authority.getId()));
-
-            mockMvc.perform(put(UserManagementController.ENDPOINT + "/" + user.getId().toString())
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(editingUserDto)))
-                    .andDo(print())
-                    .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
-                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.ROLE_NOT_FOUND.getDesc())));
-
-        }
-
-        @DisplayName("Role not found error when deleting the Role")
-        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "edit:user", "view:user"})
-        @Test
-        void roleNotFoundErrorWhenDeletingARole() throws Exception {
-
-//            Role role = roleRepository.findByRoleName("STUDENT").get();
-            Role role1 = roleRepository.findByRoleName("USER").get();
-            Authority authority = authorityRepository.findByAuthorityName("profile:manage").get();
-            Authority authority1 = authorityRepository.findByAuthorityName("list:users").get();
-
-            EditingUserDto editingUserDto = new EditingUserDto();
-            editingUserDto.setUsername("new_username");
-            editingUserDto.setNewRoles(List.of(role1.getId()));
-            editingUserDto.setNewAuthorities(List.of(authority1.getId()));
-
-            editingUserDto.setDeletedRoles(List.of(12312321L));
-            editingUserDto.setDeletedAuthorities(List.of(authority.getId()));
-
-            mockMvc.perform(put(UserManagementController.ENDPOINT + "/" + user.getId().toString())
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(editingUserDto)))
-                    .andDo(print())
-                    .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
-                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.ROLE_NOT_FOUND.getDesc())));
-
-        }
 
         @DisplayName("Organization Not Found Error")
         @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "edit:user", "view:user"})
@@ -357,24 +231,14 @@ public class UserManagementControllerTest {
     @Test
     void editUserSuccessfully() throws Exception {
 
-        Role role = roleRepository.findByRoleName("STUDENT").get();
-        Role role1 = roleRepository.findByRoleName("USER").get();
-        Authority authority = authorityRepository.findByAuthorityName("profile:manage").get();
-        Authority authority1 = authorityRepository.findByAuthorityName("list:users").get();
-
         Organization organization = new Organization();
-        organization.setOrganizationName("New organization");
+        organization.setOrganizationName(RandomStringUtils.random(10, true, false));
 
         organizationRepository.save(organization);
 
         EditingUserDto editingUserDto = new EditingUserDto();
-        editingUserDto.setUsername("new_username");
-        editingUserDto.setNewRoles(List.of(role1.getId()));
-        editingUserDto.setNewAuthorities(List.of(authority1.getId()));
+        editingUserDto.setUsername(RandomStringUtils.random(10, true, false));
         editingUserDto.setOrganizationId(organization.getId());
-
-        editingUserDto.setDeletedRoles(List.of(role.getId()));
-        editingUserDto.setDeletedAuthorities(List.of(authority.getId()));
 
         mockMvc.perform(put(UserManagementController.ENDPOINT + "/" + user.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -394,8 +258,6 @@ public class UserManagementControllerTest {
                 .andExpect(jsonPath("$.phoneNumber").isNotEmpty())
                 .andExpect(jsonPath("$.email").isNotEmpty())
                 .andExpect(jsonPath("$.organization.organizationName", is(organization.getOrganizationName())))
-                .andExpect(jsonPath("$.authorities[*]", anyOf(hasItem(is("list:users")))))
-                .andExpect(jsonPath("$.roles[*]", anyOf(hasItem(is("USER")))))
                 .andExpect(jsonPath("$.isEnabled").isNotEmpty())
                 .andExpect(jsonPath("$.isAccountNonExpired").isNotEmpty())
                 .andExpect(jsonPath("$.isAccountNonLocked").isNotEmpty())
