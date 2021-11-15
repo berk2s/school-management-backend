@@ -18,7 +18,9 @@ import com.schoolplus.office.web.mappers.TeachingSubjectMapper;
 import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,7 +41,7 @@ public class TeachingSubjectServiceImpl implements TeachingSubjectService {
     private final TeachingSubjectMapper teachingSubjectMapper;
 
     @ReadingEntity(domain = TransactionDomain.TEACHING_SUBJECT, action = DomainAction.READ_TEACHING_SUBJECTS, isList = true)
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:teachingsubjects') || hasAuthority('read:teachingsubject'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:teachingsubjects') || hasAuthority('read:teachingsubject'))")
     @Override
     public List<TeachingSubjectDto> getTeachingSubjects(Pageable pageable) {
         Page<TeachingSubject> teachingSubjects = teachingSubjectRepository
@@ -48,8 +50,32 @@ public class TeachingSubjectServiceImpl implements TeachingSubjectService {
         return teachingSubjectMapper.teachingSubjectToTeachingSubjectDto(teachingSubjects.getContent());
     }
 
+    @ReadingEntity(domain = TransactionDomain.TEACHING_SUBJECT, action = DomainAction.READ_TEACHING_SUBJECTS, isList = true)
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:teachingsubjects') || hasAuthority('read:teachingsubject'))")
+    @Override
+    public Page<TeachingSubjectDto> getTeachingSubjectsByOrganization(Long organizationId, Pageable pageable, String search) {
+        Organization organization = organizationRepository.findById(organizationId)
+                .orElseThrow(() -> {
+                    log.warn("Organization with given id does not exists [organizationId: {}]", organizationId);
+                    throw new OrganizationNotFoundException(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc());
+                });
+
+        Page<TeachingSubject> teachingSubjects;
+
+        if (StringUtils.isEmpty(search) || search.trim().equals("")) {
+            teachingSubjects = teachingSubjectRepository.findAllByOrganization(organization, pageable);
+        } else {
+            teachingSubjects = teachingSubjectRepository
+                    .findAllByOrganizationAndSubjectNameStartingWith(organization, search.trim(), pageable);
+        }
+
+        return new PageImpl<>(teachingSubjectMapper.teachingSubjectToTeachingSubjectDtoWithoutDetailsList(teachingSubjects.getContent()),
+                pageable,
+                teachingSubjects.getTotalElements());
+    }
+
     @ReadingEntity(domain = TransactionDomain.TEACHING_SUBJECT, action = DomainAction.READ_TEACHING_SUBJECT)
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:teachingsubjects') || hasAuthority('read:teachingsubject'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:teachingsubjects') || hasAuthority('read:teachingsubject'))")
     @Override
     public TeachingSubjectDto getTeachingSubject(Long teachingSubjectId) {
         TeachingSubject teachingSubject = teachingSubjectRepository.findById(teachingSubjectId)
@@ -62,7 +88,7 @@ public class TeachingSubjectServiceImpl implements TeachingSubjectService {
     }
 
     @CreatingEntity(domain = TransactionDomain.TEACHING_SUBJECT, action = DomainAction.CREATE_TEACHING_SUBJECT)
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:teachingsubjects') || hasAuthority('write:teachingsubject'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:teachingsubjects') || hasAuthority('write:teachingsubject'))")
     @Override
     public TeachingSubjectDto createTeachingSubject(CreatingTeachingSubjectDto creatingTeachingSubject) {
         TeachingSubject teachingSubject = new TeachingSubject();
@@ -97,7 +123,7 @@ public class TeachingSubjectServiceImpl implements TeachingSubjectService {
     }
 
     @UpdatingEntity(domain = TransactionDomain.TEACHING_SUBJECT, action = DomainAction.UPDATE_TEACHING_SUBJECT, idArg = "teachingSubjectId")
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:teachingsubjects') || hasAuthority('update:teachingsubject'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:teachingsubjects') || hasAuthority('update:teachingsubject'))")
     @Override
     public void updateTeachingSubject(Long teachingSubjectId, EditingTeachingSubjectDto editingTeachingSubject) {
         TeachingSubject teachingSubject = teachingSubjectRepository.findById(teachingSubjectId)
@@ -159,7 +185,7 @@ public class TeachingSubjectServiceImpl implements TeachingSubjectService {
 
     @DeletingEntity(domain = TransactionDomain.TEACHING_SUBJECT, action = DomainAction.DELETE_TEACHING_SUBJECT, idArg = "teachingSubjectId")
     @Transactional
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:teachingsubjects') || hasAuthority('delete:teachingsubject'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:teachingsubjects') || hasAuthority('delete:teachingsubject'))")
     @Override
     public void deleteTeachingSubject(Long teachingSubjectId) {
         TeachingSubject teachingSubject = teachingSubjectRepository.findById(teachingSubjectId)

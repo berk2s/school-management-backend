@@ -12,6 +12,7 @@ import com.schoolplus.office.web.models.EditingTeachingSubjectDto;
 import com.schoolplus.office.web.models.ErrorDesc;
 import com.schoolplus.office.web.models.ErrorType;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -189,6 +190,33 @@ public class TeachingSubjectControllerTest {
                     .andExpect(jsonPath("$..createdAt").isNotEmpty())
                     .andExpect(jsonPath("$..lastModifiedAt").isNotEmpty());
         }
+
+        @DisplayName("Get Teaching Subjects By Organization Successfully")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:teachingsubjects"})
+        @Test
+        void getTeachingSubjectsByOrganizationSuccessfully() throws Exception {
+            mockMvc.perform(get(TeachingSubjectController.ENDPOINT + "/organization/" + organization.getId()))
+                    .andExpect(status().isOk())
+                    .andDo(print())
+                    .andExpect(jsonPath("$.content..teachingSubjectId").isNotEmpty())
+                    .andExpect(jsonPath("$.content..subjectName").isNotEmpty())
+                    .andExpect(jsonPath("$.content..teachers").isEmpty())
+                    .andExpect(jsonPath("$.content..organization").isEmpty())
+                    .andExpect(jsonPath("$.content..createdAt").isNotEmpty())
+                    .andExpect(jsonPath("$.content..lastModifiedAt").isNotEmpty());
+        }
+
+        @DisplayName("Get Teaching Subjects By Organization Not Found Error")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:teachingsubjects"})
+        @Test
+        void getTeachingSubjectsByOrganizationNotFoundError() throws Exception {
+            mockMvc.perform(get(TeachingSubjectController.ENDPOINT + "/organization/" + RandomUtils.nextLong()))
+                    .andExpect(status().isNotFound())
+                    .andDo(print())
+                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc())));
+        }
+
 
         @DisplayName("Get Teaching Subject Not Found Error")
         @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:teachingsubjects"})
