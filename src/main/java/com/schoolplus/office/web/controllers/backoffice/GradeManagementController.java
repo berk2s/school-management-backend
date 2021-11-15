@@ -130,6 +130,7 @@ public class GradeManagementController {
             }),
     })
     @PutMapping(value = "/{gradeId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void editGrade(@Valid @PathVariable Long gradeId,
                                     @Valid @RequestBody EditingGradeDto editingGrade) {
         gradeService.editGrade(gradeId, editingGrade);

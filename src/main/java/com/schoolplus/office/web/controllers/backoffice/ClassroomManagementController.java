@@ -33,9 +33,9 @@ public class ClassroomManagementController {
 
     private final ClassroomService classroomService;
 
-    @Operation(summary = "Get Grades")
+    @Operation(summary = "Get Classroom")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Grades are listed"),
+            @ApiResponse(responseCode = "200", description = "Classrooms are listed"),
             @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
                     content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
@@ -45,14 +45,14 @@ public class ClassroomManagementController {
             }),
     })
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ClassroomDto>> getGrades(@RequestParam(defaultValue = "0") Integer page,
+    public ResponseEntity<List<ClassroomDto>> getClassrooms(@RequestParam(defaultValue = "0") Integer page,
                                                         @RequestParam(defaultValue = "10") Integer size) {
         return new ResponseEntity<>(classroomService.getClassrooms(PageRequest.of(page, size)), HttpStatus.OK);
     }
 
-    @Operation(summary = "Get Grade")
+    @Operation(summary = "Get Classroom")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Grade info is listed"),
+            @ApiResponse(responseCode = "200", description = "Classroom info is listed"),
             @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
                     content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
@@ -64,14 +64,14 @@ public class ClassroomManagementController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
     })
-    @GetMapping(value = "/{gradeId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ClassroomDto> getGrade(@Valid @PathVariable Long gradeId) {
-        return new ResponseEntity<>(classroomService.getClassroom(gradeId), HttpStatus.OK);
+    @GetMapping(value = "/{classRoomId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ClassroomDto> getClassroom(@Valid @PathVariable Long classRoomId) {
+        return new ResponseEntity<>(classroomService.getClassroom(classRoomId), HttpStatus.OK);
     }
 
-    @Operation(summary = "Create Grade")
+    @Operation(summary = "Create Classroom")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Grade is created"),
+            @ApiResponse(responseCode = "201", description = "Classroom is created"),
             @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
                     content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
@@ -84,13 +84,13 @@ public class ClassroomManagementController {
             }),
     })
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ClassroomDto> createGrade(@Valid @RequestBody CreatingClassroomDto creatingGrade) {
+    public ResponseEntity<ClassroomDto> createClassroom(@Valid @RequestBody CreatingClassroomDto creatingGrade) {
         return new ResponseEntity<>(classroomService.createClassroom(creatingGrade), HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Update Grade")
+    @Operation(summary = "Update Classroom")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "308", description = "Grade is updated",
+            @ApiResponse(responseCode = "308", description = "Classroom is updated",
                     headers = @Header(name = "Location", description = "Location of the edited the Grade.")),
             @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
                     content = {
@@ -99,24 +99,20 @@ public class ClassroomManagementController {
             @ApiResponse(responseCode = "403", description = "Don't have permission", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Grade || Teacher || Student not found", content = {
+            @ApiResponse(responseCode = "404", description = "Classroom || Organization || Teacher || Student not found", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
     })
-    @PutMapping(value = "/{gradeId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity editGrade(@Valid @PathVariable Long gradeId,
-                                    @RequestBody EditingClassroomDto editingGrade) {
-        classroomService.updateClassroom(gradeId, editingGrade);
-
-        return ResponseEntity
-                .status(HttpStatus.PERMANENT_REDIRECT)
-                .header(HttpHeaders.LOCATION, ENDPOINT + "/" + gradeId.toString())
-                .build();
+    @PutMapping(value = "/{classRoomId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void editClassroom(@Valid @PathVariable Long classRoomId,
+                          @RequestBody EditingClassroomDto editingGrade) {
+        classroomService.updateClassroom(classRoomId, editingGrade);
     }
 
-    @Operation(summary = "Delete Grade")
+    @Operation(summary = "Delete Classroom")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Grade is deleted"),
+            @ApiResponse(responseCode = "204", description = "Classroom is deleted"),
             @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
                     content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
@@ -124,14 +120,14 @@ public class ClassroomManagementController {
             @ApiResponse(responseCode = "403", description = "Don't have permission", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Grade not found", content = {
+            @ApiResponse(responseCode = "404", description = "Classroom not found", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
     })
-    @DeleteMapping(value = "/{gradeId}")
+    @DeleteMapping(value = "/{classRoomId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteGrade(@Valid @PathVariable Long gradeId) {
-        classroomService.deleteClassroom(gradeId);
+    public void deleteClassroom(@Valid @PathVariable Long classRoomId) {
+        classroomService.deleteClassroom(classRoomId);
     }
 
 }
