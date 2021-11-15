@@ -14,7 +14,9 @@ import com.schoolplus.office.web.mappers.LessonMapper;
 import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,22 +34,30 @@ public class LessonServiceImpl implements LessonService {
     private final LessonMapper lessonMapper;
 
     @ReadingEntity(domain = TransactionDomain.LESSON, action = DomainAction.READ_LESSONS_BY_ORGANIZATION, isList = true)
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:lessons') || hasAuthority('read:lessons'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:lessons') || hasAuthority('read:lessons'))")
     @Override
-    public List<LessonDto> getLessonsByOrganization(Long organizationId, Pageable pageable) {
+    public Page<LessonDto> getLessonsByOrganization(Long organizationId, Pageable pageable, String search) {
         Organization organization = organizationRepository.findById(organizationId)
                 .orElseThrow(() -> {
                     log.warn("Organization with given id does not exists [organizationId: {}]", organizationId);
                     throw new OrganizationNotFoundException(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc());
                 });
 
-        Page<Lesson> lessons = lessonRepository.findAllByOrganization(organization, pageable);
+        Page<Lesson> lessons;
 
-        return lessonMapper.lessonToLessonDto(lessons.getContent());
+        if (StringUtils.isEmpty(search) || search.trim().equals("")) {
+            lessons = lessonRepository.findAllByOrganization(organization, pageable);
+        } else {
+            lessons = lessonRepository.findAllByOrganizationAndLessonNameStartingWith(organization, search.trim(), pageable);
+        }
+
+        return new PageImpl<>(lessonMapper.lessonToLessonDto(lessons.getContent()),
+                pageable,
+                lessons.getTotalElements());
     }
 
     @ReadingEntity(domain = TransactionDomain.LESSON, action = DomainAction.READ_LESSONS, isList = true)
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:lessons') || hasAuthority('read:lessons'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:lessons') || hasAuthority('read:lessons'))")
     @Override
     public List<LessonDto> getLessons(Pageable pageable) {
         Page<Lesson> lessons = lessonRepository.findAll(pageable);
@@ -56,7 +66,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @ReadingEntity(domain = TransactionDomain.LESSON, action = DomainAction.READ_LESSON)
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:lessons') || hasAuthority('read:lesson'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:lessons') || hasAuthority('read:lesson'))")
     @Override
     public LessonDto getLesson(Long lessonId) {
         Lesson lesson = lessonRepository.findById(lessonId)
@@ -69,7 +79,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @CreatingEntity(domain = TransactionDomain.LESSON, action = DomainAction.CREATE_LESSON)
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:lessons') || hasAuthority('create:lesson'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:lessons') || hasAuthority('create:lesson'))")
     @Override
     public LessonDto createLesson(CreatingLessonDto creatingLesson) {
         Lesson lesson = new Lesson();
@@ -92,7 +102,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @UpdatingEntity(domain = TransactionDomain.LESSON, action = DomainAction.UPDATE_LESSON, idArg = "lessonId")
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:lessons') || hasAuthority('update:lesson'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:lessons') || hasAuthority('update:lesson'))")
     @Override
     public void updateLesson(Long lessonId, EditingLessonDto editingLesson) {
         Lesson lesson = lessonRepository.findById(lessonId)
@@ -122,7 +132,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @UpdatingEntity(domain = TransactionDomain.LESSON, action = DomainAction.DELETE_LESSON, idArg = "lessonId")
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:lessons') || hasAuthority('delete:lesson'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:lessons') || hasAuthority('delete:lesson'))")
     @Override
     public void deleteLesson(Long lessonId) {
         if (!lessonRepository.existsById(lessonId)) {

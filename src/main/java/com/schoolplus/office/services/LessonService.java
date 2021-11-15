@@ -3,13 +3,14 @@ package com.schoolplus.office.services;
 import com.schoolplus.office.web.models.CreatingLessonDto;
 import com.schoolplus.office.web.models.EditingLessonDto;
 import com.schoolplus.office.web.models.LessonDto;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface LessonService {
 
-    List<LessonDto> getLessonsByOrganization(Long organizationId, Pageable pageable);
+    Page<LessonDto> getLessonsByOrganization(Long organizationId, Pageable pageable, String search);
 
     List<LessonDto> getLessons(Pageable pageable);
 

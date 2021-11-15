@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Data
 public class EditingLessonDto {
 
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 100)
     private String lessonName;
 
     private Long organizationId;

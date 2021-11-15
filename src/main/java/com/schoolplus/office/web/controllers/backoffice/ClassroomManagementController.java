@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Tag(name = "Grade Management Controller", description = "Exposes student management endpoints")
+@Tag(name = "Classroom Management Controller", description = "Exposes classroom management endpoints")
 @RequiredArgsConstructor
 @RequestMapping(ClassroomManagementController.ENDPOINT)
 @RestController

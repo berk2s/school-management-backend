@@ -1,6 +1,7 @@
 package com.schoolplus.office.web.controllers.backoffice;
 
 import com.schoolplus.office.services.LessonService;
+import com.schoolplus.office.utils.SortingUtils;
 import com.schoolplus.office.web.models.CreatingLessonDto;
 import com.schoolplus.office.web.models.EditingLessonDto;
 import com.schoolplus.office.web.models.ErrorResponseDto;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -64,10 +66,15 @@ public class LessonManagementController {
             }),
     })
     @GetMapping(value = "/organization/{organizationId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<LessonDto>> getLessonsByOrganization(@Valid @PathVariable Long organizationId,
+    public ResponseEntity<Page<LessonDto>> getLessonsByOrganization(@Valid @PathVariable Long organizationId,
                                                                     @RequestParam(defaultValue = "0") Integer page,
-                                                                    @RequestParam(defaultValue = "10") Integer size) {
-        return new ResponseEntity<>(lessonService.getLessonsByOrganization(organizationId, PageRequest.of(page, size)), HttpStatus.OK);
+                                                                    @RequestParam(defaultValue = "10") Integer size,
+                                                                    @RequestParam(defaultValue = "createdAt") String sort,
+                                                                    @RequestParam(defaultValue = "asc") String order,
+                                                                    @RequestParam(defaultValue = "") String search) {
+        return new ResponseEntity<>(lessonService
+                .getLessonsByOrganization(organizationId, PageRequest.of(page, size, SortingUtils.generateSort(sort, order)), search),
+                HttpStatus.OK);
     }
 
     @Operation(summary = "Get Lesson")
@@ -123,14 +130,9 @@ public class LessonManagementController {
             }),
     })
     @PutMapping(value = "/{lessonId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity updateLesson(@Valid @PathVariable Long lessonId,
+    public void updateLesson(@Valid @PathVariable Long lessonId,
                                        @Valid @RequestBody EditingLessonDto editingLesson) {
         lessonService.updateLesson(lessonId, editingLesson);
-
-        return ResponseEntity
-                .status(HttpStatus.PERMANENT_REDIRECT)
-                .header(HttpHeaders.LOCATION, ENDPOINT + "/" + lessonId)
-                .build();
     }
 
     @Operation(summary = "Delete Lesson")

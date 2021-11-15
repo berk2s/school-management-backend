@@ -10,4 +10,6 @@ public interface LessonRepository extends PagingAndSortingRepository<Lesson, Lon
 
     Page<Lesson> findAllByOrganization(Organization organization, Pageable pageable);
 
+    Page<Lesson> findAllByOrganizationAndLessonNameStartingWith(Organization organization, String lessonName, Pageable pageable);
+
 }

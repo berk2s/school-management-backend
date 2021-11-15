@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @Data
 public class CreatingLessonDto {
 
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 100)
     @NotNull
     private String lessonName;
 
