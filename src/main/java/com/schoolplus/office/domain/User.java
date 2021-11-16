@@ -98,4 +98,22 @@ public class User extends BaseEntity {
         }
     }
 
+    @PrePersist
+    public void prePersist() {
+        this.isEnabled = true;
+        this.isAccountNonExpired = true;
+        this.isCredentialsNonExpired = true;
+        this.isAccountNonLocked = true;
+
+        if (this instanceof Student) {
+            this.userType = UserType.STUDENT;
+        } else if (this instanceof Teacher) {
+            this.userType = UserType.TEACHER;
+        } else if (this instanceof Parent) {
+            this.userType = UserType.PARENT;
+        } else {
+            this.userType = UserType.USER;
+        }
+    }
+
 }

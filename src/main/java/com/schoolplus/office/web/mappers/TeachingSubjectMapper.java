@@ -27,6 +27,15 @@ public interface TeachingSubjectMapper {
     })
     TeachingSubjectDto teachingSubjectToTeachingSubjectDtoWithoutDetails(TeachingSubject teachingSubject);
 
+    @Named("WithoutDetailsForTeachers")
+    @Mappings({
+            @Mapping(source = "id", target = "teachingSubjectId"),
+            @Mapping(source = "subjectName", target = "subjectName"),
+            @Mapping(source = "teachers", target = "teachers", ignore = true),
+            @Mapping(source = "organization", target = "organization", ignore = true),
+    })
+    TeachingSubjectDto teachingSubjectToTeachingSubjectDtoWithoutDetailsForTeachers(TeachingSubject teachingSubject);
+
     @Mappings({
             @Mapping(source = "id", target = "teachingSubjectId"),
             @Mapping(source = "subjectName", target = "subjectName"),

@@ -2,6 +2,7 @@ package com.schoolplus.office.repository;
 
 import com.schoolplus.office.domain.Organization;
 import com.schoolplus.office.domain.Student;
+import com.schoolplus.office.domain.Teacher;
 import com.schoolplus.office.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

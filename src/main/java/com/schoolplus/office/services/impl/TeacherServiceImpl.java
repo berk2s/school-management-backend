@@ -7,6 +7,7 @@ import com.schoolplus.office.domain.Organization;
 import com.schoolplus.office.domain.Teacher;
 import com.schoolplus.office.domain.TeachingSubject;
 import com.schoolplus.office.repository.OrganizationRepository;
+import com.schoolplus.office.repository.TeacherRepository;
 import com.schoolplus.office.repository.TeachingSubjectRepository;
 import com.schoolplus.office.repository.UserRepository;
 import com.schoolplus.office.services.TeacherService;
@@ -17,6 +18,10 @@ import com.schoolplus.office.web.mappers.TeacherMapper;
 import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,13 +35,37 @@ import java.util.UUID;
 public class TeacherServiceImpl implements TeacherService {
 
     private final UserRepository userRepository;
+    private final TeacherRepository teacherRepository;
     private final TeachingSubjectRepository teachingSubjectRepository;
     private final OrganizationRepository organizationRepository;
     private final PasswordEncoder passwordEncoder;
     private final TeacherMapper teacherMapper;
 
+    @ReadingEntity(domain = TransactionDomain.TEACHER, action = DomainAction.READ_TEACHER, isList = true)
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:users:teachers') || hasAuthority('read:teachers'))")
+    @Override
+    public Page<TeacherDto> getTeachersByOrganization(Long organizationId, Pageable pageable, String search) {
+        Organization organization = organizationRepository.findById(organizationId)
+                .orElseThrow(() -> {
+                   log.warn("Organization with given id does not exists [organizationId: {}]", organizationId);
+                   throw new OrganizationNotFoundException(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc());
+                });
+
+        Page<Teacher> teachers;
+
+        if(StringUtils.isEmpty(search) || search.trim().equals("")) {
+            teachers = teacherRepository.findAllByOrganization(organization, pageable);
+        } else {
+            teachers = teacherRepository.findAllByOrganizationAndSearchKey(organization,
+                    search.trim(), pageable);
+        }
+
+        return new PageImpl<>(teacherMapper.teacherToTeacherDtoForListing(teachers.getContent()),
+                pageable, teachers.getTotalElements());
+    }
+
     @ReadingEntity(domain = TransactionDomain.TEACHER, action = DomainAction.READ_TEACHER)
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:teachers') || hasAuthority('read:teacher'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:users:teachers') || hasAuthority('read:teacher'))")
     @Override
     public TeacherDto getTeacher(UUID teacherId) {
         Teacher teacher = (Teacher) userRepository.findById(teacherId)
@@ -49,7 +78,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @CreatingEntity(domain = TransactionDomain.TEACHER, action = DomainAction.CREATE_TEACHER)
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:teachers') || hasAuthority('create:teacher'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:users:teachers') || hasAuthority('create:teacher'))")
     @Override
     public TeacherDto createTeacher(CreatingTeacherDto creatingTeacher) {
         Teacher teacher = new Teacher();
@@ -93,7 +122,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @UpdatingEntity(domain = TransactionDomain.TEACHER, action = DomainAction.UPDATE_TEACHER, idArg = "teacherId")
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:teachers') || hasAuthority('create:teacher'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:users:teachers') || hasAuthority('create:teacher'))")
     @Override
     public void updateTeacher(UUID teacherId, EditingTeacherDto editTeacher) {
         Teacher teacher = (Teacher) userRepository.findById(teacherId)

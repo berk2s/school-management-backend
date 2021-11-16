@@ -4,14 +4,12 @@ import com.schoolplus.office.domain.Authority;
 import com.schoolplus.office.domain.Role;
 import com.schoolplus.office.domain.Teacher;
 import com.schoolplus.office.web.models.TeacherDto;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 
+import java.util.List;
 import java.util.UUID;
 
-@Mapper(imports = {UUID.class}, uses = {TeachingSubjectMapper.class})
+@Mapper( uses = {TeachingSubjectMapper.class, OrganizationMapper.class})
 public interface TeacherMapper {
 
     @Mappings({
@@ -33,7 +31,7 @@ public interface TeacherMapper {
             @Mapping(target = "userId", expression = "java( teacher.getId().toString() )"),
             @Mapping(target = "firstName", expression = "java( teacher.getFirstName() )"),
             @Mapping(target = "lastName", expression = "java( teacher.getLastName() )"),
-            @Mapping(target = "teachingSubjects", source = "teachingSubjects"),
+            @Mapping(source = "teachingSubjects", target = "teachingSubjects"),
             @Mapping(target = "username", source = "username", ignore = true),
             @Mapping(target = "phoneNumber", source = "phoneNumber", ignore = true),
             @Mapping(target = "email", source = "email", ignore = true),
@@ -48,6 +46,50 @@ public interface TeacherMapper {
             @Mapping(target = "organization", source = "organization", ignore = true),
     })
     TeacherDto teacherToTeacherDtoForAppointment(Teacher teacher);
+
+    @Named("WithoutDetailsForListing")
+    @Mappings({
+            @Mapping(target = "userId", expression = "java( teacher.getId().toString() )"),
+            @Mapping(target = "firstName", expression = "java( teacher.getFirstName() )"),
+            @Mapping(target = "lastName", expression = "java( teacher.getLastName() )"),
+            @Mapping(source = "teachingSubjects", target = "teachingSubjects"),
+            @Mapping(target = "username", expression = "java( teacher.getUsername() )"),
+            @Mapping(target = "phoneNumber", expression = "java( teacher.getPhoneNumber() )"),
+            @Mapping(target = "email", source = "email", ignore = true),
+            @Mapping(target = "authorities", source = "authorities", ignore = true),
+            @Mapping(target = "roles", source = "roles", ignore = true),
+            @Mapping(target = "isEnabled", source = "isEnabled", ignore = true),
+            @Mapping(target = "isAccountNonExpired", source = "isAccountNonExpired", ignore = true),
+            @Mapping(target = "isAccountNonLocked", source = "isAccountNonLocked", ignore = true),
+            @Mapping(target = "isCredentialsNonExpired", source = "isCredentialsNonExpired", ignore = true),
+            @Mapping(target = "createdAt", source = "createdAt"),
+            @Mapping(target = "lastModifiedAt", source = "lastModifiedAt"),
+            @Mapping(target = "organization", source = "organization", ignore = true),
+    })
+    TeacherDto teacherToTeacherDtoForListing(Teacher teacher);
+
+    @Named("WithoutDetailsList")
+    @IterableMapping(qualifiedByName = "WithoutDetailsForListing")
+    @Mappings({
+            @Mapping(target = "userId", expression = "java( teacher.getId().toString() )"),
+            @Mapping(target = "firstName", expression = "java( teacher.getFirstName() )"),
+            @Mapping(target = "lastName", expression = "java( teacher.getLastName() )"),
+            @Mapping(source = "teachingSubjects", target = "teachingSubjects"),
+            @Mapping(target = "username", expression = "java( teacher.getUsername() )"),
+            @Mapping(target = "phoneNumber", expression = "java( teacher.getPhoneNumber() )"),
+            @Mapping(target = "email", source = "email", ignore = true),
+            @Mapping(target = "authorities", source = "authorities", ignore = true),
+            @Mapping(target = "roles", source = "roles", ignore = true),
+            @Mapping(target = "isEnabled", source = "isEnabled", ignore = true),
+            @Mapping(target = "isAccountNonExpired", source = "isAccountNonExpired", ignore = true),
+            @Mapping(target = "isAccountNonLocked", source = "isAccountNonLocked", ignore = true),
+            @Mapping(target = "isCredentialsNonExpired", source = "isCredentialsNonExpired", ignore = true),
+            @Mapping(target = "createdAt", source = "createdAt"),
+            @Mapping(target = "lastModifiedAt", source = "lastModifiedAt"),
+            @Mapping(target = "organization", source = "organization", ignore = true),
+    })
+    List<TeacherDto> teacherToTeacherDtoForListing(List<Teacher> teachers);
+
 
     default String mapAuthority(Authority authority){
         return authority != null ? authority.getAuthorityName() : null;

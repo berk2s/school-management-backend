@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @ReadingEntity(domain = TransactionDomain.USER, action = DomainAction.READ_USER)
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users') || hasAuthority('read:user'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:users') || hasAuthority('read:user'))")
     @Override
     public UserDto getUser(UUID userId) {
         User user = userRepository.findById(userId)
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @ReadingEntity(domain = TransactionDomain.USER, action = DomainAction.READ_USERS, isList = true)
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users') || hasAuthority('list:users'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:users') || hasAuthority('list:users'))")
     @Override
     public List<UserDto> listUsers(Pageable pageable) {
         Page<User> users = userRepository.findAll(pageable);
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @UpdatingEntity(domain = TransactionDomain.USER, action = DomainAction.UPDATE_ANNOUNCEMENT, idArg = "userId")
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users') || hasAuthority('edit:user'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:users') || hasAuthority('edit:user'))")
     @Override
     public void editUser(UUID userId, EditingUserDto editUser) {
         User user = userRepository.findById(userId)
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @DeletingEntity(domain = TransactionDomain.USER, action = DomainAction.DELETE_USER, idArg = "userId")
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users') || hasAuthority('delete:user'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:users') || hasAuthority('delete:user'))")
     @Override
     public void deleteUser(UUID userId) {
         if (!userRepository.existsById(userId)) {

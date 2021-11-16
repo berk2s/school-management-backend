@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 public abstract class CreatingUserDto {
 
-    @Size(max = 99)
+    @Size(min = 3, max = 99)
     @NotEmpty
     private String username;
 
@@ -36,28 +36,27 @@ public abstract class CreatingUserDto {
     @NotEmpty
     private String phoneNumber;
 
-    @Size(min = 3, max = 99)
-    @NotEmpty
+    @Size(max = 99)
     private String email;
 
-    @Size(min = 1, max = 99)
-    @NotNull
+//    @Size(min = 1, max = 99)
+//    @NotNull
     private List<Long> authorities;
 
-    @Size(min = 1, max = 99)
-    @NotNull
+//    @Size(min = 1, max = 99)
+//    @NotNull
     private List<Long> roles;
 
-    @NotNull
+//    @NotNull
     private Boolean isEnabled;
 
-    @NotNull
+//    @NotNull
     private Boolean isAccountNonExpired;
 
-    @NotNull
+//    @NotNull
     private Boolean isAccountNonLocked;
 
-    @NotNull
+//    @NotNull
     private Boolean isCredentialsNonExpired;
 
     @NotNull

@@ -8,6 +8,7 @@ import com.schoolplus.office.web.models.EditingTeacherDto;
 import com.schoolplus.office.web.models.ErrorDesc;
 import com.schoolplus.office.web.models.ErrorType;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -51,9 +52,15 @@ public class TeacherManagementControllerTest {
     UserRepository userRepository;
 
     @Autowired
+    TeacherRepository teacherRepository;
+
+    @Autowired
     OrganizationRepository organizationRepository;
 
     Organization organization;
+
+    Teacher teacher;
+    TeachingSubject teachingSubject;
 
     @BeforeEach
     void setUp() {
@@ -61,6 +68,22 @@ public class TeacherManagementControllerTest {
         organization.setOrganizationName(RandomStringUtils.random(10, true, false));
 
         organizationRepository.save(organization);
+
+        teachingSubject = new TeachingSubject();
+        teachingSubject.setSubjectName("A Subject");
+        teachingSubject.setOrganization(organization);
+
+        teachingSubjectRepository.save(teachingSubject);
+
+        teacher = new Teacher();
+        teacher.setUsername(RandomStringUtils.random(10, true, false));
+        teacher.setFirstName(RandomStringUtils.random(10, true, false));
+        teacher.setLastName(RandomStringUtils.random(10, true, false));
+        teacher.setPhoneNumber(RandomStringUtils.random(10, true, false));
+        teacher.addTeachingSubject(teachingSubject);
+        teacher.setOrganization(organization);
+
+        teacherRepository.save(teacher);
     }
 
     @DisplayName("Creating Teacher")
@@ -145,23 +168,9 @@ public class TeacherManagementControllerTest {
     @Nested
     class GettingTeacher {
 
-        Teacher teacher;
-        TeachingSubject teachingSubject;
-
         @BeforeEach
         void setUp() {
-            teachingSubject = new TeachingSubject();
-            teachingSubject.setSubjectName("A Subject");
-            teachingSubject.setOrganization(organization);
 
-            teachingSubjectRepository.save(teachingSubject);
-
-            teacher = new Teacher();
-            teacher.setUsername(RandomStringUtils.random(10, true, false));
-            teacher.addTeachingSubject(teachingSubject);
-            teacher.setOrganization(organization);
-
-            userRepository.save(teacher);
         }
 
         @DisplayName("Get Teacher Successfully")
@@ -178,6 +187,43 @@ public class TeacherManagementControllerTest {
                     .andExpect(jsonPath("$.teachingSubjects[*]..subjectName", anyOf(hasItem(is(teachingSubject.getSubjectName())))));
 
         }
+
+        @DisplayName("Get Teachers By Organization Successfully")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:teachers"})
+        @Test
+        void getTeachersByOrganizationSuccessfully() throws Exception {
+
+            mockMvc.perform(get(TeacherManagementController.ENDPOINT + "/organization/" + organization.getId()))
+                    .andDo(print())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.content..userId").isNotEmpty())
+                    .andExpect(jsonPath("$.content..username", anyOf(hasItem(is(teacher.getUsername())))))
+                    .andExpect(jsonPath("$.content..firstName", anyOf(hasItem(is(teacher.getFirstName())))))
+                    .andExpect(jsonPath("$.content..lastName", anyOf(hasItem(is(teacher.getLastName())))))
+                    .andExpect(jsonPath("$.content..phoneNumber", anyOf(hasItem(is(teacher.getPhoneNumber())))))
+                    .andExpect(jsonPath("$.content..organization").isEmpty())
+                    .andExpect(jsonPath("$.content..teachingSubjects..teachingSubjectId", anyOf(hasItem(is(teachingSubject.getId().intValue())))))
+                    .andExpect(jsonPath("$.content..teachingSubjects..subjectName", anyOf(hasItem(is(teachingSubject.getSubjectName())))))
+                    .andExpect(jsonPath("$.content..createdAt").isNotEmpty())
+                    .andExpect(jsonPath("$.content..lastModifiedAt").isNotEmpty());
+
+        }
+
+        @DisplayName("Get Teachers By Organization Not Found Error")
+        @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:teachers"})
+        @Test
+        void getTeachersByOrganizationNotFoundError() throws Exception {
+
+            mockMvc.perform(get(TeacherManagementController.ENDPOINT + "/organization/" + RandomUtils.nextLong()))
+                    .andDo(print())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc())));
+
+        }
+
         @DisplayName("Get Teacher Not Found Error")
         @WithMockUser(username = "username",  authorities = {"ROLE_ADMIN", "manage:users:teachers"})
         @Test
