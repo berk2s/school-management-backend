@@ -16,7 +16,7 @@ public class EditingClassroomDto {
     @Size(max = 300)
     private String classRoomTag;
 
-    private String advisorTeacher;
+    private String advisorTeacherId;
 
     private List<String> addedStudents = new ArrayList<>();
 

@@ -29,6 +29,29 @@ public interface ClassroomMapper {
     })
     List<ClassroomDto> classRoomToClassRoomDto(List<Classroom> classrooms);
 
+    @Named("WithoutDetails")
+    @Mappings({
+            @Mapping(source = "id", target = "classRoomId"),
+            @Mapping(source = "classRoomTag", target = "classRoomTag"),
+            @Mapping(source = "advisorTeacher", target = "advisorTeacher", qualifiedByName = "WithoutDetailsForListing"),
+            @Mapping(source = "organization", target = "organization", ignore = true),
+            @Mapping(source = "grade", target = "grade", qualifiedByName = "WithoutDetails"),
+            @Mapping(target = "students", qualifiedByName = "WithoutDetailsForClassroom"),
+    })
+    ClassroomDto classRoomToClassRoomDtoWithoutDetails(Classroom classRoom);
+
+    @Named("WithoutDetailsList")
+    @Mappings({
+            @Mapping(source = "id", target = "classRoomId"),
+            @Mapping(source = "classRoomTag", target = "classRoomTag"),
+            @Mapping(source = "advisorTeacher", target = "advisorTeacher", qualifiedByName = "WithoutDetailsForListing"),
+            @Mapping(source = "organization", target = "organization", ignore = true),
+            @Mapping(source = "grade", target = "grade", qualifiedByName = "WithoutDetails"),
+            @Mapping(target = "students", qualifiedByName = "WithoutDetailsForClassroom"),
+    })
+    @IterableMapping(qualifiedByName = "WithoutDetails")
+    List<ClassroomDto> classRoomToClassRoomDtoWithoutDetailsList(List<Classroom> classRoom);
+
     @Named("WithoutStudents")
     @Mappings({
             @Mapping(source = "id", target = "classRoomId"),

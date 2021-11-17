@@ -1,6 +1,7 @@
 package com.schoolplus.office.web.controllers.backoffice;
 
 import com.schoolplus.office.services.ClassroomService;
+import com.schoolplus.office.utils.SortingUtils;
 import com.schoolplus.office.web.models.CreatingClassroomDto;
 import com.schoolplus.office.web.models.EditingClassroomDto;
 import com.schoolplus.office.web.models.ErrorResponseDto;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,9 +35,33 @@ public class ClassroomManagementController {
 
     private final ClassroomService classroomService;
 
-    @Operation(summary = "Get Classroom")
+    @Operation(summary = "Get Classrooms By Organization")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Classrooms are listed"),
+            @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+                    }),
+            @ApiResponse(responseCode = "403", description = "Don't have permission"),
+            @ApiResponse(responseCode = "404", description = "Organization was not found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+            }),
+    })
+    @GetMapping(value = "/organization/{organizationId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Page<ClassroomDto>> getClassroomsByOrganization(@Valid @PathVariable Long organizationId,
+                                                                          @RequestParam(defaultValue = "0") Integer page,
+                                                                          @RequestParam(defaultValue = "10") Integer size,
+                                                                          @RequestParam(defaultValue = "createdAt") String sort,
+                                                                          @RequestParam(defaultValue = "asc") String order,
+                                                                          @RequestParam(defaultValue = "") String search) {
+        return new ResponseEntity<>(classroomService.getClassroomsByOrganization(organizationId,
+                PageRequest.of(page, size, SortingUtils.generateSort(sort, order)),
+                search), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get Classroom")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Classrooms info is generated"),
             @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
                     content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))

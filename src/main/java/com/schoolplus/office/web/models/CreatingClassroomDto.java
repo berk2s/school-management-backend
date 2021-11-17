@@ -14,11 +14,14 @@ import java.util.List;
 @Data
 public class CreatingClassroomDto {
 
-    @Size(max = 300)
-    private String classRoomId;
+    @Size(min = 1, max = 300)
+    @NotNull
+    private String classRoomTag;
+
+    private Long classNumber;
 
     @NotNull
-    private String advisorTeacher;
+    private String advisorTeacherId;
 
     @NotNull
     private Long organizationId;

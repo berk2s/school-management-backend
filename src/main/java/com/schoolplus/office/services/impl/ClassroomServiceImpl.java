@@ -15,7 +15,9 @@ import com.schoolplus.office.web.mappers.ClassroomMapper;
 import com.schoolplus.office.web.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,7 +38,32 @@ public class ClassroomServiceImpl implements ClassroomService {
     private final ClassroomMapper classroomMapper;
 
     @ReadingEntity(domain = TransactionDomain.CLASSROOM, action = DomainAction.READ_CLASSROOMS, isList = true)
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:classrooms') || hasAuthority('read:classroom'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:classrooms') || hasAuthority('read:classroom'))")
+    @Override
+    public Page<ClassroomDto> getClassroomsByOrganization(Long organizationId, Pageable pageable, String search) {
+        Organization organization = organizationRepository.findById(organizationId)
+                .orElseThrow(() -> {
+                    log.warn("Organization with given id does not exists [organizationId: {}]", organizationId);
+                    throw new OrganizationNotFoundException(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc());
+                });
+
+        Page<Classroom> classrooms;
+
+        if (StringUtils.isEmpty(search) || search.trim().equals("")) {
+            classrooms = classroomRepository
+                    .findAllByOrganization(organization, pageable);
+        } else {
+            classrooms = classroomRepository
+                    .findAllByOrganizationAndClassRoomTagStartingWith(organization, search.trim(), pageable);
+        }
+
+        return new PageImpl<>(classroomMapper.classRoomToClassRoomDtoWithoutDetailsList(classrooms.getContent()),
+                pageable,
+                classrooms.getTotalElements());
+    }
+
+    @ReadingEntity(domain = TransactionDomain.CLASSROOM, action = DomainAction.READ_CLASSROOMS, isList = true)
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:classrooms') || hasAuthority('read:classroom'))")
     @Override
     public List<ClassroomDto> getClassrooms(Pageable pageable) {
         Page<Classroom> classRooms = classroomRepository.findAll(pageable);
@@ -44,7 +71,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     @ReadingEntity(domain = TransactionDomain.CLASSROOM, action = DomainAction.READ_CLASSROOM)
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:classrooms') || hasAuthority('read:classroom'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:classrooms') || hasAuthority('read:classroom'))")
     @Override
     public ClassroomDto getClassroom(Long classRoomId) {
         Classroom classRoom = classroomRepository.findById(classRoomId)
@@ -57,13 +84,16 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     @CreatingEntity(domain = TransactionDomain.CLASSROOM, action = DomainAction.CREATE_CLASSROOM)
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:classrooms') || hasAuthority('create:classroom'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:classrooms') || hasAuthority('create:classroom'))")
     @Override
     public ClassroomDto createClassroom(CreatingClassroomDto creatingClassroom) {
         Classroom classRoom = new Classroom();
 
-        if (creatingClassroom.getClassRoomId() != null)
-            classRoom.setClassRoomTag(creatingClassroom.getClassRoomId());
+        if (creatingClassroom.getClassRoomTag() != null)
+            classRoom.setClassRoomTag(creatingClassroom.getClassRoomTag());
+
+        if (creatingClassroom.getClassNumber() != null)
+            classRoom.setClassNumber(creatingClassroom.getClassNumber());
 
         Organization organization = organizationRepository.findById(creatingClassroom.getOrganizationId())
                 .orElseThrow(() -> {
@@ -81,7 +111,7 @@ public class ClassroomServiceImpl implements ClassroomService {
 
         grade.addClassroom(classRoom);
 
-        UUID teacherId = UUID.fromString(creatingClassroom.getAdvisorTeacher());
+        UUID teacherId = UUID.fromString(creatingClassroom.getAdvisorTeacherId());
 
         Teacher teacher = (Teacher) userRepository.findById(teacherId)
                 .orElseThrow(() -> {
@@ -114,7 +144,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     @UpdatingEntity(domain = TransactionDomain.CLASSROOM, action = DomainAction.UPDATE_CLASSROOM, idArg = "classRoomId")
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:classrooms') || hasAuthority('update:classroom'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:classrooms') || hasAuthority('update:classroom'))")
     @Override
     public void updateClassroom(Long classRoomId, EditingClassroomDto editingClassroom) {
         Classroom classRoom = classroomRepository.findById(classRoomId)
@@ -137,8 +167,8 @@ public class ClassroomServiceImpl implements ClassroomService {
             classRoom.setOrganization(organization);
         }
 
-        if (editingClassroom.getAdvisorTeacher() != null) {
-            UUID advisorTeacherId = UUID.fromString(editingClassroom.getAdvisorTeacher());
+        if (editingClassroom.getAdvisorTeacherId() != null) {
+            UUID advisorTeacherId = UUID.fromString(editingClassroom.getAdvisorTeacherId());
 
             Teacher teacher = (Teacher) userRepository.findById(advisorTeacherId)
                     .orElseThrow(() -> {
@@ -184,7 +214,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     @DeletingEntity(domain = TransactionDomain.CLASSROOM, action = DomainAction.DELETE_CLASSROOM, idArg = "classRoomId")
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:classrooms') || hasAuthority('delete:classroom'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:classrooms') || hasAuthority('delete:classroom'))")
     @Override
     public void deleteClassroom(Long classRoomId) {
         if (!classroomRepository.existsById(classRoomId)) {
