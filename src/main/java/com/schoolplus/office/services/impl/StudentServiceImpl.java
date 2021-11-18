@@ -66,7 +66,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @ReadingEntity(domain = TransactionDomain.STUDENT, action = DomainAction.READ_STUDENT)
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:students') || hasAuthority('read:student'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:users:students') || hasAuthority('read:student'))")
     @Override
     public StudentDto getStudent(UUID studentId) {
         Student student = (Student) userRepository.findById(studentId)
@@ -79,7 +79,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @CreatingEntity(domain = TransactionDomain.STUDENT, action = DomainAction.CREATE_STUDENT)
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:students') || hasAuthority('create:student'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:users:students') || hasAuthority('create:student'))")
     @Override
     public StudentDto createStudent(CreatingStudentDto creatingStudent) {
         Student student = new Student();
@@ -162,7 +162,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @UpdatingEntity(domain = TransactionDomain.STUDENT, action = DomainAction.UPDATE_STUDENT, idArg = "studentId")
-    @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:users:students') || hasAuthority('edit:student'))")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || (hasAuthority('manage:users:students') || hasAuthority('edit:student'))")
     @Override
     public void editStudent(UUID studentId, EditingStudentDto editStudent) {
         Student student = (Student) userRepository.findById(studentId)

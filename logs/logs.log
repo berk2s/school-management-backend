@@ -24803,3 +24803,63 @@ java.util.ConcurrentModificationException: null
 2021-11-18 23:47:14,746 INFO com.schoolplus.office.services.impl.JwtServiceImpl [http-nio-192.168.0.33-8080-exec-2] Access token is generated for the User [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
 2021-11-18 23:47:26,011 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [http-nio-192.168.0.33-8080-exec-7] Access token has been created for the User in JWT format [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
 2021-11-18 23:47:26,011 INFO com.schoolplus.office.services.impl.JwtServiceImpl [http-nio-192.168.0.33-8080-exec-7] Access token is generated for the User [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:47:51,787 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [http-nio-192.168.0.33-8080-exec-2] Access token has been created for the User in JWT format [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:47:51,788 INFO com.schoolplus.office.services.impl.JwtServiceImpl [http-nio-192.168.0.33-8080-exec-2] Access token is generated for the User [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:48:36,755 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [http-nio-192.168.0.33-8080-exec-3] Access token has been created for the User in JWT format [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:48:36,757 INFO com.schoolplus.office.services.impl.JwtServiceImpl [http-nio-192.168.0.33-8080-exec-3] Access token is generated for the User [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:48:54,404 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SchoolManagementApplication using Java 11.0.11 on Berk-MacBook-Pro.local with PID 4506 (/Users/berktopcu/Desktop/works/projects/school-management/school-management-backend/target/classes started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-11-18 23:48:54,405 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-11-18 23:48:54,405 INFO org.springframework.boot.SpringApplication [restartedMain] The following profiles are active: local
+2021-11-18 23:48:56,125 WARN com.zaxxer.hikari.util.DriverDataSource [restartedMain] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-11-18 23:48:57,493 DEBUG org.springframework.web.filter.GenericFilterBean [restartedMain] Filter 'JWTFilter' configured for use
+2021-11-18 23:48:57,710 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-11-18 23:48:58,386 WARN org.springframework.context.support.AbstractApplicationContext [restartedMain] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'studentManagementController' defined in file [/Users/berktopcu/Desktop/works/projects/school-management/school-management-backend/target/classes/com/schoolplus/office/web/controllers/backoffice/StudentManagementController.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.schoolplus.office.services.StudentService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2021-11-18 23:48:58,425 ERROR org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter [restartedMain] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in com.schoolplus.office.web.controllers.backoffice.StudentManagementController required a bean of type 'com.schoolplus.office.services.StudentService' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.schoolplus.office.services.StudentService' in your configuration.
+
+2021-11-18 23:48:59,915 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SchoolManagementApplication using Java 11.0.11 on Berk-MacBook-Pro.local with PID 4506 (/Users/berktopcu/Desktop/works/projects/school-management/school-management-backend/target/classes started by berktopcu in /Users/berktopcu/Desktop/works/projects/school-management/school-management-backend)
+2021-11-18 23:48:59,915 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.5.3, Spring v5.3.9
+2021-11-18 23:48:59,915 INFO org.springframework.boot.SpringApplication [restartedMain] The following profiles are active: local
+2021-11-18 23:49:00,668 WARN com.zaxxer.hikari.util.DriverDataSource [restartedMain] Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2021-11-18 23:49:01,565 DEBUG org.springframework.web.filter.GenericFilterBean [restartedMain] Filter 'JWTFilter' configured for use
+2021-11-18 23:49:01,738 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-11-18 23:49:03,045 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SchoolManagementApplication in 3.162 seconds (JVM running for 1803.935)
+2021-11-18 23:49:03,260 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [http-nio-192.168.0.33-8080-exec-1] Access token has been created for the User in JWT format [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:49:03,262 INFO com.schoolplus.office.services.impl.JwtServiceImpl [http-nio-192.168.0.33-8080-exec-1] Access token is generated for the User [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:49:03,281 INFO com.schoolplus.office.services.impl.LoginServiceImpl [http-nio-192.168.0.33-8080-exec-1] The User has been logged successfully [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:49:03,317 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [http-nio-192.168.0.33-8080-exec-2] Access token has been created for the User in JWT format [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:49:03,318 INFO com.schoolplus.office.services.impl.JwtServiceImpl [http-nio-192.168.0.33-8080-exec-2] Access token is generated for the User [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:49:05,515 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [http-nio-192.168.0.33-8080-exec-5] Access token has been created for the User in JWT format [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:49:05,516 INFO com.schoolplus.office.services.impl.JwtServiceImpl [http-nio-192.168.0.33-8080-exec-5] Access token is generated for the User [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:49:14,683 INFO com.schoolplus.office.services.impl.GradeCategoryServiceImpl [http-nio-192.168.0.33-8080-exec-9] Grade Category has been created successfully [gradeCategoryId: 361, performedBy: username]
+2021-11-18 23:49:21,757 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [http-nio-192.168.0.33-8080-exec-1] Access token has been created for the User in JWT format [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:49:21,758 INFO com.schoolplus.office.services.impl.JwtServiceImpl [http-nio-192.168.0.33-8080-exec-1] Access token is generated for the User [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:49:30,505 INFO com.schoolplus.office.services.impl.GradeServiceImpl [http-nio-192.168.0.33-8080-exec-3] Grade has been created successfully [gradeId: 365, performedBy: username]
+2021-11-18 23:49:31,805 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [http-nio-192.168.0.33-8080-exec-4] Access token has been created for the User in JWT format [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:49:31,806 INFO com.schoolplus.office.services.impl.JwtServiceImpl [http-nio-192.168.0.33-8080-exec-4] Access token is generated for the User [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:49:47,494 INFO com.schoolplus.office.services.impl.ClassroomServiceImpl [http-nio-192.168.0.33-8080-exec-9] Classroom has been created successfully [classRoomId: 371, performedBy: username]
+2021-11-18 23:49:59,333 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [http-nio-192.168.0.33-8080-exec-1] Access token has been created for the User in JWT format [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:49:59,334 INFO com.schoolplus.office.services.impl.JwtServiceImpl [http-nio-192.168.0.33-8080-exec-1] Access token is generated for the User [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:50:06,753 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [http-nio-192.168.0.33-8080-exec-7] Access token has been created for the User in JWT format [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:50:06,754 INFO com.schoolplus.office.services.impl.JwtServiceImpl [http-nio-192.168.0.33-8080-exec-7] Access token is generated for the User [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:50:35,421 WARN org.hibernate.engine.jdbc.spi.SqlExceptionHelper [http-nio-192.168.0.33-8080-exec-9] SQL Error: 1062, SQLState: 23000
+2021-11-18 23:50:35,422 ERROR org.hibernate.engine.jdbc.spi.SqlExceptionHelper [http-nio-192.168.0.33-8080-exec-9] Duplicate entry 'asd@asd.com' for key 'user.UK_ob8kqyqqgmefl0aco34akdtpe'
+2021-11-18 23:50:35,428 WARN com.schoolplus.office.web.exceptions.RestExceptionHandler [http-nio-192.168.0.33-8080-exec-9] ConstraintViolationException: could not execute statement
+2021-11-18 23:50:35,433 WARN org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver [http-nio-192.168.0.33-8080-exec-9] Resolved [org.springframework.dao.DataIntegrityViolationException: could not execute statement; SQL [n/a]; constraint [user.UK_ob8kqyqqgmefl0aco34akdtpe]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement]
+2021-11-18 23:50:51,789 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [http-nio-192.168.0.33-8080-exec-10] Access token has been created for the User in JWT format [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:50:51,791 INFO com.schoolplus.office.services.impl.JwtServiceImpl [http-nio-192.168.0.33-8080-exec-10] Access token is generated for the User [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:50:55,726 INFO com.schoolplus.office.services.impl.StudentServiceImpl [http-nio-192.168.0.33-8080-exec-2] User has been created [userId: 1176d80d-22cb-48fe-8f0c-4cd0db9c9ad4, performedBy: username]
+2021-11-18 23:51:36,765 INFO com.schoolplus.office.services.impl.AccessTokenServiceImpl [http-nio-192.168.0.33-8080-exec-7] Access token has been created for the User in JWT format [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
+2021-11-18 23:51:36,767 INFO com.schoolplus.office.services.impl.JwtServiceImpl [http-nio-192.168.0.33-8080-exec-7] Access token is generated for the User [userId: bde8078b-d80c-48a9-84f5-9c7cb9f02e70]
