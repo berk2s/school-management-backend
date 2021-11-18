@@ -8,6 +8,7 @@ import com.schoolplus.office.repository.RoleRepository;
 import com.schoolplus.office.repository.UserRepository;
 import com.schoolplus.office.web.models.*;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -160,17 +161,65 @@ public class ParentManagementControllerTest {
 
         @BeforeEach
         void setUp() {
-
             parent = new Parent();
-            parent.setUsername("parent_name");
+            parent.setFirstName(RandomStringUtils.random(10, true, false));
+            parent.setLastName(RandomStringUtils.random(10, true, false));
+            parent.setPhoneNumber(RandomStringUtils.random(10, true, false));
+            parent.setEmail(RandomStringUtils.random(10, true, false));
+            parent.setUsername(RandomStringUtils.random(10, true, false));
+            parent.setOrganization(organization);
 
             userRepository.save(parent);
 
             student = new Student();
-            student.setUsername("student_name");
+            student.setFirstName(RandomStringUtils.random(10, true, false));
+            student.setLastName(RandomStringUtils.random(10, true, false));
+            student.setPhoneNumber(RandomStringUtils.random(10, true, false));
+            student.setEmail(RandomStringUtils.random(10, true, false));
+            student.setUsername(RandomStringUtils.random(10, true, false));
+            student.setOrganization(organization);
             student.addParent(parent);
 
             userRepository.save(student);
+        }
+
+        @DisplayName("Get Parents By Organization Successfully")
+        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:users:parents"})
+        @Test
+        void getParentsByOrganizationSuccessfully() throws Exception {
+
+            mockMvc.perform(get(ParentManagementController.ENDPOINT + "/organization/" + organization.getId()))
+                    .andDo(print())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.content..userId", anyOf(hasItem(is(parent.getId().toString())))))
+                    .andExpect(jsonPath("$.content..firstName", anyOf(hasItem(is(parent.getFirstName())))))
+                    .andExpect(jsonPath("$.content..lastName", anyOf(hasItem(is(parent.getLastName())))))
+                    .andExpect(jsonPath("$.content..phoneNumber", anyOf(hasItem(is(parent.getPhoneNumber())))))
+                    .andExpect(jsonPath("$.content..email", anyOf(hasItem(is(parent.getEmail())))))
+                    .andExpect(jsonPath("$.content..username", anyOf(hasItem(is(parent.getUsername())))))
+                    .andExpect(jsonPath("$.content..students..userId", anyOf(hasItem(is(student.getId().toString())))))
+                    .andExpect(jsonPath("$.content..students..firstName", anyOf(hasItem(is(student.getFirstName())))))
+                    .andExpect(jsonPath("$.content..students..lastName", anyOf(hasItem(is(student.getLastName())))))
+                    .andExpect(jsonPath("$.content..students..phoneNumber", anyOf(hasItem(is(student.getPhoneNumber())))))
+                    .andExpect(jsonPath("$.content..students..email", anyOf(hasItem(is(student.getEmail())))))
+                    .andExpect(jsonPath("$.content..students..username", anyOf(hasItem(is(student.getUsername())))))
+                    .andExpect(jsonPath("$.content..createdAt").isNotEmpty())
+                    .andExpect(jsonPath("$.content..lastModifiedAt").isNotEmpty());
+
+        }
+
+        @DisplayName("Getting Parents By Organization Not Found Error")
+        @WithMockUser(username = "username", authorities = {"ROLE_ADMIN", "manage:users:parents"})
+        @Test
+        void getParentsByOrganizationNotFoundError() throws Exception {
+
+            mockMvc.perform(get(ParentManagementController.ENDPOINT + "/organization/" + RandomUtils.nextLong()))
+                    .andDo(print())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("$.error", is(ErrorType.INVALID_REQUEST.getError())))
+                    .andExpect(jsonPath("$.error_description", is(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc())));
         }
 
         @DisplayName("Get Parent Successfully")

@@ -12,7 +12,6 @@ import java.util.List;
 @Data
 public class CreatingStudentDto extends CreatingUserDto {
 
-    @NotNull
     @Size(max = 99)
     private List<String> parents;
 

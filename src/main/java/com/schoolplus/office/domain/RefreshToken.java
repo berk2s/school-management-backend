@@ -35,7 +35,7 @@ public class RefreshToken {
     @Column(name = "expiry_date_time")
     private LocalDateTime expiryDateTime;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 

@@ -1,6 +1,7 @@
 package com.schoolplus.office.web.controllers.backoffice;
 
 import com.schoolplus.office.services.ParentService;
+import com.schoolplus.office.utils.SortingUtils;
 import com.schoolplus.office.web.models.CreatingParentDto;
 import com.schoolplus.office.web.models.EditingParentDto;
 import com.schoolplus.office.web.models.ErrorResponseDto;
@@ -13,6 +14,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,6 +34,32 @@ public class ParentManagementController {
     public final static String ENDPOINT = "/management/parents";
 
     private final ParentService parentService;
+
+    @Operation(summary = "Get Parents By Organization")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Parents are listed"),
+            @ApiResponse(responseCode = "400", description = "Invalid input or malformed data",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+                    }),
+            @ApiResponse(responseCode = "403", description = "Don't have permission", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Organization not found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+            }),
+    })
+    @GetMapping(value = "/organization/{organizationId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Page<ParentDto>> getParent(@Valid @PathVariable Long organizationId,
+                                                     @RequestParam(defaultValue = "0") Integer page,
+                                                     @RequestParam(defaultValue = "10") Integer size,
+                                                     @RequestParam(defaultValue = "createdAt") String sort,
+                                                     @RequestParam(defaultValue = "desc") String order,
+                                                     @RequestParam(defaultValue = "") String search) {
+
+        return new ResponseEntity<>(parentService.getParentsByOrganization(organizationId,
+                PageRequest.of(page, size, SortingUtils.generateSort(sort, order)), search), HttpStatus.OK);
+    }
 
     @Operation(summary = "Get Parent")
     @ApiResponses(value = {
@@ -71,8 +100,7 @@ public class ParentManagementController {
 
     @Operation(summary = "Update Parent")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "308", description = "Parent is updated",
-                    headers = @Header(name = "Location", description = "Location of the edited the Parent.")),
+            @ApiResponse(responseCode = "308", description = "Parent is updated"),
             @ApiResponse(responseCode = "400", description = "Invalid input or malformed data", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
             }),
@@ -84,13 +112,28 @@ public class ParentManagementController {
             }),
     })
     @PutMapping(value = "/{parentId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity handleEditingParent(@Valid @PathVariable UUID parentId,
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void handleEditingParent(@Valid @PathVariable UUID parentId,
                                               @Valid @RequestBody EditingParentDto editingParent) {
         parentService.updateParent(parentId, editingParent);
-
-        return ResponseEntity.status(HttpStatus.PERMANENT_REDIRECT)
-                .header(HttpHeaders.LOCATION, ENDPOINT + "/" + parentId.toString())
-                .build();
     }
 
+    @Operation(summary = "Delete Parent")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "308", description = "Parent is deleted"),
+            @ApiResponse(responseCode = "400", description = "Invalid input or malformed data", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+            }),
+            @ApiResponse(responseCode = "403", description = "Don't have permission", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Parent || Student not found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDto.class))
+            }),
+    })
+    @DeleteMapping(value = "/{parentId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteParent(@Valid @PathVariable UUID parentId) {
+        parentService.deleteParent(parentId);
+    }
 }

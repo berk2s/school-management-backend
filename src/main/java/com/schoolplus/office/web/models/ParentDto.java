@@ -16,6 +16,6 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ParentDto extends UserDto {
 
-    private List<ParentsStudentDto> students = new ArrayList<>();
+    private List<StudentDto> students = new ArrayList<>();
 
 }

@@ -55,15 +55,32 @@ public interface StudentMapper {
             @Mapping(target = "lastName", expression = "java( student.getLastName() )"),
             @Mapping(target = "phoneNumber", expression = "java( student.getPhoneNumber() )"),
             @Mapping(target = "email", expression = "java( student.getEmail() )"),
-            @Mapping(target = "isAccountNonExpired", expression = "java( student.getIsAccountNonExpired() )"),
-            @Mapping(target = "isAccountNonLocked", expression = "java( student.getIsAccountNonLocked() )"),
-            @Mapping(target = "isCredentialsNonExpired", expression = "java( student.getIsCredentialsNonExpired() )"),
-            @Mapping(target = "isEnabled", expression = "java( student.getIsEnabled() )"),
+            @Mapping(target = "isAccountNonExpired", source = "isAccountNonExpired", ignore = true),
+            @Mapping(target = "isAccountNonLocked", source = "isAccountNonLocked", ignore = true),
+            @Mapping(target = "isCredentialsNonExpired", source = "isCredentialsNonExpired", ignore = true),
+            @Mapping(target = "isEnabled", source = "isEnabled", ignore = true),
             @Mapping(target = "organization", source = "organization", ignore = true),
             @Mapping(target = "parents", source = "parents", ignore = true),
             @Mapping(target = "classRoom", qualifiedByName = "WithoutStudents"),
     })
     StudentDto studentToStudentDtoWithoutParents(Student student);
+
+    @Named("ForParentListing")
+    @Mappings({
+            @Mapping(target = "userId", expression = "java( student.getId().toString() )"),
+            @Mapping(target = "firstName", expression = "java( student.getFirstName() )"),
+            @Mapping(target = "lastName", expression = "java( student.getLastName() )"),
+            @Mapping(target = "phoneNumber", expression = "java( student.getPhoneNumber() )"),
+            @Mapping(target = "email", expression = "java( student.getEmail() )"),
+            @Mapping(target = "isAccountNonExpired", source = "isAccountNonExpired", ignore = true),
+            @Mapping(target = "isAccountNonLocked", source = "isAccountNonLocked", ignore = true),
+            @Mapping(target = "isCredentialsNonExpired", source = "isCredentialsNonExpired", ignore = true),
+            @Mapping(target = "isEnabled", source = "isEnabled", ignore = true),
+            @Mapping(target = "organization", source = "organization", ignore = true),
+            @Mapping(target = "parents", source = "parents", ignore = true),
+            @Mapping(target = "classRoom", source = "classRoom", ignore = true),
+    })
+    StudentDto studentToStudentDtoForParentListing(Student student);
 
     @Named("WithoutDetailsForClassroom")
     @Mappings({

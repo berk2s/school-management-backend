@@ -135,10 +135,11 @@ public enum DomainAction {
     /*
      * Parent
      */
+    READ_PARENTS,
     READ_PARENT,
     CREATE_PARENT,
     UPDATE_PARENT,
-
+    DELETE_PARENT,
     /*
      * Personal Homework
      */
