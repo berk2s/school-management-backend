@@ -82,6 +82,24 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                 announcements.getTotalElements());
     }
 
+    @ReadingEntity(domain = TransactionDomain.ANNOUNCEMENT, action = DomainAction.READ_ANNOUNCEMENTS, isList = true)
+    @PreAuthorize("hasRole('ROLE_USER') || hasAuthority('view:announcements')")
+    @Override
+    public Page<AnnouncementDto> getAnnouncementsByOrganizationAndChannel(Long organizationId, Pageable pageable, AnnouncementChannel announcementChannel) {
+        Organization organization = organizationRepository.findById(organizationId)
+                .orElseThrow(() -> {
+                    log.warn("Organization with given id does not exists [organizationId: {}]", organizationId);
+                    throw new OrganizationNotFoundException(ErrorDesc.ORGANIZATION_NOT_FOUND.getDesc());
+                });
+
+        Page<Announcement> announcements
+                = announcementRepository.findAllByOrganizationAndAnnouncementChannels(organization, announcementChannel, pageable);
+
+        return new PageImpl<>(announcementMapper.announcementToAnnouncementDto(announcements.getContent()),
+                pageable,
+                announcements.getTotalElements());
+    }
+
     @ReadingEntity(domain = TransactionDomain.ANNOUNCEMENT, action = DomainAction.READ_ANNOUNCEMENT)
     @PreAuthorize("hasRole('ROLE_ADMIN') && (hasAuthority('manage:announcements') || hasAuthority('view:announcement'))")
     @Override

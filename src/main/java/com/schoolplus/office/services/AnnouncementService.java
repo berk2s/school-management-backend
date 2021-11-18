@@ -15,6 +15,8 @@ public interface AnnouncementService {
 
     Page<AnnouncementDto> getAnnouncementsByOrganization(Long organizationId, Pageable pageable, String search);
 
+    Page<AnnouncementDto> getAnnouncementsByOrganizationAndChannel(Long organizationId, Pageable pageable, AnnouncementChannel announcementChannel);
+
     AnnouncementDto getAnnouncement(Long announcementId);
 
     AnnouncementDto createAnnouncement(CreatingAnnouncementDto creatingAnnouncement);

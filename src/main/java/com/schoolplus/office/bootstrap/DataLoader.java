@@ -35,7 +35,8 @@ public class DataLoader implements CommandLineRunner {
         loadUsers();
     }
 
-    private void loadUsers() {
+    @Transactional
+    void loadUsers() {
         if(userRepository.findByUsername("username").isEmpty()) {
             Organization organization = new Organization();
             organization.setOrganizationName("Test Organization");
