@@ -18,6 +18,14 @@ public class EditingUserDto {
 
     private String password;
 
+    private String firstName;
+
+    private String lastName;
+
+    private String phoneNumber;
+
+    private String email;
+
     private Long organizationId;
 
     @Size(max = 99)

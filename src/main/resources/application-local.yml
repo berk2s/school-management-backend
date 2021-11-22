@@ -27,6 +27,8 @@ springdoc:
 school-plus:
   appName: School+ Management
   url: http://192.168.0.33:8080
+  metadata:
+    imageUrl: https://school-management-ozsen.s3.eu-central-1.amazonaws.com
   aws:
     access-key: ${AWS_ACCESS_KEY}
     secret-key: ${AWS_SECRET_KEY}

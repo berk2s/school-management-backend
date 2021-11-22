@@ -3,6 +3,7 @@ package com.schoolplus.office.security;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.schoolplus.office.services.JwtService;
+import com.schoolplus.office.web.controllers.MetadataController;
 import com.schoolplus.office.web.controllers.authentication.LoginController;
 import com.schoolplus.office.web.controllers.authentication.TokenController;
 import com.schoolplus.office.web.exceptions.JWTException;
@@ -38,6 +39,7 @@ public class JWTFilter extends OncePerRequestFilter {
 
     private final List<String> skipUrls = List.of(LoginController.ENDPOINT,
             TokenController.ENDPOINT,
+            MetadataController.ENDPOINT,
             "/swagger-ui.html",
             "/swagger-ui",
             "/api-docs");

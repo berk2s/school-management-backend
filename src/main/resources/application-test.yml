@@ -15,7 +15,7 @@ spring:
     username: root
     password:
   jpa:
-    hibernate.ddl-auto: create
+    hibernate.ddl-auto: create-drop
     generate-ddl: true
     show-sql: true
 
@@ -27,6 +27,8 @@ springdoc:
 school-plus:
   appName: School+ Management
   url: http://192.168.0.33:8080
+  metadata:
+    imageUrl: https://school-management-ozsen.s3.eu-central-1.amazonaws.com
   aws:
     access-key: aws
     secret-key: aws

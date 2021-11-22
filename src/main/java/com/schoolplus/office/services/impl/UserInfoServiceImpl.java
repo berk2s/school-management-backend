@@ -26,7 +26,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     private final UserMapper userMapper;
 
     @ReadingEntity(domain = TransactionDomain.USERINFO, action = DomainAction.READ_USERINFO)
-    @PreAuthorize("hasRole('ROLE_USER') && (hasAuthority('profile:manage') || hasAuthority('read:userinfo'))")
+    @PreAuthorize("hasRole('ROLE_USER') || (hasAuthority('profile:manage') || hasAuthority('read:userinfo'))")
     @Override
     public UserDto getUserInfo(UUID userId) {
         User user = userRepository.findById(userId)

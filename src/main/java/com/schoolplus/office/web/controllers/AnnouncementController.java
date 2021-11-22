@@ -1,6 +1,7 @@
 package com.schoolplus.office.web.controllers;
 
 import com.schoolplus.office.services.AnnouncementService;
+import com.schoolplus.office.utils.SortingUtils;
 import com.schoolplus.office.web.models.AnnouncementChannel;
 import com.schoolplus.office.web.models.AnnouncementDto;
 import com.schoolplus.office.web.models.ErrorResponseDto;
@@ -50,7 +51,7 @@ public class AnnouncementController {
                                                                                 @RequestParam(defaultValue = "asc") String order,
                                                                                 @RequestParam(defaultValue = "STUDENTS") AnnouncementChannel announcementChannel) {
         return new ResponseEntity<>(announcementService.getAnnouncementsByOrganizationAndChannel(organizationId,
-                PageRequest.of(page, size), announcementChannel), HttpStatus.OK);
+                PageRequest.of(page, size, SortingUtils.generateSort(sort, order)), announcementChannel), HttpStatus.OK);
     }
 
 }
