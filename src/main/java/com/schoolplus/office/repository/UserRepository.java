@@ -28,4 +28,10 @@ public interface UserRepository extends PagingAndSortingRepository<User, UUID> {
             Pageable pageable
     );
 
+    boolean existsByUsername(String givenData);
+
+    boolean existsByPhoneNumber(String givenData);
+
+    boolean existsByEmail(String givenData);
+
 }
