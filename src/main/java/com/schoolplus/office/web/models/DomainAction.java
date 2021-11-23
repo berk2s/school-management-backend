@@ -214,6 +214,7 @@ public enum DomainAction {
     CREATE_USER,
     UPDATE_USER,
     DELETE_USER,
+    UPDATE_PASSWORD,
 
     /*
      * Authentication

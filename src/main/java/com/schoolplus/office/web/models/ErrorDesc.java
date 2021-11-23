@@ -50,7 +50,9 @@ public enum ErrorDesc {
     SUPPORT_THREAD_NOT_FOUND("Support thread not found", 40),
     FAILED_IMAGE_UPLOAD("Failed to upload image", 41),
     INVALID_CONTENT_TYPE("Invalid content type", 42),
-    GRADE_CATEGORY_NOT_FOUND("Grade category not found", 43);
+    GRADE_CATEGORY_NOT_FOUND("Grade category not found", 43),
+    PASSWORDS_ARE_NOT_MATCHING("Passwords are not matching", 44),
+    NEW_PASSWORDS_ARE_NOT_MATCHING("New Passwords are not matching", 45);
 
     private final String desc;
     private final Integer code;
